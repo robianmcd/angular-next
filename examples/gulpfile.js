@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
-    traceur = require('gulp-traceur');
+    traceur = require('gulp-traceur'),
+    insert = require('gulp-insert');
 
 var appFiles = 'src/**/*.js';
 var vendorFiles = [
@@ -16,7 +17,8 @@ gulp.task('vendor', function () {
 
 gulp.task('app', function () {
     return gulp.src(appFiles)
-        .pipe(traceur({experimental: true}))
+        .pipe(traceur({experimental: true, modules: 'register', moduleName: true, annotations: true}))
+        .pipe(insert.append('System.get("app" + "");'))
         .pipe(gulp.dest('build'));
 });
 

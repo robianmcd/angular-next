@@ -1,50 +1,26 @@
-//See here for detailed annotation implimentations https://github.com/angular/angular/tree/master/modules/core/src/annotations
-class Directive {
-    constructor(options) {
-        this.selector = options.selector;
-    }
-}
+import Directive from './directive';
+import Component from './component';
 
-//Like a panel
-class Component extends Directive {
-    constructor(options) {
-        super({selector: options.selector});
+var directives = [];
 
-        this.template = options.template;
-        this.templateUrl = options.templateUrl;
-        this.controllerAs = options.controllerAs;
-    }
-}
+angular.register = function (directive) {
+    directives.push(directive);
+};
 
-//A transclude directive like ng-if or ng-show
-class Template extends Directive {
-    constructor(options) {
-        super({selector: options.selector});
-    }
-}
-
-//Like ng-class, ng-show
-class Decorator extends Directive {
-    constructor(options) {
-        super({selector: options.selector});
-    }
-}
-
-(function(){
+(function () {
     var app = angular.module('angularNext', []);
-
     app.config(function ($compileProvider) {
-        for(var key in window) {
-            if (window[key] && window[key].annotations) {
-                var annotations = window[key].annotations;
+        directives.forEach((directive) => {
+            if (directive.annotations) {
+                var annotations = directive.annotations;
                 for (var i = 0; i < annotations.length; i++) {
                     if (annotations[i] instanceof Directive) {
-                        registerDirective($compileProvider, annotations[i], window[key]);
+                        registerDirective($compileProvider, annotations[i], directive);
                     }
                 }
 
             }
-        }
+        });
 
     });
 
@@ -60,7 +36,7 @@ class Decorator extends Directive {
             restrict = 'A';
             dashesDirectiveName = match[1];
 
-        //Try to match a class selector. e.g. ".class"
+            //Try to match a class selector. e.g. ".class"
         } else if (match = directiveAnnotation.selector.match(/^\.(.*)$/)) {
             restrict = 'C';
             dashesDirectiveName = match[1];
@@ -70,7 +46,7 @@ class Decorator extends Directive {
         }
 
         //Convert the directive name from dash separated to camelCase
-        var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, char => char[1].toUpperCase() );
+        var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, char => char[1].toUpperCase());
 
         $compileProvider.directive(camelDirectiveName, function () {
             return {

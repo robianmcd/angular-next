@@ -4,6 +4,7 @@
   "dependencies": {
     "bower": "~1.3.12",
     "gulp": "~3.8.9",
-    "gulp-traceur": "~0.13.0"
+    "gulp-traceur": "git+https://git@github.com/realistschuckle/gulp-traceur.git",
+    "gulp-insert": "~0.4.0"
   }
 }
