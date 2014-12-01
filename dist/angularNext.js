@@ -1,6 +1,9 @@
 System.register("angularNext", [], function() {
   "use strict";
   var __moduleName = "angularNext";
+  function require(path) {
+    return $traceurRuntime.require("angularNext", path);
+  }
   var Directive = System.get("directive").default;
   var Component = System.get("component").default;
   var rootDir;
@@ -87,12 +90,15 @@ System.register("angularNext", [], function() {
 System.register("component", [], function() {
   "use strict";
   var __moduleName = "component";
+  function require(path) {
+    return $traceurRuntime.require("component", path);
+  }
   var Directive = System.get("directive").default;
   var Component = function Component(options) {
-    $traceurRuntime.superCall(this, $Component.prototype, "constructor", [{
+    $traceurRuntime.superConstructor($Component).call(this, {
       selector: options.selector,
       componentServices: options.componentServices
-    }]);
+    });
     this.template = options.template;
     this.templateUrl = options.templateUrl;
     this.controllerAs = options.controllerAs;
@@ -109,9 +115,12 @@ System.register("component", [], function() {
 System.register("decorator", [], function() {
   "use strict";
   var __moduleName = "decorator";
+  function require(path) {
+    return $traceurRuntime.require("decorator", path);
+  }
   var Directive = System.get("directive").default;
   var Decorator = function Decorator(options) {
-    $traceurRuntime.superCall(this, $Decorator.prototype, "constructor", [{selector: options.selector}]);
+    $traceurRuntime.superConstructor($Decorator).call(this, {selector: options.selector});
   };
   var $Decorator = Decorator;
   ($traceurRuntime.createClass)(Decorator, {}, {}, Directive);
@@ -124,6 +133,9 @@ System.register("decorator", [], function() {
 System.register("directive", [], function() {
   "use strict";
   var __moduleName = "directive";
+  function require(path) {
+    return $traceurRuntime.require("directive", path);
+  }
   var Directive = function Directive(options) {
     this.selector = options.selector;
     this.componentServices = options.componentServices;
@@ -138,9 +150,12 @@ System.register("directive", [], function() {
 System.register("template", [], function() {
   "use strict";
   var __moduleName = "template";
+  function require(path) {
+    return $traceurRuntime.require("template", path);
+  }
   var Directive = System.get("directive").default;
   var Template = function Template(options) {
-    $traceurRuntime.superCall(this, $Template.prototype, "constructor", [{selector: options.selector}]);
+    $traceurRuntime.superConstructor($Template).call(this, {selector: options.selector});
   };
   var $Template = Template;
   ($traceurRuntime.createClass)(Template, {}, {}, Directive);

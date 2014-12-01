@@ -60,8 +60,8 @@ var walkDependencies = function (dir) {
         });
     }
 
-    if (dirAnno.directives) {
-        dirAnno.directives.forEach((childDir) => {
+    if (dirAnno.template.directives) {
+        dirAnno.template.directives.forEach((childDir) => {
             walkDependencies(childDir);
         });
     }
@@ -96,7 +96,7 @@ var registerDirective = function (dir, dirAnno) {
     app.directive(camelDirectiveName, function () {
         return {
             restrict: restrict,
-            template: dirAnno.template,
+            template: dirAnno.template.inline,
             controller: dir,
             controllerAs: dirAnno.controllerAs,
             scope: {}
