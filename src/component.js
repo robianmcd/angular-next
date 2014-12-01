@@ -8,5 +8,6 @@ export default class Component extends Directive {
         this.template = options.template;
         this.templateUrl = options.templateUrl;
         this.controllerAs = options.controllerAs;
+        this.directives = options.directives;
     }
 }

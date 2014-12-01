@@ -3,51 +3,61 @@ System.register("angularNext", [], function() {
   var __moduleName = "angularNext";
   var Directive = System.get("directive").default;
   var Component = System.get("component").default;
-  var directives = [];
-  angular.register = function(directive) {
-    directives.push(directive);
-  };
-  (function() {
-    var app = angular.module('angularNext', []);
-    app.config(function($compileProvider) {
-      directives.forEach((function(directive) {
-        if (directive.annotations) {
-          var annotations = directive.annotations;
-          for (var i = 0; i < annotations.length; i++) {
-            if (annotations[i] instanceof Directive) {
-              registerDirective($compileProvider, annotations[i], directive);
-            }
-          }
-        }
-      }));
+  var rootDir;
+  window.bootstrap = (function(component, moduleName) {
+    rootDir = component;
+    var rootDirAnno = getDirAnno(rootDir);
+    var rootElement = document.querySelector(rootDirAnno.selector);
+    angular.element(rootElement).ready(function() {
+      angular.bootstrap(rootElement, [moduleName]);
     });
-    var registerDirective = function($compileProvider, directiveAnnotation, directiveClass) {
-      var restrict;
-      var dashesDirectiveName;
-      var match;
-      if (match = directiveAnnotation.selector.match(/^\[(.*)\]$/)) {
-        restrict = 'A';
-        dashesDirectiveName = match[1];
-      } else if (match = directiveAnnotation.selector.match(/^\.(.*)$/)) {
-        restrict = 'C';
-        dashesDirectiveName = match[1];
-      } else {
-        restrict = 'E';
-        dashesDirectiveName = directiveAnnotation.selector;
-      }
-      var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, (function(char) {
-        return char[1].toUpperCase();
+  });
+  var getDirAnno = function(directive) {
+    var dirAnnos = directive.annotations.filter((function(annotation) {
+      return annotation instanceof Directive;
+    }));
+    return dirAnnos.length ? dirAnnos[0] : undefined;
+  };
+  var app = angular.module('angularNext', []);
+  app.config(function($compileProvider) {
+    walkDependencies(rootDir, $compileProvider);
+  });
+  var walkDependencies = function(dir, $compileProvider) {
+    var dirAnno = getDirAnno(dir);
+    registerDirective($compileProvider, dirAnno, dir);
+    if (dirAnno.directives) {
+      dirAnno.directives.forEach((function(childDir) {
+        walkDependencies(childDir, $compileProvider);
       }));
-      $compileProvider.directive(camelDirectiveName, function() {
-        return {
-          restrict: restrict,
-          template: directiveAnnotation.template,
-          controller: directiveClass,
-          controllerAs: directiveAnnotation.controllerAs
-        };
-      });
-    };
-  })();
+    }
+  };
+  var registerDirective = function($compileProvider, dirAnno, dir) {
+    var restrict;
+    var dashesDirectiveName;
+    var match;
+    if (match = dirAnno.selector.match(/^\[(.*)\]$/)) {
+      restrict = 'A';
+      dashesDirectiveName = match[1];
+    } else if (match = dirAnno.selector.match(/^\.(.*)$/)) {
+      restrict = 'C';
+      dashesDirectiveName = match[1];
+    } else {
+      restrict = 'E';
+      dashesDirectiveName = dirAnno.selector;
+    }
+    var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, (function(char) {
+      return char[1].toUpperCase();
+    }));
+    $compileProvider.directive(camelDirectiveName, function() {
+      return {
+        restrict: restrict,
+        template: dirAnno.template,
+        controller: dir,
+        controllerAs: dirAnno.controllerAs,
+        scope: {}
+      };
+    });
+  };
   return {};
 });
 
@@ -60,6 +70,7 @@ System.register("component", [], function() {
     this.template = options.template;
     this.templateUrl = options.templateUrl;
     this.controllerAs = options.controllerAs;
+    this.directives = options.directives;
   };
   var $Component = Component;
   ($traceurRuntime.createClass)(Component, {}, {}, Directive);
