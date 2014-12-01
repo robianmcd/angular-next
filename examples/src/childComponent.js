@@ -1,8 +1,11 @@
 import Component from './component';
+import TemplateConfig from './templateConfig';
 
 @Component({
     selector: '[child-component]',
-    template: '<div>child {{ctrl.test}}</div>',
+    template: new TemplateConfig({
+        inline: '<div>child {{ctrl.test}}</div>'
+    }),
     controllerAs: 'ctrl'
 })
 export default class ChildComponent {
