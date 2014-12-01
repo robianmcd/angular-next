@@ -4,11 +4,14 @@ System.register("angularNext", [], function() {
   var Directive = System.get("directive").default;
   var Component = System.get("component").default;
   var rootDir;
+  var app;
   window.bootstrap = (function(component, moduleName) {
     rootDir = component;
+    app = angular.module(moduleName);
     var rootDirAnno = getDirAnno(rootDir);
     var rootElement = document.querySelector(rootDirAnno.selector);
     angular.element(rootElement).ready(function() {
+      walkDependencies(rootDir);
       angular.bootstrap(rootElement, [moduleName]);
     });
   });
@@ -18,20 +21,40 @@ System.register("angularNext", [], function() {
     }));
     return dirAnnos.length ? dirAnnos[0] : undefined;
   };
-  var app = angular.module('angularNext', []);
-  app.config(function($compileProvider) {
-    walkDependencies(rootDir, $compileProvider);
-  });
-  var walkDependencies = function(dir, $compileProvider) {
+  var lowerCaseFirstLetter = function(str) {
+    return str.charAt(0).toLowerCase() + str.slice(1);
+  };
+  var getFunctionName = function(func) {
+    if (func.name) {
+      return func.name;
+    } else {
+      var ret = func.toString();
+      ret = ret.substr('function '.length);
+      ret = ret.substr(0, ret.indexOf('('));
+      return ret;
+    }
+  };
+  var walkDependencies = function(dir) {
     var dirAnno = getDirAnno(dir);
-    registerDirective($compileProvider, dirAnno, dir);
+    registerDirective(dir, dirAnno);
+    if (dirAnno.componentServices) {
+      dirAnno.componentServices.forEach((function(serviceType) {
+        app.service(lowerCaseFirstLetter(getFunctionName(serviceType)), serviceType);
+      }));
+    }
+    if (dir.parameters) {
+      dir.$inject = [];
+      dir.parameters.forEach((function(serviceType) {
+        dir.$inject.push(lowerCaseFirstLetter(getFunctionName(serviceType)));
+      }));
+    }
     if (dirAnno.directives) {
       dirAnno.directives.forEach((function(childDir) {
-        walkDependencies(childDir, $compileProvider);
+        walkDependencies(childDir);
       }));
     }
   };
-  var registerDirective = function($compileProvider, dirAnno, dir) {
+  var registerDirective = function(dir, dirAnno) {
     var restrict;
     var dashesDirectiveName;
     var match;
@@ -48,7 +71,7 @@ System.register("angularNext", [], function() {
     var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, (function(char) {
       return char[1].toUpperCase();
     }));
-    $compileProvider.directive(camelDirectiveName, function() {
+    app.directive(camelDirectiveName, function() {
       return {
         restrict: restrict,
         template: dirAnno.template,
@@ -66,7 +89,10 @@ System.register("component", [], function() {
   var __moduleName = "component";
   var Directive = System.get("directive").default;
   var Component = function Component(options) {
-    $traceurRuntime.superCall(this, $Component.prototype, "constructor", [{selector: options.selector}]);
+    $traceurRuntime.superCall(this, $Component.prototype, "constructor", [{
+      selector: options.selector,
+      componentServices: options.componentServices
+    }]);
     this.template = options.template;
     this.templateUrl = options.templateUrl;
     this.controllerAs = options.controllerAs;
@@ -100,6 +126,7 @@ System.register("directive", [], function() {
   var __moduleName = "directive";
   var Directive = function Directive(options) {
     this.selector = options.selector;
+    this.componentServices = options.componentServices;
   };
   ($traceurRuntime.createClass)(Directive, {}, {});
   var $__default = Directive;

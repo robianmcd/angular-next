@@ -17,7 +17,7 @@ gulp.task('vendor', function () {
 
 gulp.task('app', function () {
     return gulp.src(appFiles)
-        .pipe(traceur({experimental: true, modules: 'register', moduleName: true, annotations: true}))
+        .pipe(traceur({experimental: true, modules: 'register', moduleName: true, annotations: true, types: true}))
         .pipe(insert.append('System.get("app" + "");'))
         .pipe(gulp.dest('build'));
 });

@@ -2,5 +2,6 @@
 export default class Directive {
     constructor(options) {
         this.selector = options.selector;
+        this.componentServices = options.componentServices
     }
 }
