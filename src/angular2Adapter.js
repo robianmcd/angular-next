@@ -37,18 +37,11 @@ class Angular2Adapter {
         //Register component services
         if (dirAnno.componentServices) {
             dirAnno.componentServices.forEach((serviceType) => {
-                //TODO: setup DI for service
+                this.setupDi(serviceType);
                 this.app.service(this.lowerCaseFirstLetter(this.getFunctionName(serviceType)), serviceType);
             });
         }
-
-        //setup DI
-        if (dir.parameters) {
-            dir.$inject = [];
-            dir.parameters.forEach((serviceType) => {
-                dir.$inject.push(this.lowerCaseFirstLetter(this.getFunctionName(serviceType)));
-            });
-        }
+        this.setupDi(dir);
 
         var restrict;
         var dashesDirectiveName;
@@ -82,6 +75,15 @@ class Angular2Adapter {
                 scope: {}
             }
         });
+    }
+
+    setupDi(aClass) {
+        if (aClass.parameters) {
+            aClass.$inject = [];
+            aClass.parameters.forEach((serviceType) => {
+                aClass.$inject.push(this.lowerCaseFirstLetter(this.getFunctionName(serviceType)));
+            });
+        }
     }
 
     getDirAnno(directive) {

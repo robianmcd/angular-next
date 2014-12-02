@@ -39,15 +39,11 @@ System.register("angular2Adapter", [], function() {
       var $__2 = this;
       if (dirAnno.componentServices) {
         dirAnno.componentServices.forEach((function(serviceType) {
+          $__2.setupDi(serviceType);
           $__2.app.service($__2.lowerCaseFirstLetter($__2.getFunctionName(serviceType)), serviceType);
         }));
       }
-      if (dir.parameters) {
-        dir.$inject = [];
-        dir.parameters.forEach((function(serviceType) {
-          dir.$inject.push($__2.lowerCaseFirstLetter($__2.getFunctionName(serviceType)));
-        }));
-      }
+      this.setupDi(dir);
       var restrict;
       var dashesDirectiveName;
       var match;
@@ -73,6 +69,15 @@ System.register("angular2Adapter", [], function() {
           scope: {}
         };
       });
+    },
+    setupDi: function(aClass) {
+      var $__2 = this;
+      if (aClass.parameters) {
+        aClass.$inject = [];
+        aClass.parameters.forEach((function(serviceType) {
+          aClass.$inject.push($__2.lowerCaseFirstLetter($__2.getFunctionName(serviceType)));
+        }));
+      }
     },
     getDirAnno: function(directive) {
       var dirAnnos = directive.annotations.filter((function(annotation) {
