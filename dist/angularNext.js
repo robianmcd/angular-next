@@ -31,7 +31,7 @@ System.register("angular2Adapter", [], function() {
       var $__4 = this;
       var dirAnno = this.getDirAnno(dir);
       this.registerDirective(dir);
-      if (dirAnno.template.directives) {
+      if (dirAnno.template && dirAnno.template.directives) {
         dirAnno.template.directives.forEach((function(childDir) {
           $__4.registerDirectiveTree(childDir);
         }));
@@ -64,14 +64,17 @@ System.register("angular2Adapter", [], function() {
       var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, (function(char) {
         return char[1].toUpperCase();
       }));
+      var ddo = {
+        restrict: restrict,
+        controller: dir,
+        controllerAs: dirAnno.controllerAs,
+        scope: {}
+      };
+      if (dirAnno.template && dirAnno.template.inline) {
+        ddo.template = dirAnno.template.inline;
+      }
       this.app.directive(camelDirectiveName, function() {
-        return {
-          restrict: restrict,
-          template: dirAnno.template.inline,
-          controller: dir,
-          controllerAs: dirAnno.controllerAs,
-          scope: {}
-        };
+        return ddo;
       });
     },
     getDirWithInjectableServices: function(dirType) {
@@ -165,15 +168,18 @@ System.register("component", [], function() {
     return $traceurRuntime.require("component", path);
   }
   var Directive = System.get("directive").default;
-  var Component = function Component(options) {
+  var Component = function Component($__2) {
+    var $__3 = $__2,
+        selector = $__3.selector,
+        componentServices = $__3.componentServices,
+        template = $__3.template,
+        controllerAs = $__3.controllerAs;
     $traceurRuntime.superConstructor($Component).call(this, {
-      selector: options.selector,
-      componentServices: options.componentServices
+      selector: selector,
+      componentServices: componentServices
     });
-    this.template = options.template;
-    this.templateUrl = options.templateUrl;
-    this.controllerAs = options.controllerAs;
-    this.directives = options.directives;
+    this.template = template;
+    this.controllerAs = controllerAs;
   };
   var $Component = Component;
   ($traceurRuntime.createClass)(Component, {}, {}, Directive);
@@ -190,8 +196,14 @@ System.register("decorator", [], function() {
     return $traceurRuntime.require("decorator", path);
   }
   var Directive = System.get("directive").default;
-  var Decorator = function Decorator(options) {
-    $traceurRuntime.superConstructor($Decorator).call(this, {selector: options.selector});
+  var Decorator = function Decorator($__2) {
+    var $__3 = $__2,
+        selector = $__3.selector,
+        componentServices = $__3.componentServices;
+    $traceurRuntime.superConstructor($Decorator).call(this, {
+      selector: selector,
+      componentServices: componentServices
+    });
   };
   var $Decorator = Decorator;
   ($traceurRuntime.createClass)(Decorator, {}, {}, Directive);
@@ -207,9 +219,12 @@ System.register("directive", [], function() {
   function require(path) {
     return $traceurRuntime.require("directive", path);
   }
-  var Directive = function Directive(options) {
-    this.selector = options.selector;
-    this.componentServices = options.componentServices;
+  var Directive = function Directive($__1) {
+    var $__2 = $__1,
+        selector = $__2.selector,
+        componentServices = $__2.componentServices;
+    this.selector = selector;
+    this.componentServices = componentServices;
   };
   ($traceurRuntime.createClass)(Directive, {}, {});
   var $__default = Directive;

@@ -2,12 +2,10 @@ import Directive from './directive';
 
 //Like a panel
 export default class Component extends Directive {
-    constructor(options) {
-        super({selector: options.selector, componentServices: options.componentServices});
+    constructor({selector, componentServices, template, controllerAs}) {
+        super({selector: selector, componentServices: componentServices});
 
-        this.template = options.template;
-        this.templateUrl = options.templateUrl;
-        this.controllerAs = options.controllerAs;
-        this.directives = options.directives;
+        this.template = template;
+        this.controllerAs = controllerAs;
     }
 }

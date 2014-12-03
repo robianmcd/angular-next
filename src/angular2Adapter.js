@@ -28,7 +28,7 @@ class Angular2Adapter {
 
         this.registerDirective(dir);
 
-        if (dirAnno.template.directives) {
+        if (dirAnno.template && dirAnno.template.directives) {
             dirAnno.template.directives.forEach((childDir) => {
                 this.registerDirectiveTree(childDir);
             });
@@ -72,14 +72,19 @@ class Angular2Adapter {
         //Convert the directive name from dash separated to camelCase
         var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, char => char[1].toUpperCase());
 
+        var ddo = {
+            restrict: restrict,
+            controller: dir,
+            controllerAs: dirAnno.controllerAs,
+            scope: {}
+        };
+
+        if (dirAnno.template && dirAnno.template.inline) {
+            ddo.template = dirAnno.template.inline;
+        }
+
         this.app.directive(camelDirectiveName, function () {
-            return {
-                restrict: restrict,
-                template: dirAnno.template.inline,
-                controller: dir,
-                controllerAs: dirAnno.controllerAs,
-                scope: {}
-            }
+            return ddo;
         });
     }
 

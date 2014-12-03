@@ -10,7 +10,7 @@ import NgElement from './core/ngElement';
     selector: '[hello-component]',
     componentServices: [MyService, MyChildService, NgElement],
     template: new TemplateConfig({
-        inline: '<h1>Hello {{ctrl.test}}</h1><div child-component></div>',
+        inline: '<h1>Hello {{ctrl.test}}</h1><child-component></child-component>',
         directives: [ChildComponent]
     }),
     controllerAs: 'ctrl'

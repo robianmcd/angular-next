@@ -1,21 +1,24 @@
 import Component from './component';
 import TemplateConfig from './templateConfig';
 import NgElement from './core/ngElement';
+import RedDec from './redDec';
 
 @Component({
-    selector: '[child-component]',
+    selector: 'child-component',
     template: new TemplateConfig({
-        inline: '<div>child {{ctrl.test}}</div>'
+        inline: '<div>child: {{ctrl.test}}</div><div red>decorated red text</div>',
+        directives: [RedDec]
     }),
     controllerAs: 'ctrl'
 })
 export default class ChildComponent {
     constructor(element: NgElement) {
+        element.domElement.style.color = 'blue';
+
         this.test = this.getTestStr();
-        element.domElement.style.color = 'red';
     }
 
     getTestStr() {
-        return 'test string';
+        return 'blue text';
     }
 }
