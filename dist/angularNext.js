@@ -6,44 +6,48 @@ System.register("angular2Adapter", [], function() {
   }
   var Directive = System.get("directive").default;
   var Component = System.get("component").default;
-  var Angular2Adapter = function Angular2Adapter($__4) {
-    var $__6;
-    var $__5 = $__4,
-        moduleName = $__5.moduleName,
-        logLevel = ($__6 = $__5.logLevel) === void 0 ? 0 : $__6;
+  var NgElement = System.get("core/ngElement").default;
+  var $element = System.get("ng1/element").default;
+  var Angular2Adapter = function Angular2Adapter($__7) {
+    var $__9;
+    var $__8 = $__7,
+        moduleName = $__8.moduleName,
+        logLevel = ($__9 = $__8.logLevel) === void 0 ? 0 : $__9;
     this.moduleName = moduleName;
     this.app = angular.module(moduleName);
     this.logLevel = logLevel;
   };
   ($traceurRuntime.createClass)(Angular2Adapter, {
     bootstrapComponent: function(rootComponent) {
-      var $__2 = this;
+      var $__4 = this;
       var rootComponentAnno = this.getDirAnno(rootComponent);
       var rootElement = document.querySelector(rootComponentAnno.selector);
       angular.element(rootElement).ready((function() {
-        $__2.registerDirectiveTree(rootComponent);
-        angular.bootstrap(rootElement, [$__2.moduleName]);
+        $__4.registerDirectiveTree(rootComponent);
+        angular.bootstrap(rootElement, [$__4.moduleName]);
       }));
     },
     registerDirectiveTree: function(dir) {
-      var $__2 = this;
+      var $__4 = this;
       var dirAnno = this.getDirAnno(dir);
-      this.registerDirective(dir, dirAnno);
+      this.registerDirective(dir);
       if (dirAnno.template.directives) {
         dirAnno.template.directives.forEach((function(childDir) {
-          $__2.registerDirectiveTree(childDir);
+          $__4.registerDirectiveTree(childDir);
         }));
       }
     },
-    registerDirective: function(dir, dirAnno) {
-      var $__2 = this;
+    registerDirective: function(dir) {
+      var $__4 = this;
+      dir = this.getDirWithInjectableServices(dir);
+      this.setupModelDi(dir);
+      var dirAnno = this.getDirAnno(dir);
       if (dirAnno.componentServices) {
         dirAnno.componentServices.forEach((function(serviceType) {
-          $__2.setupDi(serviceType);
-          $__2.app.service($__2.lowerCaseFirstLetter($__2.getFunctionName(serviceType)), serviceType);
+          $__4.setupModelDi(serviceType);
+          $__4.app.service($__4.lowerCaseFirstLetter($__4.getFunctionName(serviceType)), serviceType);
         }));
       }
-      this.setupDi(dir);
       var restrict;
       var dashesDirectiveName;
       var match;
@@ -70,12 +74,46 @@ System.register("angular2Adapter", [], function() {
         };
       });
     },
-    setupDi: function(aClass) {
-      var $__2 = this;
+    getDirWithInjectableServices: function(dirType) {
+      var retDirType = dirType;
+      if (dirType.parameters) {
+        var nonElementBasedServices = [];
+        var ngElementPos = -1;
+        for (var i = 0; i < dirType.parameters.length; i++) {
+          var curParamType = dirType.parameters[i][0];
+          if (curParamType === NgElement) {
+            ngElementPos = i;
+          } else {
+            nonElementBasedServices.push(curParamType);
+          }
+        }
+        if (ngElementPos !== -1) {
+          retDirType = function(element) {
+            for (var args = [],
+                $__6 = 1; $__6 < arguments.length; $__6++)
+              args[$__6 - 1] = arguments[$__6];
+            var origDirParams = angular.copy(args);
+            if (ngElementPos !== -1) {
+              var ngElement = new NgElement(element);
+              origDirParams.splice(ngElementPos, 0, ngElement);
+            }
+            dirType.apply(this, origDirParams);
+          };
+          retDirType.prototype = Object.create(dirType.prototype);
+          retDirType.annotations = dirType.annotations;
+          retDirType.parameters = [[$element]].concat(nonElementBasedServices.map((function(type) {
+            return [type];
+          })));
+        }
+      }
+      return retDirType;
+    },
+    setupModelDi: function(aClass) {
+      var $__4 = this;
       if (aClass.parameters) {
         aClass.$inject = [];
         aClass.parameters.forEach((function(serviceType) {
-          aClass.$inject.push($__2.lowerCaseFirstLetter($__2.getFunctionName(serviceType)));
+          aClass.$inject.push($__4.lowerCaseFirstLetter($__4.getFunctionName(serviceType[0])));
         }));
       }
     },
@@ -210,6 +248,36 @@ System.register("templateConfig", [], function() {
   };
   ($traceurRuntime.createClass)(TemplateConfig, {}, {});
   var $__default = TemplateConfig;
+  return {get default() {
+      return $__default;
+    }};
+});
+
+System.register("core/ngElement", [], function() {
+  "use strict";
+  var __moduleName = "core/ngElement";
+  function require(path) {
+    return $traceurRuntime.require("core/ngElement", path);
+  }
+  var NgElement = function NgElement($element) {
+    this.domElement = $element[0];
+  };
+  ($traceurRuntime.createClass)(NgElement, {}, {});
+  var $__default = NgElement;
+  return {get default() {
+      return $__default;
+    }};
+});
+
+System.register("ng1/element", [], function() {
+  "use strict";
+  var __moduleName = "ng1/element";
+  function require(path) {
+    return $traceurRuntime.require("ng1/element", path);
+  }
+  var $element = function $element() {};
+  ($traceurRuntime.createClass)($element, {}, {});
+  var $__default = $element;
   return {get default() {
       return $__default;
     }};

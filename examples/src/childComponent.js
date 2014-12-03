@@ -1,5 +1,6 @@
 import Component from './component';
 import TemplateConfig from './templateConfig';
+import NgElement from './core/ngElement';
 
 @Component({
     selector: '[child-component]',
@@ -9,7 +10,12 @@ import TemplateConfig from './templateConfig';
     controllerAs: 'ctrl'
 })
 export default class ChildComponent {
-    constructor() {
-        this.test = 'component';
+    constructor(element: NgElement) {
+        this.test = this.getTestStr();
+        element.domElement.style.color = 'red';
+    }
+
+    getTestStr() {
+        return 'test string';
     }
 }

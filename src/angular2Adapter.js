@@ -1,5 +1,7 @@
 import Directive from './directive';
 import Component from './component';
+import NgElement from './core/ngElement'
+import $element from './ng1/element'
 
 export default
 class Angular2Adapter {
@@ -24,7 +26,7 @@ class Angular2Adapter {
     registerDirectiveTree(dir) {
         var dirAnno = this.getDirAnno(dir);
 
-        this.registerDirective(dir, dirAnno);
+        this.registerDirective(dir);
 
         if (dirAnno.template.directives) {
             dirAnno.template.directives.forEach((childDir) => {
@@ -33,15 +35,19 @@ class Angular2Adapter {
         }
     }
 
-    registerDirective(dir, dirAnno) {
+    registerDirective(dir) {
+        dir = this.getDirWithInjectableServices(dir);
+        this.setupModelDi(dir);
+
+        var dirAnno = this.getDirAnno(dir);
+
         //Register component services
         if (dirAnno.componentServices) {
             dirAnno.componentServices.forEach((serviceType) => {
-                this.setupDi(serviceType);
+                this.setupModelDi(serviceType);
                 this.app.service(this.lowerCaseFirstLetter(this.getFunctionName(serviceType)), serviceType);
             });
         }
-        this.setupDi(dir);
 
         var restrict;
         var dashesDirectiveName;
@@ -77,11 +83,62 @@ class Angular2Adapter {
         });
     }
 
-    setupDi(aClass) {
+    //Services that require $element (e.g. NgElement) cannot be injected normally as $element can only be injected
+    //directly into the controller of a directive. If the directive passed in requires any of these services then it
+    //will be wrapped (inherited) by a function that injects $element and manually initialized the $element based
+    //services before passing them in.
+    getDirWithInjectableServices(dirType) {
+        var retDirType = dirType;
+
+        if (dirType.parameters) {
+            var nonElementBasedServices = [];
+
+            var ngElementPos = -1;
+
+            for (var i = 0; i < dirType.parameters.length; i++) {
+                var curParamType = dirType.parameters[i][0];
+
+                if (curParamType === NgElement) {
+                    ngElementPos = i;
+                } else {
+                    nonElementBasedServices.push(curParamType);
+                }
+            }
+
+
+            if (ngElementPos !== -1) {
+
+                retDirType = function (element, ...args) {
+
+                    var origDirParams = angular.copy(args);
+
+                    //This is redundant right now but in the future there will be other element based services
+                    if (ngElementPos !== -1) {
+                        var ngElement = new NgElement(element);
+                        origDirParams.splice(ngElementPos, 0, ngElement);
+                    }
+
+                    //Steal constructor
+                    dirType.apply(this, origDirParams);
+                };
+
+                //Inherit prototype
+                retDirType.prototype = Object.create(dirType.prototype);
+                retDirType.annotations = dirType.annotations;
+                retDirType.parameters = [[$element]].concat(nonElementBasedServices.map(type => [type]));
+
+
+            }
+        }
+
+        return retDirType;
+    }
+
+    setupModelDi(aClass) {
         if (aClass.parameters) {
             aClass.$inject = [];
             aClass.parameters.forEach((serviceType) => {
-                aClass.$inject.push(this.lowerCaseFirstLetter(this.getFunctionName(serviceType)));
+                aClass.$inject.push(this.lowerCaseFirstLetter(this.getFunctionName(serviceType[0])));
             });
         }
     }
