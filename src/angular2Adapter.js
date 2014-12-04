@@ -12,8 +12,9 @@ class Angular2Adapter {
         this.logLevel = logLevel;
     }
 
-    bootstrapComponent(rootComponent) {
-        var rootComponentAnno = this.getDirAnno(rootComponent);
+    bootstrapComponent(rootComponent: Object) {
+        var rootComponentAnno: Component;
+        rootComponentAnno = this.getDirAnno(rootComponent);
 
         var rootElement = document.querySelector(rootComponentAnno.selector);
 

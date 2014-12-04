@@ -4,48 +4,51 @@ System.register("angular2Adapter", [], function() {
   function require(path) {
     return $traceurRuntime.require("angular2Adapter", path);
   }
+  var assert = System.get("lib/assert").assert;
   var Directive = System.get("directive").default;
   var Component = System.get("component").default;
   var NgElement = System.get("core/ngElement").default;
   var $element = System.get("ng1/element").default;
-  var Angular2Adapter = function Angular2Adapter($__7) {
-    var $__9;
-    var $__8 = $__7,
-        moduleName = $__8.moduleName,
-        logLevel = ($__9 = $__8.logLevel) === void 0 ? 0 : $__9;
+  var Angular2Adapter = function Angular2Adapter($__8) {
+    var $__10;
+    var $__9 = $__8,
+        moduleName = $__9.moduleName,
+        logLevel = ($__10 = $__9.logLevel) === void 0 ? 0 : $__10;
     this.moduleName = moduleName;
     this.app = angular.module(moduleName);
     this.logLevel = logLevel;
   };
   ($traceurRuntime.createClass)(Angular2Adapter, {
     bootstrapComponent: function(rootComponent) {
-      var $__4 = this;
-      var rootComponentAnno = this.getDirAnno(rootComponent);
+      var $__5 = this;
+      assert.argumentTypes(rootComponent, Object);
+      var rootComponentAnno;
+      rootComponentAnno = this.getDirAnno(rootComponent);
       var rootElement = document.querySelector(rootComponentAnno.selector);
       angular.element(rootElement).ready((function() {
-        $__4.registerDirectiveTree(rootComponent);
-        angular.bootstrap(rootElement, [$__4.moduleName]);
+        $__5.registerDirectiveTree(rootComponent);
+        angular.bootstrap(rootElement, [$__5.moduleName]);
       }));
     },
     registerDirectiveTree: function(dir) {
-      var $__4 = this;
+      var $__5 = this;
       var dirAnno = this.getDirAnno(dir);
       this.registerDirective(dir);
       if (dirAnno.template && dirAnno.template.directives) {
         dirAnno.template.directives.forEach((function(childDir) {
-          $__4.registerDirectiveTree(childDir);
+          $__5.registerDirectiveTree(childDir);
         }));
       }
     },
     registerDirective: function(dir) {
-      var $__4 = this;
+      var $__5 = this;
       dir = this.getDirWithInjectableServices(dir);
       this.setupModelDi(dir);
       var dirAnno = this.getDirAnno(dir);
       if (dirAnno.componentServices) {
         dirAnno.componentServices.forEach((function(serviceType) {
-          $__4.setupModelDi(serviceType);
-          $__4.app.service($__4.lowerCaseFirstLetter($__4.getFunctionName(serviceType)), serviceType);
+          $__5.setupModelDi(serviceType);
+          $__5.app.service($__5.lowerCaseFirstLetter($__5.getFunctionName(serviceType)), serviceType);
         }));
       }
       var restrict;
@@ -100,8 +103,8 @@ System.register("angular2Adapter", [], function() {
         if (ngElementPos !== -1) {
           retDirType = function(element) {
             for (var args = [],
-                $__6 = 1; $__6 < arguments.length; $__6++)
-              args[$__6 - 1] = arguments[$__6];
+                $__7 = 1; $__7 < arguments.length; $__7++)
+              args[$__7 - 1] = arguments[$__7];
             var origDirParams = angular.copy(args);
             if (ngElementPos !== -1) {
               var ngElement = new NgElement(element);
@@ -119,11 +122,11 @@ System.register("angular2Adapter", [], function() {
       return retDirType;
     },
     setupModelDi: function(aClass) {
-      var $__4 = this;
+      var $__5 = this;
       if (aClass.parameters) {
         aClass.$inject = [];
         aClass.parameters.forEach((function(serviceType) {
-          aClass.$inject.push($__4.lowerCaseFirstLetter($__4.getFunctionName(serviceType[0])));
+          aClass.$inject.push($__5.lowerCaseFirstLetter($__5.getFunctionName(serviceType[0])));
         }));
       }
     },
@@ -148,6 +151,9 @@ System.register("angular2Adapter", [], function() {
     }
   }, {});
   var $__default = Angular2Adapter;
+  Object.defineProperty(Angular2Adapter.prototype.bootstrapComponent, "parameters", {get: function() {
+      return [[Object]];
+    }});
   return {get default() {
       return $__default;
     }};
@@ -229,15 +235,23 @@ System.register("directive", [], function() {
   function require(path) {
     return $traceurRuntime.require("directive", path);
   }
-  var Directive = function Directive($__1) {
-    var $__2 = $__1,
-        selector = $__2.selector,
-        bind = $__2.bind;
-    this.selector = selector;
-    this.bind = bind;
+  var assert = System.get("lib/assert").assert;
+  var Directive = function Directive(options) {
+    assert.argumentTypes(options, DirectiveOptions);
+    this.selector = options.selector;
+    this.bind = options.bind;
   };
   ($traceurRuntime.createClass)(Directive, {}, {});
   var $__default = Directive;
+  Object.defineProperty(Directive, "parameters", {get: function() {
+      return [[DirectiveOptions]];
+    }});
+  var DirectiveOptions = function DirectiveOptions() {};
+  ($traceurRuntime.createClass)(DirectiveOptions, {}, {assert: function(options) {
+      if (!options.selector) {
+        assert.fail('The selector field is missing from this directive.');
+      }
+    }});
   return {get default() {
       return $__default;
     }};
