@@ -72,11 +72,20 @@ class Angular2Adapter {
         //Convert the directive name from dash separated to camelCase
         var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, char => char[1].toUpperCase());
 
+        var scope = {};
+
+        for (var key in dirAnno.bind) {
+            if (dirAnno.bind.hasOwnProperty(key)) {
+                scope[key] = '=' + dirAnno.bind[key];
+            }
+        }
+
         var ddo = {
             restrict: restrict,
             controller: dir,
-            controllerAs: dirAnno.controllerAs,
-            scope: {}
+            controllerAs: dirAnno.controllerAs || 'ctrl',
+            scope: scope,
+            bindToController: true
         };
 
         if (dirAnno.template && dirAnno.template.inline) {

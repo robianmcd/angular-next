@@ -12,8 +12,7 @@ import NgElement from './core/ngElement';
     template: new TemplateConfig({
         inline: '<h1>Hello {{ctrl.test}}</h1><child-component></child-component>',
         directives: [ChildComponent]
-    }),
-    controllerAs: 'ctrl'
+    })
 })
 export default class HelloComponent {
     constructor(test: MyService) {

@@ -1,13 +1,13 @@
 import Component from './component';
 import TemplateConfig from './templateConfig';
 import NgElement from './core/ngElement';
-import RedDec from './redDec';
+import ColorDec from './colorDec';
 
 @Component({
     selector: 'child-component',
     template: new TemplateConfig({
-        inline: '<div>child: {{ctrl.test}}</div><div red>decorated red text</div>',
-        directives: [RedDec]
+        inline: '<div>child: {{ctrl.test}}</div><div color="\'red\'">decorated red text</div>',
+        directives: [ColorDec]
     }),
     controllerAs: 'ctrl'
 })

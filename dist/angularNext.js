@@ -64,11 +64,18 @@ System.register("angular2Adapter", [], function() {
       var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, (function(char) {
         return char[1].toUpperCase();
       }));
+      var scope = {};
+      for (var key in dirAnno.bind) {
+        if (dirAnno.bind.hasOwnProperty(key)) {
+          scope[key] = '=' + dirAnno.bind[key];
+        }
+      }
       var ddo = {
         restrict: restrict,
         controller: dir,
-        controllerAs: dirAnno.controllerAs,
-        scope: {}
+        controllerAs: dirAnno.controllerAs || 'ctrl',
+        scope: scope,
+        bindToController: true
       };
       if (dirAnno.template && dirAnno.template.inline) {
         ddo.template = dirAnno.template.inline;
@@ -173,11 +180,14 @@ System.register("component", [], function() {
         selector = $__3.selector,
         componentServices = $__3.componentServices,
         template = $__3.template,
-        controllerAs = $__3.controllerAs;
+        controllerAs = $__3.controllerAs,
+        bind = $__3.bind;
     $traceurRuntime.superConstructor($Component).call(this, {
       selector: selector,
-      componentServices: componentServices
+      componentServices: componentServices,
+      bind: bind
     });
+    this.componentServices = componentServices;
     this.template = template;
     this.controllerAs = controllerAs;
   };
@@ -199,10 +209,10 @@ System.register("decorator", [], function() {
   var Decorator = function Decorator($__2) {
     var $__3 = $__2,
         selector = $__3.selector,
-        componentServices = $__3.componentServices;
+        bind = $__3.bind;
     $traceurRuntime.superConstructor($Decorator).call(this, {
       selector: selector,
-      componentServices: componentServices
+      bind: bind
     });
   };
   var $Decorator = Decorator;
@@ -222,9 +232,9 @@ System.register("directive", [], function() {
   var Directive = function Directive($__1) {
     var $__2 = $__1,
         selector = $__2.selector,
-        componentServices = $__2.componentServices;
+        bind = $__2.bind;
     this.selector = selector;
-    this.componentServices = componentServices;
+    this.bind = bind;
   };
   ($traceurRuntime.createClass)(Directive, {}, {});
   var $__default = Directive;
@@ -240,8 +250,14 @@ System.register("template", [], function() {
     return $traceurRuntime.require("template", path);
   }
   var Directive = System.get("directive").default;
-  var Template = function Template(options) {
-    $traceurRuntime.superConstructor($Template).call(this, {selector: options.selector});
+  var Template = function Template($__2) {
+    var $__3 = $__2,
+        selector = $__3.selector,
+        bind = $__3.bind;
+    $traceurRuntime.superConstructor($Template).call(this, {
+      selector: selector,
+      bind: bind
+    });
   };
   var $Template = Template;
   ($traceurRuntime.createClass)(Template, {}, {}, Directive);
