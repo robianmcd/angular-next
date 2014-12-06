@@ -106,32 +106,38 @@ class Angular2Adapter {
         var retDirType = dirType;
 
         if (dirType.parameters) {
-            var nonElementBasedServices = [];
+            var injectableServices = [];
 
-            var ngElementPos = -1;
+            //e.g. {pos: 3, type: MyDir}
+            var nonInjectableParams = [];
+
 
             for (var i = 0; i < dirType.parameters.length; i++) {
                 var curParamType = dirType.parameters[i][0];
 
-                if (curParamType === NgElement) {
-                    ngElementPos = i;
+                if (curParamType === NgElement || this.isDirClass(curParamType)) {
+                    nonInjectableParams.push({pos: i, type: curParamType});
                 } else {
-                    nonElementBasedServices.push(curParamType);
+                    injectableServices.push(curParamType);
                 }
             }
 
 
-            if (ngElementPos !== -1) {
+            if (nonInjectableParams.length) {
 
                 retDirType = function (element, ...args) {
-
                     var origDirParams = angular.copy(args);
 
-                    //This is redundant right now but in the future there will be other element based services
-                    if (ngElementPos !== -1) {
-                        var ngElement = new NgElement(element);
-                        origDirParams.splice(ngElementPos, 0, ngElement);
-                    }
+                    nonInjectableParams.forEach((param) => {
+                        var model;
+                        if(param.type === NgElement) {
+                            model = new NgElement(element);
+                        } else if (this.isDirClass(param.type)) {
+                            var dirName = this.lowerCaseFirstLetter(this.getFunctionName(param.type));
+                            model = $element.inheritedData(`$${dirName}Controller`);
+                        }
+                        origDirParams.splice(param.pos, 0, model);
+                    });
 
                     //Steal constructor
                     dirType.apply(this, origDirParams);
@@ -140,9 +146,7 @@ class Angular2Adapter {
                 //Inherit prototype
                 retDirType.prototype = Object.create(dirType.prototype);
                 retDirType.annotations = dirType.annotations;
-                retDirType.parameters = [[$element]].concat(nonElementBasedServices.map(type => [type]));
-
-
+                retDirType.parameters = [[$element], ...injectableServices.map(type => [type])];
             }
         }
 
@@ -179,6 +183,10 @@ class Angular2Adapter {
             ret = ret.substr(0, ret.indexOf('('));
             return ret;
         }
+    }
+
+    isDirClass(obj) {
+        return obj.annotations && obj.annotations.filter(anno => anno instanceof Directive).length;
     }
 
 }

@@ -90,31 +90,41 @@ System.register("angular2Adapter", [], function() {
     getDirWithInjectableServices: function(dirType) {
       var retDirType = dirType;
       if (dirType.parameters) {
-        var nonElementBasedServices = [];
-        var ngElementPos = -1;
+        var injectableServices = [];
+        var nonInjectableParams = [];
         for (var i = 0; i < dirType.parameters.length; i++) {
           var curParamType = dirType.parameters[i][0];
-          if (curParamType === NgElement) {
-            ngElementPos = i;
+          if (curParamType === NgElement || this.isDirClass(curParamType)) {
+            nonInjectableParams.push({
+              pos: i,
+              type: curParamType
+            });
           } else {
-            nonElementBasedServices.push(curParamType);
+            injectableServices.push(curParamType);
           }
         }
-        if (ngElementPos !== -1) {
+        if (nonInjectableParams.length) {
           retDirType = function(element) {
             for (var args = [],
                 $__7 = 1; $__7 < arguments.length; $__7++)
               args[$__7 - 1] = arguments[$__7];
+            var $__5 = this;
             var origDirParams = angular.copy(args);
-            if (ngElementPos !== -1) {
-              var ngElement = new NgElement(element);
-              origDirParams.splice(ngElementPos, 0, ngElement);
-            }
+            nonInjectableParams.forEach((function(param) {
+              var model;
+              if (param.type === NgElement) {
+                model = new NgElement(element);
+              } else if ($__5.isDirClass(param.type)) {
+                var dirName = $__5.lowerCaseFirstLetter($__5.getFunctionName(param.type));
+                model = $element.inheritedData(("$" + dirName + "Controller"));
+              }
+              origDirParams.splice(param.pos, 0, model);
+            }));
             dirType.apply(this, origDirParams);
           };
           retDirType.prototype = Object.create(dirType.prototype);
           retDirType.annotations = dirType.annotations;
-          retDirType.parameters = [[$element]].concat(nonElementBasedServices.map((function(type) {
+          retDirType.parameters = $traceurRuntime.spread([[$element]], injectableServices.map((function(type) {
             return [type];
           })));
         }
@@ -148,6 +158,11 @@ System.register("angular2Adapter", [], function() {
         ret = ret.substr(0, ret.indexOf('('));
         return ret;
       }
+    },
+    isDirClass: function(obj) {
+      return obj.annotations && obj.annotations.filter((function(anno) {
+        return anno instanceof Directive;
+      })).length;
     }
   }, {});
   var $__default = Angular2Adapter;
