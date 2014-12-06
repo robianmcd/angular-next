@@ -1,12 +1,28 @@
 import Directive from './directive';
+import TemplateConfig from './templateConfig';
 
 //Like a panel
 export default class Component extends Directive {
-    constructor({selector, componentServices, template, controllerAs, bind}) {
-        super({selector: selector, componentServices: componentServices, bind});
+    constructor(options: ComponentOptions) {
+        this.componentServices = options.componentServices;
+        this.template = options.template;
 
-        this.componentServices = componentServices;
-        this.template = template;
-        this.controllerAs = controllerAs;
+        delete options.componentServices;
+        delete options.template;
+
+        super(options);
     }
 }
+
+
+var ComponentOptions = assert.define('ComponentOptions', function(options) {
+    //Required fields
+    assert(options).is(assert.structure({
+        selector: assert.string
+    }));
+
+    //Optional fields
+    if(options.componentServices) {
+        assert(options.componentServices).is(assert.arrayOf(Object));
+    }
+});

@@ -180,26 +180,29 @@ System.register("component", [], function() {
   function require(path) {
     return $traceurRuntime.require("component", path);
   }
+  var assert = System.get("lib/assert").assert;
   var Directive = System.get("directive").default;
-  var Component = function Component($__2) {
-    var $__3 = $__2,
-        selector = $__3.selector,
-        componentServices = $__3.componentServices,
-        template = $__3.template,
-        controllerAs = $__3.controllerAs,
-        bind = $__3.bind;
-    $traceurRuntime.superConstructor($Component).call(this, {
-      selector: selector,
-      componentServices: componentServices,
-      bind: bind
-    });
-    this.componentServices = componentServices;
-    this.template = template;
-    this.controllerAs = controllerAs;
+  var TemplateConfig = System.get("templateConfig").default;
+  var Component = function Component(options) {
+    assert.argumentTypes(options, ComponentOptions);
+    this.componentServices = options.componentServices;
+    this.template = options.template;
+    delete options.componentServices;
+    delete options.template;
+    $traceurRuntime.superConstructor($Component).call(this, options);
   };
   var $Component = Component;
   ($traceurRuntime.createClass)(Component, {}, {}, Directive);
   var $__default = Component;
+  Object.defineProperty(Component, "parameters", {get: function() {
+      return [[ComponentOptions]];
+    }});
+  var ComponentOptions = assert.define('ComponentOptions', function(options) {
+    assert(options).is(assert.structure({selector: assert.string}));
+    if (options.componentServices) {
+      assert(options.componentServices).is(assert.arrayOf(Object));
+    }
+  });
   return {get default() {
       return $__default;
     }};
@@ -212,14 +215,8 @@ System.register("decorator", [], function() {
     return $traceurRuntime.require("decorator", path);
   }
   var Directive = System.get("directive").default;
-  var Decorator = function Decorator($__2) {
-    var $__3 = $__2,
-        selector = $__3.selector,
-        bind = $__3.bind;
-    $traceurRuntime.superConstructor($Decorator).call(this, {
-      selector: selector,
-      bind: bind
-    });
+  var Decorator = function Decorator(options) {
+    $traceurRuntime.superConstructor($Decorator).call(this, options);
   };
   var $Decorator = Decorator;
   ($traceurRuntime.createClass)(Decorator, {}, {}, Directive);
@@ -240,18 +237,29 @@ System.register("directive", [], function() {
     assert.argumentTypes(options, DirectiveOptions);
     this.selector = options.selector;
     this.bind = options.bind;
+    this.controllerAs = options.controllerAs;
   };
   ($traceurRuntime.createClass)(Directive, {}, {});
   var $__default = Directive;
   Object.defineProperty(Directive, "parameters", {get: function() {
       return [[DirectiveOptions]];
     }});
-  var DirectiveOptions = function DirectiveOptions() {};
-  ($traceurRuntime.createClass)(DirectiveOptions, {}, {assert: function(options) {
-      if (!options.selector) {
-        assert.fail('The selector field is missing from this directive.');
+  var DirectiveOptions = assert.define('DirectiveOptions', function(options) {
+    assert(options).is(assert.structure({selector: assert.string}));
+    if (options.bind) {
+      assert.type(options.bind, Object);
+    }
+    if (options.controllerAs) {
+      assert.type(options.controllerAs, assert.string);
+    }
+    for (var key in options) {
+      if (options.hasOwnProperty(key)) {
+        if (key !== 'selector' && key !== 'bind' && key !== 'controllerAs') {
+          assert.fail((key + " is not a valid directive field"));
+        }
       }
-    }});
+    }
+  });
   return {get default() {
       return $__default;
     }};
@@ -264,14 +272,8 @@ System.register("template", [], function() {
     return $traceurRuntime.require("template", path);
   }
   var Directive = System.get("directive").default;
-  var Template = function Template($__2) {
-    var $__3 = $__2,
-        selector = $__3.selector,
-        bind = $__3.bind;
-    $traceurRuntime.superConstructor($Template).call(this, {
-      selector: selector,
-      bind: bind
-    });
+  var Template = function Template(options) {
+    $traceurRuntime.superConstructor($Template).call(this, options);
   };
   var $Template = Template;
   ($traceurRuntime.createClass)(Template, {}, {}, Directive);
