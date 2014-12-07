@@ -3,7 +3,6 @@ import Component from './component';
 import NgElement from './core/ngElement'
 import $element from './ng1/element'
 
-export default
 class Angular2Adapter {
     constructor({moduleName, logLevel = 0}) {
         this.moduleName = moduleName;
@@ -103,6 +102,8 @@ class Angular2Adapter {
     //will be wrapped (inherited) by a function that injects $element and manually initialized the $element based
     //services before passing them in.
     getDirWithInjectableServices(dirType) {
+        var adapter = this;
+
         var retDirType = dirType;
 
         if (dirType.parameters) {
@@ -132,9 +133,9 @@ class Angular2Adapter {
                         var model;
                         if(param.type === NgElement) {
                             model = new NgElement(element);
-                        } else if (this.isDirClass(param.type)) {
-                            var dirName = this.lowerCaseFirstLetter(this.getFunctionName(param.type));
-                            model = $element.inheritedData(`$${dirName}Controller`);
+                        } else if (adapter.isDirClass(param.type)) {
+                            var dirName = adapter.lowerCaseFirstLetter(adapter.getFunctionName(param.type));
+                            model = element.inheritedData(`$${dirName}Controller`);
                         }
                         origDirParams.splice(param.pos, 0, model);
                     });
@@ -190,3 +191,5 @@ class Angular2Adapter {
     }
 
 }
+
+export default Angular2Adapter;

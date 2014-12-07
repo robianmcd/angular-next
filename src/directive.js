@@ -1,11 +1,14 @@
 //See here for detailed annotation implimentations https://github.com/angular/angular/tree/master/modules/core/src/annotations
-export default class Directive {
+class Directive {
     constructor(options: DirectiveOptions) {
         this.selector = options.selector;
         this.bind = options.bind;
         this.controllerAs = options.controllerAs;
     }
 }
+
+export default Directive;
+
 
 var DirectiveOptions = assert.define('DirectiveOptions', function(options) {
     //Required fields

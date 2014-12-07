@@ -2,6 +2,7 @@ import Component from './component';
 import TemplateConfig from './templateConfig';
 import NgElement from './core/ngElement';
 import ColorDec from './colorDec';
+import HelloComponent from './helloComponent';
 
 @Component({
     selector: 'child-component',
@@ -11,14 +12,16 @@ import ColorDec from './colorDec';
     }),
     controllerAs: 'ctrl'
 })
-export default class ChildComponent {
-    constructor(element: NgElement) {
+class ChildComponent {
+    constructor(element: NgElement, hello: HelloComponent) {
         element.domElement.style.color = 'blue';
 
-        this.test = this.getTestStr();
+        this.test = hello.test;
     }
 
     getTestStr() {
         return 'blue text';
     }
 }
+
+export default ChildComponent;

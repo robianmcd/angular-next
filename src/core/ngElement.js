@@ -1,6 +1,7 @@
-export default class NgElement {
+class NgElement {
     constructor($element) {
         this.domElement = $element[0];
     }
-
 }
+
+export default NgElement;

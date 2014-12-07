@@ -1,6 +1,6 @@
 import MyChildService from './myChildService';
 
-export default class MyService {
+class MyService {
     constructor(childService: MyChildService) {
         this.childService = childService;
     }
@@ -9,3 +9,5 @@ export default class MyService {
         return this.childService.getChildStr();
     }
 }
+
+export default MyService;

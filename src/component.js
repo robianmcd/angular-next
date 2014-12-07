@@ -2,7 +2,7 @@ import Directive from './directive';
 import TemplateConfig from './templateConfig';
 
 //Like a panel
-export default class Component extends Directive {
+class Component extends Directive {
     constructor(options: ComponentOptions) {
         this.componentServices = options.componentServices;
         this.template = options.template;
@@ -13,6 +13,7 @@ export default class Component extends Directive {
         super(options);
     }
 }
+export default Component;
 
 
 var ComponentOptions = assert.define('ComponentOptions', function(options) {

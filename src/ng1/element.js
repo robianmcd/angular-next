@@ -1,5 +1,7 @@
-export default class $element {
+class $element {
     constructor() {
 
     }
 }
+
+export default $element;

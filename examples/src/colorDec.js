@@ -5,8 +5,10 @@ import NgElement from './core/ngElement';
     selector: '[color]',
     bind: {color: 'color'}
 })
-export default class ColorDec {
+class ColorDec {
     constructor(el: NgElement) {
         el.domElement.style.color = this.color;
     }
 }
+
+export default ColorDec;

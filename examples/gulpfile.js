@@ -5,6 +5,8 @@ var gulp = require('gulp'),
 var appFiles = 'src/**/*.js';
 var vendorFiles = [
     'bower_components/traceur-runtime/traceur-runtime.js',
+    'bower_components/es6-module-loader/dist/es6-module-loader.src.js',
+    'vendor/extension-register.js',
     'bower_components/angular/angular.js',
     '../dist/angularNext.js'
 ];
@@ -17,8 +19,7 @@ gulp.task('vendor', function () {
 
 gulp.task('app', function () {
     return gulp.src(appFiles)
-        .pipe(traceur({experimental: true, modules: 'register', moduleName: true, annotations: true, types: true, typeAssertions: true, typeAssertionModule: "lib/assert"}))
-        .pipe(insert.append('System.get("app" + "");'))
+        .pipe(traceur({experimental: true, modules: 'instantiate', moduleName: true, annotations: true, types: true, typeAssertions: true, typeAssertionModule: "lib/assert"}))
         .pipe(gulp.dest('build'));
 });
 

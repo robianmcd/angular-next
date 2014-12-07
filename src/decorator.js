@@ -1,8 +1,10 @@
 import Directive from './directive';
 
 //Like ng-class, ng-show
-export default class Decorator extends Directive {
+class Decorator extends Directive {
     constructor(options) {
         super(options);
     }
 }
+
+export default Decorator;

@@ -14,8 +14,10 @@ import NgElement from './core/ngElement';
         directives: [ChildComponent]
     })
 })
-export default class HelloComponent {
+class HelloComponent {
     constructor(test: MyService) {
         this.test = test.getStr();
     }
 }
+
+export default HelloComponent;

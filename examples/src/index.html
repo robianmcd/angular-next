@@ -9,6 +9,11 @@
 <div hello-component></div>
 
 <script src="vendor/traceur-runtime.js"></script>
+<script src="vendor/es6-module-loader.src.js"></script>
+<script src="vendor/extension-register.js"></script>
+
+<script>register(System);</script>
+
 <script src="lib/assert.js"></script>
 <script src="vendor/angular.js"></script>
 <script src="vendor/angularNext.js"></script>
@@ -18,8 +23,19 @@
 <script src="myService.js"></script>
 <script src="myChildService.js"></script>
 <script src="colorDec.js"></script>
-
 <script src="app.js"></script>
+
+
+<script>
+    //System.baseURL = '/';
+
+    System.import('app').then(function (module) {
+        module.default();
+    }, function (e) {
+        console.error(e)
+    })
+</script>
+
 
 </body>
 </html>

@@ -7,9 +7,8 @@ var appFiles = 'src/**/*.js';
 
 gulp.task('build', function () {
     return gulp.src(appFiles)
-        .pipe(traceur({experimental: true, modules: 'register', moduleName: true, annotations: true, types: true, typeAssertions: true, typeAssertionModule: "lib/assert"}))
+        .pipe(traceur({experimental: true, modules: 'instantiate', moduleName: true, annotations: true, types: true, typeAssertions: true, typeAssertionModule: "lib/assert"}))
         .pipe(concat('angularNext.js'))
-        .pipe(insert.append('System.get("angularNext" + "");'))
         .pipe(gulp.dest('dist'))
 });
 

@@ -1,4 +1,4 @@
-export default class MyChildService {
+class MyChildService {
     constructor() {
 
     }
@@ -7,3 +7,5 @@ export default class MyChildService {
         return 'child service'
     }
 }
+
+export default MyChildService;
