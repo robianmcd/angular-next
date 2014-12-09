@@ -1,4 +1,4 @@
-System.register("angular2Adapter", ["lib/assert", "./directive", "./component", "./core/ngElement", "./ng1/element"], function($__export) {
+System.register("angular2Adapter", ["lib/assert", "./directive", "./component", "./core/ngElement", "./ng1/element", "./ng1/scope"], function($__export) {
   "use strict";
   var __moduleName = "angular2Adapter";
   function require(path) {
@@ -9,6 +9,7 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
       Component,
       NgElement,
       $element,
+      $scope,
       Angular2Adapter;
   return {
     setters: [function(m) {
@@ -21,6 +22,8 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
       NgElement = m.default;
     }, function(m) {
       $element = m.default;
+    }, function(m) {
+      $scope = m.default;
     }],
     execute: function() {
       Angular2Adapter = (function() {
@@ -57,7 +60,7 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
           },
           registerDirective: function(dir) {
             var $__0 = this;
-            dir = this.getDirWithInjectableServices(dir);
+            dir = this.wrapDir(dir);
             this.setupModelDi(dir);
             var dirAnno = this.getDirAnno(dir);
             if (dirAnno.componentServices) {
@@ -91,7 +94,7 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
             var ddo = {
               restrict: restrict,
               controller: dir,
-              controllerAs: dirAnno.controllerAs || 'ctrl',
+              controllerAs: dirAnno.controllerAs,
               scope: scope,
               bindToController: true
             };
@@ -102,30 +105,46 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
               return ddo;
             });
           },
-          getDirWithInjectableServices: function(dirType) {
+          wrapDir: function(dirType) {
             var adapter = this;
+            var dirAnno = this.getDirAnno(dirType);
             var retDirType = dirType;
             if (dirType.parameters) {
               var injectableServices = [];
-              var nonInjectableParams = [];
+              var uninjectableParams = [];
+              var requiresElement = false;
+              var requiresScope = false;
               for (var i = 0; i < dirType.parameters.length; i++) {
                 var curParamType = dirType.parameters[i][0];
                 if (curParamType === NgElement || this.isDirClass(curParamType)) {
-                  nonInjectableParams.push({
+                  uninjectableParams.push({
                     pos: i,
                     type: curParamType
                   });
+                  requiresElement = true;
                 } else {
                   injectableServices.push(curParamType);
                 }
               }
-              if (nonInjectableParams.length) {
-                retDirType = function(element) {
+              if (dirAnno.observe) {
+                requiresScope = true;
+              }
+              if (uninjectableParams.length || requiresElement || requiresScope) {
+                retDirType = function() {
                   for (var args = [],
-                      $__2 = 1; $__2 < arguments.length; $__2++)
-                    args[$__2 - 1] = arguments[$__2];
+                      $__2 = 0; $__2 < arguments.length; $__2++)
+                    args[$__2] = arguments[$__2];
+                  var $__0 = this;
+                  var element,
+                      scope;
+                  if (requiresScope) {
+                    scope = args.pop();
+                  }
+                  if (requiresElement) {
+                    element = args.pop();
+                  }
                   var origDirParams = angular.copy(args);
-                  nonInjectableParams.forEach((function(param) {
+                  uninjectableParams.forEach((function(param) {
                     var model;
                     if (param.type === NgElement) {
                       model = new NgElement(element);
@@ -135,13 +154,36 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
                     }
                     origDirParams.splice(param.pos, 0, model);
                   }));
+                  if (dirAnno.observe) {
+                    var $__6 = function(key) {
+                      if (dirAnno.observe.hasOwnProperty(key)) {
+                        var functionName = dirAnno.observe[key];
+                        scope.$watch((dirAnno.controllerAs + "." + key), (function(newValue, oldValue) {
+                          if ($__0[functionName]) {
+                            $__0[functionName](newValue, oldValue);
+                          } else {
+                            console.warn(("'" + key + "' has changed but observe function, '" + functionName + "' does not exist."));
+                          }
+                        }));
+                      }
+                    };
+                    for (var key in dirAnno.observe) {
+                      $__6(key);
+                    }
+                  }
                   dirType.apply(this, origDirParams);
                 };
                 retDirType.prototype = Object.create(dirType.prototype);
                 retDirType.annotations = dirType.annotations;
-                retDirType.parameters = $traceurRuntime.spread([[$element]], injectableServices.map((function(type) {
+                retDirType.parameters = injectableServices.map((function(type) {
                   return [type];
-                })));
+                }));
+                if (requiresElement) {
+                  retDirType.parameters.push([$element]);
+                }
+                if (requiresScope) {
+                  retDirType.parameters.push([$scope]);
+                }
               }
             }
             return retDirType;
@@ -300,7 +342,8 @@ System.register("directive", ["lib/assert"], function($__export) {
           assert.argumentTypes(options, DirectiveOptions);
           this.selector = options.selector;
           this.bind = options.bind;
-          this.controllerAs = options.controllerAs;
+          this.controllerAs = options.controllerAs || 'ctrl';
+          this.observe = options.observe;
         };
         return ($traceurRuntime.createClass)(Directive, {}, {});
       }());
@@ -316,9 +359,12 @@ System.register("directive", ["lib/assert"], function($__export) {
         if (options.controllerAs) {
           assert.type(options.controllerAs, assert.string);
         }
+        if (options.observe) {
+          assert.type(options.observe, Object);
+        }
         for (var key in options) {
           if (options.hasOwnProperty(key)) {
-            if (key !== 'selector' && key !== 'bind' && key !== 'controllerAs') {
+            if (key !== 'selector' && key !== 'bind' && key !== 'controllerAs' && key !== 'observe') {
               assert.fail((key + " is not a valid directive field"));
             }
           }
@@ -410,6 +456,25 @@ System.register("ng1/element", [], function($__export) {
         return ($traceurRuntime.createClass)($element, {}, {});
       }());
       $__export('default', $element);
+    }
+  };
+});
+
+System.register("ng1/scope", [], function($__export) {
+  "use strict";
+  var __moduleName = "ng1/scope";
+  function require(path) {
+    return $traceurRuntime.require("ng1/scope", path);
+  }
+  var $scope;
+  return {
+    setters: [],
+    execute: function() {
+      $scope = (function() {
+        var $scope = function $scope() {};
+        return ($traceurRuntime.createClass)($scope, {}, {});
+      }());
+      $__export('default', $scope);
     }
   };
 });

@@ -1,7 +1,8 @@
 import Directive from './directive';
 import Component from './component';
-import NgElement from './core/ngElement'
-import $element from './ng1/element'
+import NgElement from './core/ngElement';
+import $element from './ng1/element';
+import $scope from './ng1/scope';
 
 class Angular2Adapter {
     constructor({moduleName, logLevel = 0}) {
@@ -11,8 +12,8 @@ class Angular2Adapter {
         this.logLevel = logLevel;
     }
 
-    bootstrapComponent(rootComponent: Object) {
-        var rootComponentAnno: Component;
+    bootstrapComponent(rootComponent:Object) {
+        var rootComponentAnno:Component;
         rootComponentAnno = this.getDirAnno(rootComponent);
 
         var rootElement = document.querySelector(rootComponentAnno.selector);
@@ -36,7 +37,7 @@ class Angular2Adapter {
     }
 
     registerDirective(dir) {
-        dir = this.getDirWithInjectableServices(dir);
+        dir = this.wrapDir(dir);
         this.setupModelDi(dir);
 
         var dirAnno = this.getDirAnno(dir);
@@ -83,7 +84,7 @@ class Angular2Adapter {
         var ddo = {
             restrict: restrict,
             controller: dir,
-            controllerAs: dirAnno.controllerAs || 'ctrl',
+            controllerAs: dirAnno.controllerAs,
             scope: scope,
             bindToController: true
         };
@@ -101,8 +102,10 @@ class Angular2Adapter {
     //directly into the controller of a directive. If the directive passed in requires any of these services then it
     //will be wrapped (inherited) by a function that injects $element and manually initialized the $element based
     //services before passing them in.
-    getDirWithInjectableServices(dirType) {
+    wrapDir(dirType) {
         var adapter = this;
+
+        var dirAnno = this.getDirAnno(dirType);
 
         var retDirType = dirType;
 
@@ -110,28 +113,48 @@ class Angular2Adapter {
             var injectableServices = [];
 
             //e.g. {pos: 3, type: MyDir}
-            var nonInjectableParams = [];
-
+            var uninjectableParams = [];
+            var requiresElement = false;
+            var requiresScope = false;
 
             for (var i = 0; i < dirType.parameters.length; i++) {
                 var curParamType = dirType.parameters[i][0];
 
+                //TODO: should check if they are already injecting $element or $scope so we don't end up injecting it twice
+
                 if (curParamType === NgElement || this.isDirClass(curParamType)) {
-                    nonInjectableParams.push({pos: i, type: curParamType});
+                    uninjectableParams.push({pos: i, type: curParamType});
+                    requiresElement = true;
                 } else {
                     injectableServices.push(curParamType);
                 }
             }
 
+            if (dirAnno.observe) {
+                requiresScope = true;
+            }
 
-            if (nonInjectableParams.length) {
 
-                retDirType = function (element, ...args) {
+            //If the directive needs to be wrapped
+            if (uninjectableParams.length || requiresElement || requiresScope) {
+
+                retDirType = function (...args) {
+                    var element, scope;
+
+                    if (requiresScope) {
+                        scope = args.pop();
+                    }
+
+                    if (requiresElement) {
+                        element = args.pop();
+                    }
+
                     var origDirParams = angular.copy(args);
 
-                    nonInjectableParams.forEach((param) => {
+                    //Manually create each parameter that could not be injected
+                    uninjectableParams.forEach((param) => {
                         var model;
-                        if(param.type === NgElement) {
+                        if (param.type === NgElement) {
                             model = new NgElement(element);
                         } else if (adapter.isDirClass(param.type)) {
                             var dirName = adapter.lowerCaseFirstLetter(adapter.getFunctionName(param.type));
@@ -140,6 +163,23 @@ class Angular2Adapter {
                         origDirParams.splice(param.pos, 0, model);
                     });
 
+                    //Setup any watches specified in dirAnno.observe
+                    if (dirAnno.observe) {
+                        for (let key in dirAnno.observe) {
+                            if (dirAnno.observe.hasOwnProperty(key)) {
+                                let functionName = dirAnno.observe[key];
+
+                                scope.$watch(`${dirAnno.controllerAs}.${key}`, (newValue, oldValue) => {
+                                    if (this[functionName]) {
+                                        this[functionName](newValue, oldValue);
+                                    } else {
+                                        console.warn(`'${key}' has changed but observe function, '${functionName}' does not exist.`);
+                                    }
+                                });
+                            }
+                        }
+                    }
+
                     //Steal constructor
                     dirType.apply(this, origDirParams);
                 };
@@ -147,7 +187,14 @@ class Angular2Adapter {
                 //Inherit prototype
                 retDirType.prototype = Object.create(dirType.prototype);
                 retDirType.annotations = dirType.annotations;
-                retDirType.parameters = [[$element], ...injectableServices.map(type => [type])];
+                retDirType.parameters = injectableServices.map(type => [type]);
+
+                if (requiresElement) {
+                    retDirType.parameters.push([$element]);
+                }
+                if (requiresScope) {
+                    retDirType.parameters.push([$scope]);
+                }
             }
         }
 

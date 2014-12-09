@@ -3,11 +3,17 @@ import NgElement from './core/ngElement';
 
 @Decorator({
     selector: '[color]',
-    bind: {color: 'color'}
+    bind: {color: 'color'},
+    observe: {color: 'onColorChange'}
 })
 class ColorDec {
-    constructor(el: NgElement) {
-        el.domElement.style.color = this.color;
+    constructor(el:NgElement) {
+        this.element = el;
+        this.onColorChange(this.color);
+    }
+
+    onColorChange(newValue) {
+        this.element.domElement.style.color = newValue;
     }
 }
 

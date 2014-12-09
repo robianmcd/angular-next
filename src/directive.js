@@ -3,7 +3,8 @@ class Directive {
     constructor(options: DirectiveOptions) {
         this.selector = options.selector;
         this.bind = options.bind;
-        this.controllerAs = options.controllerAs;
+        this.controllerAs = options.controllerAs || 'ctrl';
+        this.observe = options.observe;
     }
 }
 
@@ -23,10 +24,13 @@ var DirectiveOptions = assert.define('DirectiveOptions', function(options) {
     if(options.controllerAs) {
         assert.type(options.controllerAs, assert.string);
     }
+    if(options.observe) {
+        assert.type(options.observe, Object);
+    }
 
     for(var key in options) {
         if (options.hasOwnProperty(key)) {
-            if(key !== 'selector' && key !== 'bind' && key !== 'controllerAs') {
+            if(key !== 'selector' && key !== 'bind' && key !== 'controllerAs' && key !== 'observe') {
                 assert.fail(`${key} is not a valid directive field`);
             }
         }
