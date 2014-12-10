@@ -1,4 +1,4 @@
-import Component from './component';
+import {Component} from './component';
 import TemplateConfig from './templateConfig';
 import NgElement from './core/ngElement';
 import ColorDec from './colorDec';

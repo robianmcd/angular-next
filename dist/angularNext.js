@@ -6,7 +6,9 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
   }
   var assert,
       Directive,
+      DirectiveClass,
       Component,
+      ComponentClass,
       NgElement,
       $element,
       $scope,
@@ -15,9 +17,11 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
     setters: [function(m) {
       assert = m.assert;
     }, function(m) {
-      Directive = m.default;
+      Directive = m.Directive;
+      DirectiveClass = m.DirectiveClass;
     }, function(m) {
-      Component = m.default;
+      Component = m.Component;
+      ComponentClass = m.ComponentClass;
     }, function(m) {
       NgElement = m.default;
     }, function(m) {
@@ -39,7 +43,7 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
         return ($traceurRuntime.createClass)(Angular2Adapter, {
           bootstrapComponent: function(rootComponent) {
             var $__0 = this;
-            assert.argumentTypes(rootComponent, Object);
+            assert.argumentTypes(rootComponent, ComponentClass);
             var rootComponentAnno;
             rootComponentAnno = this.getDirAnno(rootComponent);
             var rootElement = document.querySelector(rootComponentAnno.selector);
@@ -50,6 +54,7 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
           },
           registerDirectiveTree: function(dir) {
             var $__0 = this;
+            assert.argumentTypes(dir, DirectiveClass);
             var dirAnno = this.getDirAnno(dir);
             this.registerDirective(dir);
             if (dirAnno.template && dirAnno.template.directives) {
@@ -190,6 +195,7 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
           },
           setupModelDi: function(aClass) {
             var $__0 = this;
+            assert.argumentTypes(aClass, Object);
             if (aClass.parameters) {
               aClass.$inject = [];
               aClass.parameters.forEach((function(serviceType) {
@@ -207,6 +213,7 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
             return str.charAt(0).toLowerCase() + str.slice(1);
           },
           getFunctionName: function(func) {
+            assert.argumentTypes(func, Function);
             if (func.name) {
               return func.name;
             } else {
@@ -224,7 +231,25 @@ System.register("angular2Adapter", ["lib/assert", "./directive", "./component", 
         }, {});
       }());
       Object.defineProperty(Angular2Adapter.prototype.bootstrapComponent, "parameters", {get: function() {
+          return [[ComponentClass]];
+        }});
+      Object.defineProperty(Angular2Adapter.prototype.registerDirectiveTree, "parameters", {get: function() {
+          return [[DirectiveClass]];
+        }});
+      Object.defineProperty(Angular2Adapter.prototype.registerDirective, "parameters", {get: function() {
+          return [[DirectiveClass]];
+        }});
+      Object.defineProperty(Angular2Adapter.prototype.wrapDir, "parameters", {get: function() {
+          return [[DirectiveClass]];
+        }});
+      Object.defineProperty(Angular2Adapter.prototype.setupModelDi, "parameters", {get: function() {
           return [[Object]];
+        }});
+      Object.defineProperty(Angular2Adapter.prototype.getDirAnno, "parameters", {get: function() {
+          return [[DirectiveClass]];
+        }});
+      Object.defineProperty(Angular2Adapter.prototype.getFunctionName, "parameters", {get: function() {
+          return [[Function]];
         }});
       $__export('default', Angular2Adapter);
     }
@@ -264,12 +289,13 @@ System.register("component", ["lib/assert", "./directive", "./templateConfig"], 
       Directive,
       TemplateConfig,
       Component,
-      ComponentOptions;
+      ComponentOptions,
+      ComponentClass;
   return {
     setters: [function(m) {
       assert = m.assert;
     }, function(m) {
-      Directive = m.default;
+      Directive = m.Directive;
     }, function(m) {
       TemplateConfig = m.default;
     }],
@@ -288,37 +314,89 @@ System.register("component", ["lib/assert", "./directive", "./templateConfig"], 
       Object.defineProperty(Component, "parameters", {get: function() {
           return [[ComponentOptions]];
         }});
-      $__export('default', Component);
       ComponentOptions = assert.define('ComponentOptions', function(options) {
         assert(options).is(assert.structure({selector: assert.string}));
         if (options.componentServices) {
           assert(options.componentServices).is(assert.arrayOf(Object));
         }
       });
+      ComponentClass = assert.define('DirectiveClass', function(componentClass) {
+        assert.type(componentClass, Object);
+        var numDirAnnos;
+        var numComponentAnnos;
+        if (componentClass.annotations) {
+          numDirAnnos = componentClass.annotations.filter((function(anno) {
+            return anno instanceof Directive;
+          })).length;
+          numComponentAnnos = componentClass.annotations.filter((function(anno) {
+            return anno instanceof Component;
+          })).length;
+        } else {
+          numDirAnnos = 0;
+          numComponentAnnos = 0;
+        }
+        if (numComponentAnnos === 0) {
+          assert.fail('A ComponentClass must have a Component annotation');
+        }
+        if (numDirAnnos > 1) {
+          asssert.fail('You cannot have more than one Directive annotations on a class.');
+        }
+      });
+      $__export("Component", Component), $__export("ComponentOptions", ComponentOptions), $__export("ComponentClass", ComponentClass);
     }
   };
 });
 
-System.register("decorator", ["./directive"], function($__export) {
+System.register("decorator", ["lib/assert", "./directive"], function($__export) {
   "use strict";
   var __moduleName = "decorator";
   function require(path) {
     return $traceurRuntime.require("decorator", path);
   }
-  var Directive,
-      Decorator;
+  var assert,
+      Directive,
+      Decorator,
+      DecoratorClass;
   return {
     setters: [function(m) {
-      Directive = m.default;
+      assert = m.assert;
+    }, function(m) {
+      Directive = m.Directive;
     }],
     execute: function() {
       Decorator = (function($__super) {
         var Decorator = function Decorator(options) {
+          assert.argumentTypes(options, Object);
           $traceurRuntime.superConstructor(Decorator).call(this, options);
         };
         return ($traceurRuntime.createClass)(Decorator, {}, {}, $__super);
       }(Directive));
-      $__export('default', Decorator);
+      Object.defineProperty(Decorator, "parameters", {get: function() {
+          return [[Object]];
+        }});
+      DecoratorClass = assert.define('DecoratorClass', function(decoratorClass) {
+        assert.type(decoratorClass, Object);
+        var numDirAnnos;
+        var numComponentAnnos;
+        if (decoratorClass.annotations) {
+          numDirAnnos = decoratorClass.annotations.filter((function(anno) {
+            return anno instanceof Directive;
+          })).length;
+          numComponentAnnos = decoratorClass.annotations.filter((function(anno) {
+            return anno instanceof Decorator;
+          })).length;
+        } else {
+          numDirAnnos = 0;
+          numComponentAnnos = 0;
+        }
+        if (numComponentAnnos === 0) {
+          assert.fail('A DecoratorClass must have a Decorator annotation');
+        }
+        if (numDirAnnos > 1) {
+          asssert.fail('You cannot have more than one Directive annotations on a class.');
+        }
+      });
+      $__export("Decorator", Decorator), $__export("DecoratorClass", DecoratorClass);
     }
   };
 });
@@ -331,7 +409,8 @@ System.register("directive", ["lib/assert"], function($__export) {
   }
   var assert,
       Directive,
-      DirectiveOptions;
+      DirectiveOptions,
+      DirectiveClass;
   return {
     setters: [function(m) {
       assert = m.assert;
@@ -350,7 +429,6 @@ System.register("directive", ["lib/assert"], function($__export) {
       Object.defineProperty(Directive, "parameters", {get: function() {
           return [[DirectiveOptions]];
         }});
-      $__export('default', Directive);
       DirectiveOptions = assert.define('DirectiveOptions', function(options) {
         assert(options).is(assert.structure({selector: assert.string}));
         if (options.bind) {
@@ -370,6 +448,23 @@ System.register("directive", ["lib/assert"], function($__export) {
           }
         }
       });
+      DirectiveClass = assert.define('DirectiveClass', function(dirClass) {
+        assert.type(dirClass, Object);
+        var numDirAnnos;
+        if (dirClass.annotations) {
+          numDirAnnos = dirClass.annotations.filter((function(anno) {
+            return anno instanceof Directive;
+          })).length;
+        } else {
+          numDirAnnos = 0;
+        }
+        if (numDirAnnos === 0) {
+          assert.fail('A DirectiveClass must have a Directive annotation');
+        } else if (numDirAnnos > 1) {
+          asssert.fail('You cannot have more than one Directive annotations on a class.');
+        }
+      });
+      $__export("Directive", Directive), $__export("DirectiveOptions", DirectiveOptions), $__export("DirectiveClass", DirectiveClass);
     }
   };
 });
@@ -384,7 +479,7 @@ System.register("template", ["./directive"], function($__export) {
       Template;
   return {
     setters: [function(m) {
-      Directive = m.default;
+      Directive = m.Directive;
     }],
     execute: function() {
       Template = (function($__super) {

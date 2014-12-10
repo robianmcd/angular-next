@@ -1,5 +1,5 @@
-import Directive from './directive';
-import Component from './component';
+import {Directive, DirectiveClass} from './directive';
+import {Component, ComponentClass} from './component';
 import NgElement from './core/ngElement';
 import $element from './ng1/element';
 import $scope from './ng1/scope';
@@ -12,7 +12,7 @@ class Angular2Adapter {
         this.logLevel = logLevel;
     }
 
-    bootstrapComponent(rootComponent:Object) {
+    bootstrapComponent(rootComponent:ComponentClass) {
         var rootComponentAnno:Component;
         rootComponentAnno = this.getDirAnno(rootComponent);
 
@@ -24,7 +24,7 @@ class Angular2Adapter {
         });
     }
 
-    registerDirectiveTree(dir) {
+    registerDirectiveTree(dir:DirectiveClass) {
         var dirAnno = this.getDirAnno(dir);
 
         this.registerDirective(dir);
@@ -36,7 +36,7 @@ class Angular2Adapter {
         }
     }
 
-    registerDirective(dir) {
+    registerDirective(dir:DirectiveClass) {
         dir = this.wrapDir(dir);
         this.setupModelDi(dir);
 
@@ -102,7 +102,7 @@ class Angular2Adapter {
     //directly into the controller of a directive. If the directive passed in requires any of these services then it
     //will be wrapped (inherited) by a function that injects $element and manually initialized the $element based
     //services before passing them in.
-    wrapDir(dirType) {
+    wrapDir(dirType:DirectiveClass) {
         var adapter = this;
 
         var dirAnno = this.getDirAnno(dirType);
@@ -201,7 +201,7 @@ class Angular2Adapter {
         return retDirType;
     }
 
-    setupModelDi(aClass) {
+    setupModelDi(aClass:Object) {
         if (aClass.parameters) {
             aClass.$inject = [];
             aClass.parameters.forEach((serviceType) => {
@@ -210,7 +210,7 @@ class Angular2Adapter {
         }
     }
 
-    getDirAnno(directive) {
+    getDirAnno(directive:DirectiveClass) {
         var dirAnnos = directive.annotations.filter((annotation) => annotation instanceof Directive);
 
         return dirAnnos.length ? dirAnnos[0] : undefined;
@@ -220,7 +220,7 @@ class Angular2Adapter {
         return str.charAt(0).toLowerCase() + str.slice(1);
     }
 
-    getFunctionName(func) {
+    getFunctionName(func:Function) {
         if (func.name) {
             return func.name;
 

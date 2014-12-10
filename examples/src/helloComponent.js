@@ -1,4 +1,4 @@
-import Component from './component';
+import {Component} from './component';
 import ChildComponent from './childComponent';
 import MyService from './myService';
 import MyChildService from './myChildService';

@@ -13,7 +13,7 @@ index.html
 
     <script>
         System.import('app').then(function (app) {
-            app.default();
+            app.main();
         })
     </script>
 ```
@@ -21,7 +21,7 @@ index.html
 app.js
 ```javascript
 import bootstrap from './bootstrap';
-import Component from './component';
+import {Component} from './component';
 import TemplateConfig from './templateConfig';
 
 
@@ -37,7 +37,7 @@ class MyComponent {
     }
 }
 
-export default function main() {
+export function main() {
     var app = angular.module('myApp', []);
 
     bootstrap(MyComponent, {moduleName: 'myApp'});

@@ -1,4 +1,4 @@
-import Directive from './directive';
+import {Directive} from './directive';
 
 //A transclude directive like ng-if or ng-repeat
 class Template extends Directive {
