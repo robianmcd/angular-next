@@ -13,8 +13,9 @@
   ],
   "license": "Apache License, Version 2.0",
   "ignore": [
-    "./*",
-    "!./dist"
+    "*",
+    "!dist/",
+    "!dist/*"
   ],
   "repository": {
     "type": "git",
