@@ -6,6 +6,7 @@
     "gulp": "~3.8.10",
     "gulp-concat": "~2.4.1",
     "gulp-insert": "~0.4.0",
-    "gulp-traceur": "~0.14.1"
+    "gulp-traceur": "~0.14.1",
+    "gulp-if": "~1.2.5"
   }
 }

@@ -1,4 +1,4 @@
-System.register("angular2Adapter", ["lib/assert", "./directive", "./component", "./core/ngElement", "./ng1/element", "./ng1/scope"], function($__export) {
+System.register("angular2Adapter", ["assert", "./directive", "./component", "./core/ngElement", "./ng1/element", "./ng1/scope"], function($__export) {
   "use strict";
   var __moduleName = "angular2Adapter";
   function require(path) {
@@ -279,7 +279,7 @@ System.register("bootstrap", ["./angular2Adapter"], function($__export) {
   };
 });
 
-System.register("component", ["lib/assert", "./directive", "./templateConfig"], function($__export) {
+System.register("component", ["assert", "./directive", "./templateConfig"], function($__export) {
   "use strict";
   var __moduleName = "component";
   function require(path) {
@@ -347,7 +347,7 @@ System.register("component", ["lib/assert", "./directive", "./templateConfig"], 
   };
 });
 
-System.register("decorator", ["lib/assert", "./directive"], function($__export) {
+System.register("decorator", ["assert", "./directive"], function($__export) {
   "use strict";
   var __moduleName = "decorator";
   function require(path) {
@@ -401,7 +401,7 @@ System.register("decorator", ["lib/assert", "./directive"], function($__export) 
   };
 });
 
-System.register("directive", ["lib/assert"], function($__export) {
+System.register("directive", ["assert"], function($__export) {
   "use strict";
   var __moduleName = "directive";
   function require(path) {

@@ -22,6 +22,7 @@
     "url": "https://github.com/robianmcd/angular-next.git"
   },
   "dependencies": {
-
+    "traceur-runtime": "0.0.74",
+    "es6-module-loader": "~0.10.0"
   }
 }

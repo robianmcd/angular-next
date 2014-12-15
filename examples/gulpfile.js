@@ -1,14 +1,10 @@
 var gulp = require('gulp'),
-    traceur = require('gulp-traceur'),
-    insert = require('gulp-insert');
+    traceur = require('gulp-traceur');
 
 var appFiles = 'src/**/*.js';
 var vendorFiles = [
-    'bower_components/traceur-runtime/traceur-runtime.js',
-    'bower_components/es6-module-loader/dist/es6-module-loader.src.js',
-    'vendor/extension-register.js',
     'bower_components/angular/angular.js',
-    '../dist/angularNext.js'
+    '../dist/angularNext-standalone.js'
 ];
 var indexFile = 'src/index.html';
 
@@ -19,7 +15,7 @@ gulp.task('vendor', function () {
 
 gulp.task('app', function () {
     return gulp.src(appFiles)
-        .pipe(traceur({experimental: true, modules: 'instantiate', moduleName: true, annotations: true, types: true, typeAssertions: true, typeAssertionModule: "lib/assert"}))
+        .pipe(traceur({experimental: true, modules: 'instantiate', moduleName: true, annotations: true, types: true, typeAssertions: true, typeAssertionModule: "assert"}))
         .pipe(gulp.dest('build'));
 });
 

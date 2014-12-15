@@ -6,35 +6,29 @@
 </head>
 <body>
 
-<div hello-component></div>
+    <div hello-component></div>
 
-<script src="vendor/traceur-runtime.js"></script>
-<script src="vendor/es6-module-loader.src.js"></script>
-<script src="vendor/extension-register.js"></script>
+    <script src="vendor/angularNext-standalone.js"></script>
 
-<script>register(System);</script>
+    <script src="vendor/angular.js"></script>
 
-<script src="lib/assert.js"></script>
-<script src="vendor/angular.js"></script>
-<script src="vendor/angularNext.js"></script>
-
-<script src="childComponent.js"></script>
-<script src="helloComponent.js"></script>
-<script src="myService.js"></script>
-<script src="myChildService.js"></script>
-<script src="colorDec.js"></script>
-<script src="app.js"></script>
+    <script src="childComponent.js"></script>
+    <script src="helloComponent.js"></script>
+    <script src="myService.js"></script>
+    <script src="myChildService.js"></script>
+    <script src="colorDec.js"></script>
+    <script src="app.js"></script>
 
 
-<script>
-    //System.baseURL = '/';
+    <script>
+        //System.baseURL = '/';
 
-    System.import('app').then(function (module) {
-        module.main();
-    }, function (e) {
-        console.error(e)
-    })
-</script>
+        System.import('app').then(function (module) {
+            module.main();
+        }, function (e) {
+            console.error(e)
+        })
+    </script>
 
 
 </body>
