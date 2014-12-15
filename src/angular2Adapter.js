@@ -3,6 +3,7 @@ import {Component, ComponentClass} from './component';
 import NgElement from './core/ngElement';
 import $element from './ng1/element';
 import $scope from './ng1/scope';
+import InjectNgOne from './injectNgOne';
 
 class Angular2Adapter {
     constructor({moduleName, logLevel = 0}) {
@@ -204,10 +205,29 @@ class Angular2Adapter {
     setupModelDi(aClass:Object) {
         if (aClass.parameters) {
             aClass.$inject = [];
-            aClass.parameters.forEach((serviceType) => {
-                aClass.$inject.push(this.lowerCaseFirstLetter(this.getFunctionName(serviceType[0])));
+            aClass.parameters.forEach((paramAnnotations) => {
+                aClass.$inject.push(this.getInjectStrFromParamAnnotations(paramAnnotations));
             });
         }
+    }
+
+    getInjectStrFromParamAnnotations(paramAnnotations) {
+        for (var i = 0; i < paramAnnotations.length; i++) {
+            var paramAnno = paramAnnotations[i];
+
+            if (paramAnno instanceof InjectNgOne) {
+                return paramAnno.typeStr;
+            } else if (paramAnno instanceof Function) {
+                return this.lowerCaseFirstLetter(this.getFunctionName(paramAnno));
+            }
+        }
+
+        if(paramAnnotations.length === 0) {
+            throw `Could not inject parameter. You must either specify its type or annotate it with @InjectNgOne('...').`;
+        } else {
+            throw `Could not determine how to inject parameter with annotations: ${paramAnnotations}`;
+        }
+
     }
 
     getDirAnno(directive:DirectiveClass) {
