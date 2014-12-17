@@ -42,9 +42,20 @@ export function main() {
 
     bootstrap(MyComponent, {moduleName: 'myApp'});
 }
-
 ```
 
+## Demos
+
+**[Hello World](https://github.com/robianmcd/angular-next/tree/master/examples/hello-world)**
+* This is a bare bones, self contained example that uses Angular Next to create a directive that says "Hello World".
+
+**[Hello World](https://github.com/robianmcd/angular-next/tree/master/examples/color-slider)**
+* TODO: create this demo
+
+## Get Angular Next
+Angular Next distributes two files
+  * angularNext.js -
+  * AngularNext-standalone.js -
 
 ## Preparation
 There is lots you can do to start making your Angular 1 app more Angular 2 friendly.
