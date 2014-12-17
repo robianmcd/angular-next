@@ -1,0 +1,10 @@
+{
+  "name": "angularNextHelloWorld",
+  "version": "1.0.0",
+  "dependencies": {
+    "traceur": "0.0.74"
+  },
+  "scripts": {
+    "build": "traceur --dir src build --modules=instantiate --moduleName=+ --annotations=true"
+  }
+}

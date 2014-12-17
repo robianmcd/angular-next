@@ -1,4 +1,4 @@
-System.register("angular2Adapter", ["assert", "./directive", "./component", "./core/ngElement", "./ng1/element", "./ng1/scope"], function($__export) {
+System.register("angular2Adapter", ["assert", "./directive", "./component", "./core/ngElement", "./ng1/element", "./ng1/scope", "./injectNgOne"], function($__export) {
   "use strict";
   var __moduleName = "angular2Adapter";
   function require(path) {
@@ -12,6 +12,7 @@ System.register("angular2Adapter", ["assert", "./directive", "./component", "./c
       NgElement,
       $element,
       $scope,
+      InjectNgOne,
       Angular2Adapter;
   return {
     setters: [function(m) {
@@ -28,6 +29,8 @@ System.register("angular2Adapter", ["assert", "./directive", "./component", "./c
       $element = m.default;
     }, function(m) {
       $scope = m.default;
+    }, function(m) {
+      InjectNgOne = m.default;
     }],
     execute: function() {
       Angular2Adapter = (function() {
@@ -198,9 +201,24 @@ System.register("angular2Adapter", ["assert", "./directive", "./component", "./c
             assert.argumentTypes(aClass, Object);
             if (aClass.parameters) {
               aClass.$inject = [];
-              aClass.parameters.forEach((function(serviceType) {
-                aClass.$inject.push($__0.lowerCaseFirstLetter($__0.getFunctionName(serviceType[0])));
+              aClass.parameters.forEach((function(paramAnnotations) {
+                aClass.$inject.push($__0.getInjectStrFromParamAnnotations(paramAnnotations));
               }));
+            }
+          },
+          getInjectStrFromParamAnnotations: function(paramAnnotations) {
+            for (var i = 0; i < paramAnnotations.length; i++) {
+              var paramAnno = paramAnnotations[i];
+              if (paramAnno instanceof InjectNgOne) {
+                return paramAnno.typeStr;
+              } else if (paramAnno instanceof Function) {
+                return this.lowerCaseFirstLetter(this.getFunctionName(paramAnno));
+              }
+            }
+            if (paramAnnotations.length === 0) {
+              throw "Could not inject parameter. You must either specify its type or annotate it with @InjectNgOne('...').";
+            } else {
+              throw ("Could not determine how to inject parameter with annotations: " + paramAnnotations);
             }
           },
           getDirAnno: function(directive) {
@@ -465,6 +483,34 @@ System.register("directive", ["assert"], function($__export) {
         }
       });
       $__export("Directive", Directive), $__export("DirectiveOptions", DirectiveOptions), $__export("DirectiveClass", DirectiveClass);
+    }
+  };
+});
+
+System.register("injectNgOne", ["assert"], function($__export) {
+  "use strict";
+  var __moduleName = "injectNgOne";
+  function require(path) {
+    return $traceurRuntime.require("injectNgOne", path);
+  }
+  var assert,
+      InjectNgOne;
+  return {
+    setters: [function(m) {
+      assert = m.assert;
+    }],
+    execute: function() {
+      InjectNgOne = (function() {
+        var InjectNgOne = function InjectNgOne(typeStr) {
+          assert.argumentTypes(typeStr, assert.string);
+          this.typeStr = typeStr;
+        };
+        return ($traceurRuntime.createClass)(InjectNgOne, {}, {});
+      }());
+      Object.defineProperty(InjectNgOne, "parameters", {get: function() {
+          return [[assert.string]];
+        }});
+      $__export('default', InjectNgOne);
     }
   };
 });

@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 var appFiles = 'src/**/*.js';
 var vendorFiles = [
     'bower_components/angular/angular.js',
-    '../dist/angularNext-standalone.js'
+    '../../dist/angularNext-standalone.js'
 ];
 var indexFile = 'src/index.html';
 

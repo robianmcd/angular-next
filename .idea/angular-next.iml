@@ -2,10 +2,12 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/examples/bower_components" />
-      <excludeFolder url="file://$MODULE_DIR$/examples/build" />
-      <excludeFolder url="file://$MODULE_DIR$/examples/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/bower_components" />
+      <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/build" />
+      <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/examples/hello-world/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/node_modules" />
     </content>
     <orderEntry type="inheritedJdk" />
