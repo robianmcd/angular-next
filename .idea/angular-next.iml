@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/build" />
       <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/examples/hello-world/build" />
       <excludeFolder url="file://$MODULE_DIR$/examples/hello-world/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/node_modules" />
     </content>
@@ -14,5 +15,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="angular-next node_modules" level="project" />
     <orderEntry type="library" name="angular" level="application" />
+    <orderEntry type="library" name="angularNext-standalone" level="application" />
   </component>
 </module>

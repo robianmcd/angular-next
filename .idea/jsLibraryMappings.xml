@@ -2,6 +2,6 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{angular-next node_modules}" />
-    <file url="PROJECT" libraries="{angular}" />
+    <file url="PROJECT" libraries="{angular, angularNext-standalone}" />
   </component>
 </project>
