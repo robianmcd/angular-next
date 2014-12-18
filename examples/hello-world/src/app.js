@@ -16,7 +16,7 @@ class HelloComponent {
 }
 
 export function main() {
-    var app = angular.module('myApp', []);
+    angular.module('myApp', []);
 
     bootstrap(HelloComponent, {moduleName: 'myApp'});
 }

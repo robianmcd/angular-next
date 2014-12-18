@@ -5,7 +5,7 @@ System.register(["bootstrap", "component", "templateConfig"], function($__export
       TemplateConfig,
       HelloComponent;
   function main() {
-    var app = angular.module('myApp', []);
+    angular.module('myApp', []);
     bootstrap(HelloComponent, {moduleName: 'myApp'});
   }
   $__export("main", main);
