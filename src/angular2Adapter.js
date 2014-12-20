@@ -90,8 +90,12 @@ class Angular2Adapter {
             bindToController: true
         };
 
-        if (dirAnno.template && dirAnno.template.inline) {
-            ddo.template = dirAnno.template.inline;
+        if(dirAnno.template) {
+            if(dirAnno.template.inline) {
+                ddo.template = dirAnno.template.inline;
+            } else if (dirAnno.template.url) {
+                ddo.templateUrl = dirAnno.template.url;
+            }
         }
 
         this.app.directive(camelDirectiveName, function () {

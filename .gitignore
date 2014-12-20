@@ -1,5 +1,8 @@
-/examples/feature-sandbox/build/
 node_modules/
 /.idea/workspace.xml
 /bower_components
+
+/examples/feature-sandbox/build/
 /examples/feature-sandbox/bower_components
+
+/examples/color-slider/bower_components

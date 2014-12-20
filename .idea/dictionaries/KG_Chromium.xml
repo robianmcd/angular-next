@@ -2,6 +2,7 @@
   <dictionary name="KG-Chromium">
     <words>
       <w>backport</w>
+      <w>livereload</w>
     </words>
   </dictionary>
 </component>

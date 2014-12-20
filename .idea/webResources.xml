@@ -6,6 +6,7 @@
         <entryData>
           <resourceRoots>
             <path value="file://$PROJECT_DIR$/examples/build" />
+            <path value="file://$PROJECT_DIR$/examples/color-slider/build" />
           </resourceRoots>
         </entryData>
       </entry>

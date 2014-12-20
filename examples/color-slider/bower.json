@@ -1,0 +1,9 @@
+{
+  "name": "angularNextColorSlider",
+  "version": "1.0.0",
+  "dependencies": {
+    "angular": "1.3.8",
+    "angular-next": "0.0.0",
+    "angular-material": "~0.6.1"
+  }
+}

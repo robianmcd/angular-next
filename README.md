@@ -55,8 +55,8 @@ export function main() {
 
 ## Get Angular Next
 Angular Next distributes two files
-  * angularNext-standalone.js - Contains the Angular Next library along with all of its dependencies. This includes [traceur-runtime](https://github.com/jmcriffey/bower-traceur-runtime), [es6-module-loader](https://github.com/ModuleLoader/es6-module-loader), [the register extension for systemjs](https://github.com/systemjs/systemjs/blob/master/lib/extension-register.js), and [assert.js](http://angular.github.io/assert/)
-  * angularNext.js - Just the Angular Next library. If you use this you'll need to manually include all of the dependencies.
+  * **angularNext-standalone.js** - Contains the Angular Next library along with all of its dependencies. This includes [traceur-runtime](https://github.com/jmcriffey/bower-traceur-runtime), [es6-module-loader](https://github.com/ModuleLoader/es6-module-loader), [the register extension for systemjs](https://github.com/systemjs/systemjs/blob/master/lib/extension-register.js), and [assert.js](http://angular.github.io/assert/)
+  * **angularNext.js** - Just the Angular Next library. If you use this you'll need to manually include all of the dependencies.
 
 You can get Angular Next through bower
 

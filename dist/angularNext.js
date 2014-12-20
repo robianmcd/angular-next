@@ -106,8 +106,12 @@ System.register("angular2Adapter", ["assert", "./directive", "./component", "./c
               scope: scope,
               bindToController: true
             };
-            if (dirAnno.template && dirAnno.template.inline) {
-              ddo.template = dirAnno.template.inline;
+            if (dirAnno.template) {
+              if (dirAnno.template.inline) {
+                ddo.template = dirAnno.template.inline;
+              } else if (dirAnno.template.url) {
+                ddo.templateUrl = dirAnno.template.url;
+              }
             }
             this.app.directive(camelDirectiveName, function() {
               return ddo;
@@ -552,6 +556,7 @@ System.register("templateConfig", [], function($__export) {
       TemplateConfig = (function() {
         var TemplateConfig = function TemplateConfig(options) {
           this.inline = options.inline;
+          this.url = options.url;
           this.directives = options.directives;
         };
         return ($traceurRuntime.createClass)(TemplateConfig, {}, {});
