@@ -1,8 +1,8 @@
-System.register("ng2ColorSettings", ["assert", "component", "templateConfig", "backgroundColor", "colorUtil", "baseComponent", "injectNgOne"], function($__export) {
+System.register("components/colorSettings/ng2ColorSettings", ["assert", "component", "templateConfig", "decorators/backgroundColor", "services/colorUtil", "components/base/baseComponent", "injectNgOne"], function($__export) {
   "use strict";
-  var __moduleName = "ng2ColorSettings";
+  var __moduleName = "components/colorSettings/ng2ColorSettings";
   function require(path) {
-    return $traceurRuntime.require("ng2ColorSettings", path);
+    return $traceurRuntime.require("components/colorSettings/ng2ColorSettings", path);
   }
   var assert,
       Component,
@@ -52,7 +52,7 @@ System.register("ng2ColorSettings", ["assert", "component", "templateConfig", "b
           return [new Component({
             selector: 'ng2-color-settings',
             template: new TemplateConfig({
-              url: 'colorSettings.html',
+              url: 'components/colorSettings/colorSettings.html',
               directives: []
             })
           })];

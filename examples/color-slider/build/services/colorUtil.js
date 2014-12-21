@@ -1,8 +1,8 @@
-System.register("colorUtil", [], function($__export) {
+System.register("services/colorUtil", [], function($__export) {
   "use strict";
-  var __moduleName = "colorUtil";
+  var __moduleName = "services/colorUtil";
   function require(path) {
-    return $traceurRuntime.require("colorUtil", path);
+    return $traceurRuntime.require("services/colorUtil", path);
   }
   var ColorUtil;
   return {

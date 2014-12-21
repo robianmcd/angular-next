@@ -1,8 +1,6 @@
 import bootstrap from 'bootstrap';
-import BaseComponent from 'baseComponent';
+import BaseComponent from 'components/base/baseComponent';
 
 export function main() {
-    angular.module('colorSlider', ['ngMaterial']);
-
     bootstrap(BaseComponent, {moduleName: 'colorSlider'});
 }

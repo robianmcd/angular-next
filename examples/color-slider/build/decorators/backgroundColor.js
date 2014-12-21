@@ -1,8 +1,8 @@
-System.register("backgroundColor", ["assert", "./decorator", "./core/ngElement"], function($__export) {
+System.register("decorators/backgroundColor", ["assert", "decorator", "core/ngElement"], function($__export) {
   "use strict";
-  var __moduleName = "backgroundColor";
+  var __moduleName = "decorators/backgroundColor";
   function require(path) {
-    return $traceurRuntime.require("backgroundColor", path);
+    return $traceurRuntime.require("decorators/backgroundColor", path);
   }
   var assert,
       Decorator,

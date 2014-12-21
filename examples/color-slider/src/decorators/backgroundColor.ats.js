@@ -1,5 +1,5 @@
-import {Decorator} from './decorator';
-import NgElement from './core/ngElement';
+import {Decorator} from 'decorator';
+import NgElement from 'core/ngElement';
 
 @Decorator({
     selector: '[background-color]',

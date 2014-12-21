@@ -1,8 +1,8 @@
-System.register("baseComponent", ["component", "templateConfig", "backgroundColor", "colorUtil", "ng2ColorSettings"], function($__export) {
+System.register("components/base/baseComponent", ["component", "templateConfig", "decorators/backgroundColor", "services/colorUtil", "components/colorSettings/ng2ColorSettings"], function($__export) {
   "use strict";
-  var __moduleName = "baseComponent";
+  var __moduleName = "components/base/baseComponent";
   function require(path) {
-    return $traceurRuntime.require("baseComponent", path);
+    return $traceurRuntime.require("components/base/baseComponent", path);
   }
   var Component,
       TemplateConfig,
@@ -36,7 +36,7 @@ System.register("baseComponent", ["component", "templateConfig", "backgroundColo
             selector: 'base-component',
             componentServices: [ColorUtil],
             template: new TemplateConfig({
-              url: 'base.html',
+              url: 'components/base/baseComponent.html',
               directives: [BackgroundColor, Ng2ColorSettings]
             })
           })];

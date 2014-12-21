@@ -1,6 +1,9 @@
 var gulp = require('gulp'),
     traceur = require('gulp-traceur'),
-    connect = require('gulp-connect');
+    connect = require('gulp-connect'),
+    gulpIf = require('gulp-if'),
+    rename = require('gulp-rename'),
+    lazypipe = require('lazypipe');
 
 var vendorFiles = [
     'bower_components/angular-next/dist/angularNext-standalone.js',
@@ -24,8 +27,23 @@ gulp.task('html', function () {
 });
 
 gulp.task('js', function () {
+    var buildAtScript = lazypipe()
+        .pipe(rename, function (path) {
+            //remove .ats from the filename
+            path.basename = path.basename.substring(0, path.basename.length - 4);
+        })
+        .pipe(traceur, {
+            modules: 'instantiate',
+            moduleName: true,
+            annotations: true,
+            types: true,
+            typeAssertions: true,
+            typeAssertionModule: 'assert'
+        });
+
+
     gulp.src('src/**/*.js')
-        .pipe(traceur({modules: 'instantiate', moduleName: true, annotations: true, types:true, typeAssertions: true, typeAssertionModule: 'assert'}))
+        .pipe(gulpIf(/\.ats\.js$/, buildAtScript()))
         .pipe(gulp.dest('build'))
         .pipe(connect.reload());
 });
