@@ -1,1 +1,20 @@
-<div>Base component</div>
+<div layout="row" layout-margin background-color="ctrl.backgroundColor">
+    <div flex layout="column">
+        <h1 style="margin-top:0;">Angular Next - Color Slider</h1>
+        Base component
+    </div>
+
+    <div flex>
+        <md-tabs>
+            <md-tab label="ng2">
+
+                <ng2-color-settings></ng2-color-settings>
+
+            </md-tab>
+            <md-tab label="ng1">
+                one
+                <md-button class="md-raised md-primary">Set Parent Color</md-button>
+            </md-tab>
+        </md-tabs>
+    </div>
+</div>

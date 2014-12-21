@@ -1,0 +1,22 @@
+<div layout="column" layout-padding style="background-color: #eee; padding:10px">
+    <div layout>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, repellat.
+    </div>
+    <div layout="row" layout-align="start center">
+        <h3>Preview:</h3>
+
+        <div style="width:30px; height:30px;" background-color="ctrl.hueToHash(ctrl.hue)"></div>
+    </div>
+    <div layout layout-align="space-between center">
+        <div flex="10">
+            Hue
+        </div>
+        <md-slider flex="65" min="0" max="100" ng-model="ctrl.hue"></md-slider>
+        <div flex="20" layout>
+            <input type="number" ng-model="ctrl.hue">
+        </div>
+    </div>
+    <div layout layout-align="center center">
+        <md-button ng-click="ctrl.setParentColor()" class="md-raised md-primary" background-color="ctrl.hueToHash(ctrl.hue)">Set Parent Color</md-button>
+    </div>
+</div>

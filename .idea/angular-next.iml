@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/examples/color-slider/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/examples/color-slider/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/build" />

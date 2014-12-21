@@ -50,8 +50,8 @@ export function main() {
 * A working demo of the hello world example shown above.
 
 **[Color Slider](https://github.com/robianmcd/angular-next/tree/master/examples/color-slider)**
-* TODO: create this demo
-* When finished this should demonstrate usage of: components, decorators, services, bootstrapping, selector, bind, observe, NgElement, injecting parent directives, injecting Angular 1 services, gulp, Traceur, etc.
+* TODO: finish this demo
+* Demonstrates usage of: components, decorators, services, bootstrapping, selector, bind, observe, NgElement, injecting parent directives, injecting Angular 1 services, gulp, Traceur, etc.
 
 ## Get Angular Next
 Angular Next distributes two files

@@ -1,21 +1,8 @@
 import bootstrap from 'bootstrap';
-import {Component} from 'component';
-import TemplateConfig from 'templateConfig';
-
-@Component({
-    selector: 'base-component',
-    template: new TemplateConfig({
-        url: 'base.html'
-    })
-})
-class BaseComponent {
-    constructor() {
-
-    }
-}
+import BaseComponent from 'baseComponent';
 
 export function main() {
-    angular.module('colorSlider', []);
+    angular.module('colorSlider', ['ngMaterial']);
 
     bootstrap(BaseComponent, {moduleName: 'colorSlider'});
 }
