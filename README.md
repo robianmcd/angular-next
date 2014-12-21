@@ -46,10 +46,10 @@ export function main() {
 
 ## Demos
 
-**[Hello World](https://github.com/robianmcd/angular-next/tree/master/examples/hello-world)**
+**[Hello World](https://github.com/robianmcd/angular-next/tree/gh-pages/examples/hello-world)**
 * A working demo of the hello world example shown above.
 
-**[Color Slider](https://github.com/robianmcd/angular-next/tree/master/examples/color-slider)**
+**[Color Slider](https://github.com/robianmcd/angular-next/tree/gh-pages/examples/color-slider)**
 * TODO: finish this demo
 * Demonstrates usage of: components, decorators, services, bootstrapping, selector, bind, observe, NgElement, injecting parent directives, injecting Angular 1 services, gulp, Traceur, etc.
 
