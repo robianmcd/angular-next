@@ -1,0 +1,17 @@
+.container {
+    width: 550px;
+    margin: 50px auto;
+    border: 2px solid #777;
+}
+
+.title {
+    text-align: center;
+}
+
+.content {
+    padding: 10px;
+}
+
+p {
+    margin-top: 0;
+}

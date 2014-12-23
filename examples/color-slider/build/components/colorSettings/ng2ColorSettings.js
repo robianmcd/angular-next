@@ -39,7 +39,7 @@ System.register("components/colorSettings/ng2ColorSettings", ["assert", "compone
         };
         return ($traceurRuntime.createClass)(Ng2ColorSettings, {
           hueToHash: function(hue) {
-            return this.colorUtil.hslToHash(hue / 100, 0.7, 0.5);
+            return this.colorUtil.hslToHash(hue / 100, 0.8, 0.5);
           },
           setParentColor: function() {
             var hash = this.hueToHash(this.hue);

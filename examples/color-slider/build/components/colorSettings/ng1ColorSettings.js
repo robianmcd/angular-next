@@ -22,7 +22,7 @@
     Ng1ColorSettingsCtrl.$inject = ['colorUtil', '$log'];
 
     Ng1ColorSettingsCtrl.prototype.hueToHash = function(hue) {
-        return this.colorUtil.hslToHash(hue / 100, 0.7, 0.5);
+        return this.colorUtil.hslToHash(hue / 100, 0.7, 0.4);
     };
 
     Ng1ColorSettingsCtrl.prototype.setParentColor = function() {

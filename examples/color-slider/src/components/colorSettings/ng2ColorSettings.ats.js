@@ -25,7 +25,7 @@ class Ng2ColorSettings {
     }
 
     hueToHash(hue) {
-        return this.colorUtil.hslToHash(hue / 100, 0.7, 0.5);
+        return this.colorUtil.hslToHash(hue / 100, 0.8, 0.5);
     }
 
     setParentColor() {

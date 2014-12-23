@@ -17,7 +17,7 @@ var vendorFiles = [
 var cssFiles = [
     'bower_components/angular-material/angular-material.css',
     'bower_components/angular-material/themes/blue-grey-theme.css',
-    'src/**/*.css'
+    'src/css/**/*.css'
 ];
 
 gulp.task('html', function () {
@@ -67,4 +67,5 @@ gulp.task('default', ['js', 'html', 'css', 'vendor'], function () {
 
     gulp.watch(['src/**/*.html'], ['html']);
     gulp.watch(['src/**/*.js'], ['js']);
+    gulp.watch([cssFiles], ['css']);
 });

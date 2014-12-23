@@ -1,17 +1,29 @@
-<div layout="row" layout-margin background-color="ctrl.backgroundColor">
-    <div flex layout="column">
-        <h1 style="margin-top:0;">Angular Next - Color Slider</h1>
-        Base component
-    </div>
-
-    <div flex>
-        <md-tabs>
-            <md-tab label="ng2">
-                <ng2-color-settings></ng2-color-settings>
-            </md-tab>
-            <md-tab label="ng1">
-                <ng1-color-settings></ng1-color-settings>
-            </md-tab>
-        </md-tabs>
+<div class="container">
+    <md-toolbar>
+        <h2 class="title">Angular Next - Color Slider</h2>
+    </md-toolbar>
+    <div background-color="ctrl.backgroundColor" layout="column" class="content">
+        <div flex layout="column">
+            <p>
+                This app is built using Angular Next and Angular Material. The two tabs below are
+                identical except that the one on the left is implemented with a standard
+                <a href="https://github.com/robianmcd/angular-next/blob/gh-pages/examples/color-slider/src/components/colorSettings/ng1ColorSettings.js">Angular 1 directive</a>
+                while the one on the right is implemented with an
+                <a href="https://github.com/robianmcd/angular-next/blob/gh-pages/examples/color-slider/src/components/colorSettings/ng2ColorSettings.ats.js">Angular 2 style component</a>.
+            </p>
+            <p>
+                <a href="https://github.com/robianmcd/angular-next/tree/gh-pages/examples/color-slider">Back to code</a>
+            </p>
+        </div>
+        <div flex>
+            <md-tabs>
+                <md-tab label="settings - ng1">
+                    <ng1-color-settings></ng1-color-settings>
+                </md-tab>
+                <md-tab label="settings - ng2">
+                    <ng2-color-settings></ng2-color-settings>
+                </md-tab>
+            </md-tabs>
+        </div>
     </div>
 </div>
