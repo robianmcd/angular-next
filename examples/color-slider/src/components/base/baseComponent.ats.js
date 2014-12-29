@@ -1,7 +1,7 @@
-import {Component, TemplateConfig} from 'core/core';
-import BackgroundColor from 'decorators/backgroundColor';
-import ColorUtil from 'services/colorUtil';
-import Ng2ColorSettings from 'components/colorSettings/ng2ColorSettings';
+import {Component, TemplateConfig} from 'core/core.js';
+import BackgroundColor from 'decorators/backgroundColor.js';
+import ColorUtil from 'services/colorUtil.js';
+import Ng2ColorSettings from 'components/colorSettings/ng2ColorSettings.js';
 
 @Component({
     selector: 'base-component',

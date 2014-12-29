@@ -15,7 +15,7 @@ gulp.task('vendor', function () {
 
 gulp.task('app', function () {
     return gulp.src(appFiles)
-        .pipe(traceur({experimental: true, modules: 'instantiate', moduleName: true, annotations: true, types: true, typeAssertions: true, typeAssertionModule: "assert"}))
+        .pipe(traceur({experimental: true, modules: 'instantiate', moduleName: true, annotations: true, types: true, typeAssertions: true, typeAssertionModule: "assert.js"}))
         .pipe(gulp.dest('build'));
 });
 

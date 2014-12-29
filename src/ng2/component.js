@@ -1,5 +1,5 @@
-import {Directive} from 'ng2/directive';
-import {TemplateConfig} from 'ng2/templateConfig';
+import {Directive} from 'ng2/directive.js';
+import {TemplateConfig} from 'ng2/templateConfig.js';
 
 //Like a panel
 class Component extends Directive {

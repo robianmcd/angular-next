@@ -1,9 +1,6 @@
-System.register("components/colorSettings/ng2ColorSettings", ["assert", "core/core", "decorators/backgroundColor", "services/colorUtil", "components/base/baseComponent"], function($__export) {
+System.register("components/colorSettings/ng2ColorSettings.js", ["assert.js", "core/core.js", "decorators/backgroundColor.js", "services/colorUtil.js", "components/base/baseComponent.js"], function($__export) {
   "use strict";
-  var __moduleName = "components/colorSettings/ng2ColorSettings";
-  function require(path) {
-    return $traceurRuntime.require("components/colorSettings/ng2ColorSettings", path);
-  }
+  var __moduleName = "components/colorSettings/ng2ColorSettings.js";
   var assert,
       Component,
       TemplateConfig,
@@ -62,3 +59,4 @@ System.register("components/colorSettings/ng2ColorSettings", ["assert", "core/co
     }
   };
 });
+//# sourceURL=components/colorSettings/ng2ColorSettings.js

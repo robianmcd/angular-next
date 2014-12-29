@@ -1,7 +1,7 @@
-import {Component, TemplateConfig, NgElement} from 'core/core';
-import ChildComponent from 'childComponent';
-import MyService from 'myService';
-import MyChildService from 'myChildService';
+import {Component, TemplateConfig, NgElement} from 'core/core.js';
+import ChildComponent from 'childComponent.js';
+import MyService from 'myService.js';
+import MyChildService from 'myChildService.js';
 
 
 @Component({

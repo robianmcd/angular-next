@@ -15,7 +15,7 @@ gulp.task('build-angular-next', function () {
             annotations: true,
             types: true,
             typeAssertions: true,
-            typeAssertionModule: "assert"
+            typeAssertionModule: "assert.js"
         }))
         .pipe(concat('angularNext.js'))
         .pipe(gulp.dest('dist'))

@@ -1,9 +1,6 @@
-System.register("app", ["core/core", "components/base/baseComponent"], function($__export) {
+System.register("app.js", ["core/core.js", "components/base/baseComponent.js"], function($__export) {
   "use strict";
-  var __moduleName = "app";
-  function require(path) {
-    return $traceurRuntime.require("app", path);
-  }
+  var __moduleName = "app.js";
   var bootstrap,
       BaseComponent;
   function main() {
@@ -20,3 +17,4 @@ System.register("app", ["core/core", "components/base/baseComponent"], function(
     }
   };
 });
+//# sourceURL=app.js

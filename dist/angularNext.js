@@ -1,57 +1,69 @@
-System.register("core/core", ["ng2/bootstrap", "ng2/templateConfig", "ng2/directive", "ng2/component", "ng2/decorator", "ng2/template", "ng2/ngElement", "ngNext/injectNgOne", "ngNext/angular2Adapter"], function($__export) {
+System.register("core/core.js", ["ng2/bootstrap.js", "ng2/templateConfig.js", "ng2/directive.js", "ng2/component.js", "ng2/decorator.js", "ng2/template.js", "ng2/ngElement.js", "ngNext/injectNgOne.js", "ngNext/angular2Adapter.js"], function($__export) {
   "use strict";
-  var __moduleName = "core/core";
-  function require(path) {
-    return $traceurRuntime.require("core/core", path);
-  }
+  var __moduleName = "core/core.js";
+  var $__exportNames = {};
+  var $__exportNames = {};
+  var $__exportNames = {};
+  var $__exportNames = {};
+  var $__exportNames = {};
+  var $__exportNames = {};
+  var $__exportNames = {};
+  var $__exportNames = {};
+  var $__exportNames = {};
   return {
     setters: [function(m) {
       Object.keys(m).forEach(function(p) {
-        $__export(p, m[p]);
+        if (!$__exportNames[p])
+          $__export(p, m[p]);
       });
     }, function(m) {
       Object.keys(m).forEach(function(p) {
-        $__export(p, m[p]);
+        if (!$__exportNames[p])
+          $__export(p, m[p]);
       });
     }, function(m) {
       Object.keys(m).forEach(function(p) {
-        $__export(p, m[p]);
+        if (!$__exportNames[p])
+          $__export(p, m[p]);
       });
     }, function(m) {
       Object.keys(m).forEach(function(p) {
-        $__export(p, m[p]);
+        if (!$__exportNames[p])
+          $__export(p, m[p]);
       });
     }, function(m) {
       Object.keys(m).forEach(function(p) {
-        $__export(p, m[p]);
+        if (!$__exportNames[p])
+          $__export(p, m[p]);
       });
     }, function(m) {
       Object.keys(m).forEach(function(p) {
-        $__export(p, m[p]);
+        if (!$__exportNames[p])
+          $__export(p, m[p]);
       });
     }, function(m) {
       Object.keys(m).forEach(function(p) {
-        $__export(p, m[p]);
+        if (!$__exportNames[p])
+          $__export(p, m[p]);
       });
     }, function(m) {
       Object.keys(m).forEach(function(p) {
-        $__export(p, m[p]);
+        if (!$__exportNames[p])
+          $__export(p, m[p]);
       });
     }, function(m) {
       Object.keys(m).forEach(function(p) {
-        $__export(p, m[p]);
+        if (!$__exportNames[p])
+          $__export(p, m[p]);
       });
     }],
     execute: function() {}
   };
 });
-
-System.register("ng2/bootstrap", ["ngNext/angular2Adapter"], function($__export) {
+//# sourceURL=core/core.js
+System.register("ng2/bootstrap.js", ["ngNext/angular2Adapter.js"], function($__export) {
   "use strict";
-  var __moduleName = "ng2/bootstrap";
-  function require(path) {
-    return $traceurRuntime.require("ng2/bootstrap", path);
-  }
+  var __moduleName = "ng2/bootstrap.js";
   var Angular2Adapter;
   function bootstrap(component) {
     var config = arguments[1] !== (void 0) ? arguments[1] : {};
@@ -68,13 +80,10 @@ System.register("ng2/bootstrap", ["ngNext/angular2Adapter"], function($__export)
     }
   };
 });
-
-System.register("ng2/component", ["assert", "ng2/directive", "ng2/templateConfig"], function($__export) {
+//# sourceURL=ng2/bootstrap.js
+System.register("ng2/component.js", ["assert.js", "ng2/directive.js", "ng2/templateConfig.js"], function($__export) {
   "use strict";
-  var __moduleName = "ng2/component";
-  function require(path) {
-    return $traceurRuntime.require("ng2/component", path);
-  }
+  var __moduleName = "ng2/component.js";
   var assert,
       Directive,
       TemplateConfig,
@@ -136,13 +145,10 @@ System.register("ng2/component", ["assert", "ng2/directive", "ng2/templateConfig
     }
   };
 });
-
-System.register("ng2/decorator", ["assert", "ng2/directive"], function($__export) {
+//# sourceURL=ng2/component.js
+System.register("ng2/decorator.js", ["assert.js", "ng2/directive.js"], function($__export) {
   "use strict";
-  var __moduleName = "ng2/decorator";
-  function require(path) {
-    return $traceurRuntime.require("ng2/decorator", path);
-  }
+  var __moduleName = "ng2/decorator.js";
   var assert,
       Directive,
       Decorator,
@@ -190,13 +196,10 @@ System.register("ng2/decorator", ["assert", "ng2/directive"], function($__export
     }
   };
 });
-
-System.register("ng2/directive", ["assert"], function($__export) {
+//# sourceURL=ng2/decorator.js
+System.register("ng2/directive.js", ["assert.js"], function($__export) {
   "use strict";
-  var __moduleName = "ng2/directive";
-  function require(path) {
-    return $traceurRuntime.require("ng2/directive", path);
-  }
+  var __moduleName = "ng2/directive.js";
   var assert,
       Directive,
       DirectiveOptions,
@@ -258,13 +261,10 @@ System.register("ng2/directive", ["assert"], function($__export) {
     }
   };
 });
-
-System.register("ng2/ngElement", [], function($__export) {
+//# sourceURL=ng2/directive.js
+System.register("ng2/ngElement.js", [], function($__export) {
   "use strict";
-  var __moduleName = "ng2/ngElement";
-  function require(path) {
-    return $traceurRuntime.require("ng2/ngElement", path);
-  }
+  var __moduleName = "ng2/ngElement.js";
   var NgElement;
   return {
     setters: [],
@@ -279,13 +279,10 @@ System.register("ng2/ngElement", [], function($__export) {
     }
   };
 });
-
-System.register("ng2/template", ["ng2/directive"], function($__export) {
+//# sourceURL=ng2/ngElement.js
+System.register("ng2/template.js", ["ng2/directive.js"], function($__export) {
   "use strict";
-  var __moduleName = "ng2/template";
-  function require(path) {
-    return $traceurRuntime.require("ng2/template", path);
-  }
+  var __moduleName = "ng2/template.js";
   var Directive,
       Template;
   return {
@@ -303,13 +300,10 @@ System.register("ng2/template", ["ng2/directive"], function($__export) {
     }
   };
 });
-
-System.register("ng2/templateConfig", [], function($__export) {
+//# sourceURL=ng2/template.js
+System.register("ng2/templateConfig.js", [], function($__export) {
   "use strict";
-  var __moduleName = "ng2/templateConfig";
-  function require(path) {
-    return $traceurRuntime.require("ng2/templateConfig", path);
-  }
+  var __moduleName = "ng2/templateConfig.js";
   var TemplateConfig;
   return {
     setters: [],
@@ -326,13 +320,10 @@ System.register("ng2/templateConfig", [], function($__export) {
     }
   };
 });
-
-System.register("ngNext/angular2Adapter", ["assert", "ng2/directive", "ng2/component", "ng2/ngElement", "ngNext/injectNgOne"], function($__export) {
+//# sourceURL=ng2/templateConfig.js
+System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "ng2/component.js", "ng2/ngElement.js", "ngNext/injectNgOne.js"], function($__export) {
   "use strict";
-  var __moduleName = "ngNext/angular2Adapter";
-  function require(path) {
-    return $traceurRuntime.require("ngNext/angular2Adapter", path);
-  }
+  var __moduleName = "ngNext/angular2Adapter.js";
   var assert,
       Directive,
       DirectiveClass,
@@ -606,13 +597,10 @@ System.register("ngNext/angular2Adapter", ["assert", "ng2/directive", "ng2/compo
     }
   };
 });
-
-System.register("ngNext/injectNgOne", ["assert"], function($__export) {
+//# sourceURL=ngNext/angular2Adapter.js
+System.register("ngNext/injectNgOne.js", ["assert.js"], function($__export) {
   "use strict";
-  var __moduleName = "ngNext/injectNgOne";
-  function require(path) {
-    return $traceurRuntime.require("ngNext/injectNgOne", path);
-  }
+  var __moduleName = "ngNext/injectNgOne.js";
   var assert,
       InjectNgOne;
   return {
@@ -634,3 +622,4 @@ System.register("ngNext/injectNgOne", ["assert"], function($__export) {
     }
   };
 });
+//# sourceURL=ngNext/injectNgOne.js

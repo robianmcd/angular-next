@@ -1,7 +1,7 @@
-import {Directive, DirectiveClass} from 'ng2/directive';
-import {Component, ComponentClass} from 'ng2/component';
-import {NgElement} from 'ng2/ngElement';
-import {InjectNgOne} from 'ngNext/injectNgOne';
+import {Directive, DirectiveClass} from 'ng2/directive.js';
+import {Component, ComponentClass} from 'ng2/component.js';
+import {NgElement} from 'ng2/ngElement.js';
+import {InjectNgOne} from 'ngNext/injectNgOne.js';
 
 class Angular2Adapter {
     constructor({moduleName, logLevel = 0}) {

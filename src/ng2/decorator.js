@@ -1,4 +1,4 @@
-import {Directive} from 'ng2/directive';
+import {Directive} from 'ng2/directive.js';
 
 //Like ng-class, ng-show
 class Decorator extends Directive {

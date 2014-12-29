@@ -1,9 +1,6 @@
-System.register("services/colorUtil", [], function($__export) {
+System.register("services/colorUtil.js", [], function($__export) {
   "use strict";
-  var __moduleName = "services/colorUtil";
-  function require(path) {
-    return $traceurRuntime.require("services/colorUtil", path);
-  }
+  var __moduleName = "services/colorUtil.js";
   var ColorUtil;
   return {
     setters: [],
@@ -52,3 +49,4 @@ System.register("services/colorUtil", [], function($__export) {
     }
   };
 });
+//# sourceURL=services/colorUtil.js
