@@ -53,7 +53,7 @@ System.register("components/colorSettings/ng2ColorSettings", ["assert", "compone
             selector: 'ng2-color-settings',
             template: new TemplateConfig({
               url: 'components/colorSettings/colorSettings.html',
-              directives: []
+              directives: [BackgroundColor]
             })
           })];
         }});

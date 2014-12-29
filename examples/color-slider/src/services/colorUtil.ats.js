@@ -3,7 +3,7 @@ class ColorUtil {
 
     }
 
-    //Tagek from http://stackoverflow.com/a/9493060/373655
+    //Taken from http://stackoverflow.com/a/9493060/373655
     hslToRgb(h, s, l) {
         var r, g, b;
 

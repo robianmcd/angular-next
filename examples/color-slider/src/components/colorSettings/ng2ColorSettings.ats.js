@@ -5,13 +5,11 @@ import ColorUtil from 'services/colorUtil';
 import BaseComponent from 'components/base/baseComponent';
 import InjectNgOne from 'injectNgOne';
 
-//TODO: should be able to specify BackgroundColor in directives but it throws an error because it is included in baseComponent
-
 @Component({
     selector: 'ng2-color-settings',
     template: new TemplateConfig({
         url: 'components/colorSettings/colorSettings.html',
-        directives: []
+        directives: [BackgroundColor]
     })
 })
 class Ng2ColorSettings {

@@ -11,6 +11,8 @@ class Angular2Adapter {
         this.app = angular.module(moduleName);
         //not currently used
         this.logLevel = logLevel;
+
+        this.registeredDirectives = new Set();
     }
 
     bootstrapComponent(rootComponent:ComponentClass) {
@@ -26,6 +28,12 @@ class Angular2Adapter {
     }
 
     registerDirectiveTree(dir:DirectiveClass) {
+        if(this.registeredDirectives.has(dir)) {
+            return;
+        } else {
+            this.registeredDirectives.add(dir);
+        }
+
         var dirAnno = this.getDirAnno(dir);
 
         this.registerDirective(dir);

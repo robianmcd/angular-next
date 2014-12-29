@@ -6091,6 +6091,7 @@ System.register("angular2Adapter", ["assert", "./directive", "./component", "./c
           this.moduleName = moduleName;
           this.app = angular.module(moduleName);
           this.logLevel = logLevel;
+          this.registeredDirectives = new Set();
         };
         return ($traceurRuntime.createClass)(Angular2Adapter, {
           bootstrapComponent: function(rootComponent) {
@@ -6107,6 +6108,11 @@ System.register("angular2Adapter", ["assert", "./directive", "./component", "./c
           registerDirectiveTree: function(dir) {
             var $__0 = this;
             assert.argumentTypes(dir, DirectiveClass);
+            if (this.registeredDirectives.has(dir)) {
+              return;
+            } else {
+              this.registeredDirectives.add(dir);
+            }
             var dirAnno = this.getDirAnno(dir);
             this.registerDirective(dir);
             if (dirAnno.template && dirAnno.template.directives) {

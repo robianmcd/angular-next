@@ -2,6 +2,10 @@
 
 Description...
 
+### Demonstrated Features
+* [Component Directive](https://github.com/robianmcd/angular-next/blob/gh-pages/examples/color-slider/src/components/colorSettings/ng2ColorSettings.ats.js)
+
+
 ### Demo
 
 [http://robianmcd.github.io/angular-next/examples/color-slider/build](http://robianmcd.github.io/angular-next/examples/color-slider/build)
