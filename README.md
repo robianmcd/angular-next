@@ -22,7 +22,7 @@ index.html
 
 app.js
 ```javascript
-import {bootstrap, Component, TemplateConfig} from 'core/core';
+import {bootstrap, Component, TemplateConfig} from 'core/core.js';
 
 @Component({
     selector: 'hello-component',
