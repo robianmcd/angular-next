@@ -4,4 +4,4 @@ class InjectNgOne {
     }
 }
 
-export default InjectNgOne;
+export {InjectNgOne};

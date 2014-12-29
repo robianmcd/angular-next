@@ -1,4 +1,4 @@
-import bootstrap from 'bootstrap';
+import {bootstrap} from 'core/core';
 import BaseComponent from 'components/base/baseComponent';
 
 export function main() {

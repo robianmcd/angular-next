@@ -1,5 +1,4 @@
-import {Decorator} from './decorator';
-import NgElement from './core/ngElement';
+import {Decorator, NgElement} from 'core/core';
 
 @Decorator({
     selector: '[color]',

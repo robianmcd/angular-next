@@ -1,4 +1,4 @@
-System.register("decorators/backgroundColor", ["assert", "decorator", "core/ngElement"], function($__export) {
+System.register("decorators/backgroundColor", ["assert", "core/core"], function($__export) {
   "use strict";
   var __moduleName = "decorators/backgroundColor";
   function require(path) {
@@ -13,8 +13,7 @@ System.register("decorators/backgroundColor", ["assert", "decorator", "core/ngEl
       assert = m.assert;
     }, function(m) {
       Decorator = m.Decorator;
-    }, function(m) {
-      NgElement = m.default;
+      NgElement = m.NgElement;
     }],
     execute: function() {
       BackgroundColor = (function() {

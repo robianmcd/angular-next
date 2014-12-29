@@ -6,4 +6,4 @@ class TemplateConfig {
     }
 }
 
-export default TemplateConfig;
+export {TemplateConfig};

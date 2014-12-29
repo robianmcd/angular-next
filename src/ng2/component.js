@@ -1,5 +1,5 @@
-import {Directive} from './directive';
-import TemplateConfig from './templateConfig';
+import {Directive} from 'ng2/directive';
+import {TemplateConfig} from 'ng2/templateConfig';
 
 //Like a panel
 class Component extends Directive {
@@ -26,7 +26,7 @@ var ComponentOptions = assert.define('ComponentOptions', function(options) {
     }
 });
 
-var ComponentClass = assert.define('DirectiveClass', function (componentClass) {
+var ComponentClass = assert.define('ComponentClass', function (componentClass) {
     assert.type(componentClass, Object);
 
     var numDirAnnos;

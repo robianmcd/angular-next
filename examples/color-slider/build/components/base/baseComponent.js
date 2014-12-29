@@ -1,4 +1,4 @@
-System.register("components/base/baseComponent", ["component", "templateConfig", "decorators/backgroundColor", "services/colorUtil", "components/colorSettings/ng2ColorSettings"], function($__export) {
+System.register("components/base/baseComponent", ["core/core", "decorators/backgroundColor", "services/colorUtil", "components/colorSettings/ng2ColorSettings"], function($__export) {
   "use strict";
   var __moduleName = "components/base/baseComponent";
   function require(path) {
@@ -13,8 +13,7 @@ System.register("components/base/baseComponent", ["component", "templateConfig",
   return {
     setters: [function(m) {
       Component = m.Component;
-    }, function(m) {
-      TemplateConfig = m.default;
+      TemplateConfig = m.TemplateConfig;
     }, function(m) {
       BackgroundColor = m.default;
     }, function(m) {

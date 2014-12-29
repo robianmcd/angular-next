@@ -1,5 +1,4 @@
-import {Component} from 'component';
-import TemplateConfig from 'templateConfig';
+import {Component, TemplateConfig} from 'core/core';
 import BackgroundColor from 'decorators/backgroundColor';
 import ColorUtil from 'services/colorUtil';
 import Ng2ColorSettings from 'components/colorSettings/ng2ColorSettings';

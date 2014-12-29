@@ -1,4 +1,4 @@
-System.register("components/colorSettings/ng2ColorSettings", ["assert", "component", "templateConfig", "decorators/backgroundColor", "services/colorUtil", "components/base/baseComponent", "injectNgOne"], function($__export) {
+System.register("components/colorSettings/ng2ColorSettings", ["assert", "core/core", "decorators/backgroundColor", "services/colorUtil", "components/base/baseComponent"], function($__export) {
   "use strict";
   var __moduleName = "components/colorSettings/ng2ColorSettings";
   function require(path) {
@@ -7,26 +7,24 @@ System.register("components/colorSettings/ng2ColorSettings", ["assert", "compone
   var assert,
       Component,
       TemplateConfig,
+      InjectNgOne,
       BackgroundColor,
       ColorUtil,
       BaseComponent,
-      InjectNgOne,
       Ng2ColorSettings;
   return {
     setters: [function(m) {
       assert = m.assert;
     }, function(m) {
       Component = m.Component;
-    }, function(m) {
-      TemplateConfig = m.default;
+      TemplateConfig = m.TemplateConfig;
+      InjectNgOne = m.InjectNgOne;
     }, function(m) {
       BackgroundColor = m.default;
     }, function(m) {
       ColorUtil = m.default;
     }, function(m) {
       BaseComponent = m.default;
-    }, function(m) {
-      InjectNgOne = m.default;
     }],
     execute: function() {
       Ng2ColorSettings = (function() {

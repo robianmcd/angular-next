@@ -1,4 +1,4 @@
-System.register("app", ["bootstrap", "components/base/baseComponent"], function($__export) {
+System.register("app", ["core/core", "components/base/baseComponent"], function($__export) {
   "use strict";
   var __moduleName = "app";
   function require(path) {
@@ -12,7 +12,7 @@ System.register("app", ["bootstrap", "components/base/baseComponent"], function(
   $__export("main", main);
   return {
     setters: [function(m) {
-      bootstrap = m.default;
+      bootstrap = m.bootstrap;
     }, function(m) {
       BaseComponent = m.default;
     }],

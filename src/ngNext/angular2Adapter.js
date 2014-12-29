@@ -1,9 +1,7 @@
-import {Directive, DirectiveClass} from './directive';
-import {Component, ComponentClass} from './component';
-import NgElement from './core/ngElement';
-import $element from './ng1/element';
-import $scope from './ng1/scope';
-import InjectNgOne from './injectNgOne';
+import {Directive, DirectiveClass} from 'ng2/directive';
+import {Component, ComponentClass} from 'ng2/component';
+import {NgElement} from 'ng2/ngElement';
+import {InjectNgOne} from 'ngNext/injectNgOne';
 
 class Angular2Adapter {
     constructor({moduleName, logLevel = 0}) {
@@ -203,10 +201,10 @@ class Angular2Adapter {
                 retDirType.parameters = injectableServices.map(type => [type]);
 
                 if (requiresElement) {
-                    retDirType.parameters.push([$element]);
+                    retDirType.parameters.push([new InjectNgOne('$element')]);
                 }
                 if (requiresScope) {
-                    retDirType.parameters.push([$scope]);
+                    retDirType.parameters.push([new InjectNgOne('$scope')]);
                 }
             }
         }
@@ -271,4 +269,4 @@ class Angular2Adapter {
 
 }
 
-export default Angular2Adapter;
+export {Angular2Adapter};

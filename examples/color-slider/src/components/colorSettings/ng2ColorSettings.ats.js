@@ -1,9 +1,7 @@
-import {Component} from 'component';
-import TemplateConfig from 'templateConfig';
+import {Component, TemplateConfig, InjectNgOne} from 'core/core';
 import BackgroundColor from 'decorators/backgroundColor';
 import ColorUtil from 'services/colorUtil';
 import BaseComponent from 'components/base/baseComponent';
-import InjectNgOne from 'injectNgOne';
 
 @Component({
     selector: 'ng2-color-settings',

@@ -4,4 +4,4 @@ class NgElement {
     }
 }
 
-export default NgElement;
+export {NgElement};

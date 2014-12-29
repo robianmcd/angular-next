@@ -1,8 +1,6 @@
-import {Component} from './component';
-import TemplateConfig from './templateConfig';
-import NgElement from './core/ngElement';
-import ColorDec from './colorDec';
-import HelloComponent from './helloComponent';
+import {Component, TemplateConfig, NgElement} from 'core/core';
+import ColorDec from 'colorDec';
+import HelloComponent from 'helloComponent';
 
 @Component({
     selector: 'child-component',

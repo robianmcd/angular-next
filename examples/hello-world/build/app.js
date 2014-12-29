@@ -1,4 +1,4 @@
-System.register(["bootstrap", "component", "templateConfig"], function($__export) {
+System.register(["core/core"], function($__export) {
   "use strict";
   var bootstrap,
       Component,
@@ -11,11 +11,9 @@ System.register(["bootstrap", "component", "templateConfig"], function($__export
   $__export("main", main);
   return {
     setters: [function(m) {
-      bootstrap = m.default;
-    }, function(m) {
+      bootstrap = m.bootstrap;
       Component = m.Component;
-    }, function(m) {
-      TemplateConfig = m.default;
+      TemplateConfig = m.TemplateConfig;
     }],
     execute: function() {
       HelloComponent = (function() {
