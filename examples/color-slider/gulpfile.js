@@ -41,8 +41,8 @@ gulp.task('js', function () {
             typeAssertionModule: 'assert.js'
         });
 
-
     gulp.src('src/**/*.js')
+        //Only files ending in .ats.js will be treated as AtScript and transpiled with Traceur
         .pipe(gulpIf(/\.ats\.js$/, buildAtScript()))
         .pipe(gulp.dest('build'))
         .pipe(connect.reload());
