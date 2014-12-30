@@ -3,7 +3,7 @@
 
 This library lets you start writing Angular 2 style directives and services and use them in an existing Angular 1 app. This allows you to incrementally adopt features from Angular 2 instead of needing to migrate all at once.
 
-**Warning: Angular Next is still highly experimental and will likely have breaking changes.**
+**Warning: Angular Next is still highly experimental. It could change drastically as more information is released about Angular 2.0**
 
 ## Sample App: Angular 1 + Angular Next
 
@@ -67,17 +67,4 @@ or from the CDN
 <script src="//robianmcd.github.io/angular-next/dist/angularNext-standalone.js"></script>
 ```
 
-## Preparation
-There is lots you can do to start making your Angular 1 app more Angular 2 friendly.
-
-### Controller As
-todo
-
-### Traceur
-todo
-
-### Modules
-todo
-
-## Installation
-todo
+More docs coming soon...
