@@ -1,27 +1,42 @@
 var gulp = require('gulp'),
     traceur = require('gulp-traceur'),
     concat = require('gulp-concat'),
-    insert = require('gulp-insert'),
+    karma = require('gulp-karma'),
     gulpIf = require('gulp-if');
 
 var appFiles = 'src/**/*.js';
+var testFiles = 'test/**/*.js';
+
+var filesForKarma = [
+    'dist/angularNext-standalone.js',
+    'test-build/**/*.js',
+    'testMain.js'
+];
+
+var traceurOptions = {
+    experimental: true,
+    modules: 'instantiate',
+    moduleName: true,
+    annotations: true,
+    types: true,
+    typeAssertions: true,
+    typeAssertionModule: "assert.js"
+};
 
 gulp.task('build-angular-next', function () {
     return gulp.src(appFiles)
-        .pipe(traceur({
-            experimental: true,
-            modules: 'instantiate',
-            moduleName: true,
-            annotations: true,
-            types: true,
-            typeAssertions: true,
-            typeAssertionModule: "assert.js"
-        }))
+        .pipe(traceur(traceurOptions))
         .pipe(concat('angularNext.js'))
         .pipe(gulp.dest('dist'))
 });
 
-gulp.task('build', ['build-angular-next'], function () {
+gulp.task('build-test-files', function () {
+    return gulp.src(testFiles)
+        .pipe(traceur(traceurOptions))
+        .pipe(gulp.dest('test-build'));
+});
+
+gulp.task('build', ['build-angular-next', 'build-test-files'], function () {
     gulp.src([
         'bower_components/traceur-runtime/traceur-runtime.js',
         'bower_components/es6-module-loader/dist/es6-module-loader.src.js',
@@ -37,5 +52,11 @@ gulp.task('build', ['build-angular-next'], function () {
 });
 
 gulp.task('default', ['build'], function () {
-    gulp.watch(appFiles, ['build']);
+    gulp.watch([appFiles, testFiles], ['build']);
+
+    gulp.src(filesForKarma)
+        .pipe(karma({
+            configFile: 'karma.conf.js',
+            action: 'watch'
+        }))
 });

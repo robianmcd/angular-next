@@ -1,6 +1,7 @@
 node_modules/
 /.idea/workspace.xml
 /bower_components
+/test-build
 
 /examples/feature-sandbox/build/
 /examples/feature-sandbox/bower_components
