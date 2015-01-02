@@ -1,4 +1,7 @@
 # angular-next
+
+[Build Status](https://travis-ci.org/robianmcd/angular-next.svg)
+
 > Angular Next brings the power of **Angular 2** to Angular 1 and gives you an incremental **migration path**.
 
 This library lets you start writing Angular 2 style directives and services and use them in an existing Angular 1 app. This allows you to incrementally adopt features from Angular 2 instead of needing to migrate all at once.
