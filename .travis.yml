@@ -10,3 +10,6 @@ before_script:
 script:
   - gulp build
   - gulp test
+branches:
+  only:
+    - gh-pages
