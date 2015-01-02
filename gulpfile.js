@@ -8,6 +8,7 @@ var appFiles = 'src/**/*.js';
 var testFiles = 'test/**/*.js';
 
 var filesForKarma = [
+    'bower_components/angular/angular.js',
     'dist/angularNext-standalone.js',
     'test-build/**/*.js',
     'testMain.js'
@@ -47,6 +48,7 @@ gulp.task('build', ['build-angular-next', 'build-test-files'], function () {
         .pipe(gulpIf(/assert.js/,
             traceur({modules: 'instantiate', moduleName: true})
         ))
+        .pipe(gulp.dest('test-deps'))
         .pipe(concat('angularNext-standalone.js'))
         .pipe(gulp.dest('dist'));
 });
@@ -60,7 +62,8 @@ gulp.task('test', function () {
 });
 
 gulp.task('default', ['build'], function () {
-    gulp.watch([appFiles, testFiles], ['build']);
+    gulp.watch([appFiles], ['build']);
+    gulp.watch([testFiles], ['build-test-files']);
 
     gulp.src(filesForKarma)
         .pipe(karma({

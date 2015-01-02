@@ -6642,9 +6642,9 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
             }
           },
           isDirClass: function(obj) {
-            return obj.annotations && obj.annotations.filter((function(anno) {
+            return !!(obj.annotations && obj.annotations.filter((function(anno) {
               return anno instanceof Directive;
-            })).length;
+            })).length);
           }
         }, {});
       }());

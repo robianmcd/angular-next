@@ -264,7 +264,7 @@ class Angular2Adapter {
     }
 
     isDirClass(obj) {
-        return obj.annotations && obj.annotations.filter(anno => anno instanceof Directive).length;
+        return !!(obj.annotations && obj.annotations.filter(anno => anno instanceof Directive).length);
     }
 
 }

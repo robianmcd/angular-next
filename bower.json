@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "traceur-runtime": "0.0.79",
-    "es6-module-loader": "~0.10.0"
+    "es6-module-loader": "~0.10.0",
+    "angular": "~1.3.8"
   }
 }
