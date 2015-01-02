@@ -51,6 +51,14 @@ gulp.task('build', ['build-angular-next', 'build-test-files'], function () {
         .pipe(gulp.dest('dist'));
 });
 
+gulp.task('test', function () {
+    gulp.src(filesForKarma)
+        .pipe(karma({
+            configFile: 'karma.conf.js',
+            action: 'run'
+        }));
+});
+
 gulp.task('default', ['build'], function () {
     gulp.watch([appFiles, testFiles], ['build']);
 
@@ -58,5 +66,5 @@ gulp.task('default', ['build'], function () {
         .pipe(karma({
             configFile: 'karma.conf.js',
             action: 'watch'
-        }))
+        }));
 });
