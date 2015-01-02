@@ -4,6 +4,6 @@ module.exports = function(config) {
     autoWatch: true,
     frameworks: ['jasmine'],
     reporters: ['progress'],
-    browsers: ['Chrome']
+    browsers: ['Firefox']
   });
 };
