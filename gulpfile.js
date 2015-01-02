@@ -52,7 +52,7 @@ gulp.task('build', ['build-angular-next', 'build-test-files'], function () {
 });
 
 gulp.task('test', function () {
-    gulp.src(filesForKarma)
+    return gulp.src(filesForKarma)
         .pipe(karma({
             configFile: 'karma.conf.js',
             action: 'run'
