@@ -1,6 +1,6 @@
-# angular-next
+[![Bower version](https://badge.fury.io/bo/angular-next.svg)](http://badge.fury.io/bo/angular-next) [![Build Status](https://travis-ci.org/robianmcd/angular-next.svg)](https://travis-ci.org/robianmcd/angular-next)
 
-[![Build Status](https://travis-ci.org/robianmcd/angular-next.svg)](https://travis-ci.org/robianmcd/angular-next)
+# angular-next
 
 > Angular Next brings the power of **Angular 2** to Angular 1 and gives you an incremental **migration path**.
 
