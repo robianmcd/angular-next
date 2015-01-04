@@ -48,7 +48,6 @@ gulp.task('build', ['build-angular-next', 'build-test-files'], function () {
         .pipe(gulpIf(/assert.js/,
             traceur({modules: 'instantiate', moduleName: true})
         ))
-        .pipe(gulp.dest('test-deps'))
         .pipe(concat('angularNext-standalone.js'))
         .pipe(gulp.dest('dist'));
 });

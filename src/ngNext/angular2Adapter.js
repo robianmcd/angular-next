@@ -57,6 +57,17 @@ class Angular2Adapter {
             });
         }
 
+        var dirInfo = this.getNg1DirectiveInfo(dir);
+
+        this.app.directive(dirInfo.name, function () {
+            return dirInfo.ddo;
+        });
+    }
+
+    //Returns name and ddo for a directive class
+    getNg1DirectiveInfo(dir:DirectiveClass) {
+        var dirAnno = this.getDirAnno(dir);
+
         var restrict;
         var dashesDirectiveName;
 
@@ -76,9 +87,6 @@ class Angular2Adapter {
             restrict = 'E';
             dashesDirectiveName = dirAnno.selector;
         }
-
-        //Convert the directive name from dash separated to camelCase
-        var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, char => char[1].toUpperCase());
 
         var scope = {};
 
@@ -104,9 +112,10 @@ class Angular2Adapter {
             }
         }
 
-        this.app.directive(camelDirectiveName, function () {
-            return ddo;
-        });
+        //Convert the directive name from dash separated to camelCase
+        var name = dashesDirectiveName.replace(/-([a-z])/g, char => char[1].toUpperCase());
+
+        return {name, ddo};
     }
 
     //Services that require $element (e.g. NgElement) cannot be injected normally as $element can only be injected
@@ -212,7 +221,7 @@ class Angular2Adapter {
         return retDirType;
     }
 
-    setupModelDi(aClass:Object) {
+    setupModelDi(aClass:Function) {
         if (aClass.parameters) {
             aClass.$inject = [];
             aClass.parameters.forEach((paramAnnotations) => {

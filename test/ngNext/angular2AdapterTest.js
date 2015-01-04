@@ -1,24 +1,100 @@
-import {Angular2Adapter, Decorator} from 'core/core.js';
+import {Angular2Adapter, Decorator, Component, TemplateConfig, InjectNgOne} from 'core/core.js';
 
 describe('Angular2Adapter', function () {
 
     var adapter;
 
-    @Decorator({selector: 'my-dec'})
+    @Decorator({selector: '[my-dec]'})
     class MyDec {
 
     }
+
+    @Component({
+        selector: 'my-component',
+        template: new TemplateConfig({
+            inline: 'hello world'
+        }),
+        controllerAs: 'myCtrl',
+        bind: {param1: 'param1'}
+    })
+    class MyComp {
+        constructor(param1: Object) {
+
+        }
+    }
+
 
     beforeEach(function () {
         angular.module('myApp', []);
         adapter = new Angular2Adapter({moduleName: 'myApp'});
     });
 
+    describe('getNg1DirectiveInfo', function () {
+        it('should generate ddo for attribute selector directive', function () {
+            expect(adapter.getNg1DirectiveInfo(MyDec)).toEqual({
+                name: 'myDec',
+                ddo: {
+                    restrict: 'A',
+                    controller: MyDec,
+                    controllerAs: 'ctrl',
+                    scope: {},
+                    bindToController: true
+                }
+            });
+        });
+
+        it('should generate ddo for element selector directive', function () {
+            expect(adapter.getNg1DirectiveInfo(MyComp)).toEqual({
+                name: 'myComponent',
+                ddo: {
+                    restrict: 'E',
+                    controller: MyComp,
+                    controllerAs: 'myCtrl',
+                    scope: {param1: '=param1'},
+                    bindToController: true,
+                    template: 'hello world'
+                }
+            });
+        });
+    });
+
+    describe('setupModelDi', function () {
+        it('should initialize a decorator\'s $inject array', function () {
+
+            class MyService {
+
+            }
+
+            @Decorator({selector: 'my-dec2'})
+            class MyDec2 {
+                constructor(myService: MyService) {
+
+                }
+            }
+
+            adapter.setupModelDi(MyDec2);
+
+            expect(MyDec2.$inject).toEqual(['myService']);
+        });
+    });
+
+    describe('getInjectStrFromParamAnnotations', function () {
+        it('should return the correct string', function () {
+            expect(adapter.getInjectStrFromParamAnnotations([MyDec])).toEqual('myDec');
+            expect(adapter.getInjectStrFromParamAnnotations([new InjectNgOne('$scope')])).toEqual('$scope');
+
+            var callWithInvalidParam = function () {
+                adapter.getInjectStrFromParamAnnotations([]);
+            };
+            expect(callWithInvalidParam).toThrow();
+        });
+    });
+
     describe('getDirAnno', function () {
         it('should return the annotation', function () {
             var anno = adapter.getDirAnno(MyDec);
             expect(anno).toEqual(jasmine.any(Decorator));
-            expect(anno.selector).toEqual('my-dec');
+            expect(anno.selector).toEqual('[my-dec]');
         });
     });
 
