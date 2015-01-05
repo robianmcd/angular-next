@@ -4,9 +4,15 @@ describe('Angular2Adapter', function () {
 
     var adapter;
 
+    class MyService {
+
+    }
+
     @Decorator({selector: '[my-dec]'})
     class MyDec {
+        constructor(myService:MyService) {
 
+        }
     }
 
     @Component({
@@ -18,7 +24,7 @@ describe('Angular2Adapter', function () {
         bind: {param1: 'param1'}
     })
     class MyComp {
-        constructor(param1: Object) {
+        constructor(param1:Object) {
 
         }
     }
@@ -58,23 +64,9 @@ describe('Angular2Adapter', function () {
         });
     });
 
-    describe('setupModelDi', function () {
-        it('should initialize a decorator\'s $inject array', function () {
-
-            class MyService {
-
-            }
-
-            @Decorator({selector: 'my-dec2'})
-            class MyDec2 {
-                constructor(myService: MyService) {
-
-                }
-            }
-
-            adapter.setupModelDi(MyDec2);
-
-            expect(MyDec2.$inject).toEqual(['myService']);
+    describe('getInjectArray', function () {
+        it('should get a decorator\'s $inject array', function () {
+            expect(adapter.getInjectArray(MyDec)).toEqual(['myService']);
         });
     });
 

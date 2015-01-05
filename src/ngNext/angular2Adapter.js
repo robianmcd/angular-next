@@ -32,10 +32,9 @@ class Angular2Adapter {
             this.registeredDirectives.add(dir);
         }
 
-        var dirAnno = this.getDirAnno(dir);
-
         this.registerDirective(dir);
 
+        var dirAnno = this.getDirAnno(dir);
         if (dirAnno.template && dirAnno.template.directives) {
             dirAnno.template.directives.forEach((childDir) => {
                 this.registerDirectiveTree(childDir);
@@ -45,23 +44,27 @@ class Angular2Adapter {
 
     registerDirective(dir:DirectiveClass) {
         dir = this.wrapDir(dir);
-        this.setupModelDi(dir);
+        dir.$inject = this.getInjectArray(dir);
 
-        var dirAnno = this.getDirAnno(dir);
-
-        //Register component services
-        if (dirAnno.componentServices) {
-            dirAnno.componentServices.forEach((serviceType) => {
-                this.setupModelDi(serviceType);
-                this.app.service(this.lowerCaseFirstLetter(this.getFunctionName(serviceType)), serviceType);
-            });
-        }
+        this.registerComponentServices(dir);
 
         var dirInfo = this.getNg1DirectiveInfo(dir);
 
         this.app.directive(dirInfo.name, function () {
             return dirInfo.ddo;
         });
+    }
+
+    registerComponentServices(dir:DirectiveClass) {
+        var dirAnno = this.getDirAnno(dir);
+
+        //Register component services
+        if (dirAnno.componentServices) {
+            dirAnno.componentServices.forEach((serviceType) => {
+                serviceType.$inject = this.getInjectArray(serviceType);
+                this.app.service(this.lowerCaseFirstLetter(this.getFunctionName(serviceType)), serviceType);
+            });
+        }
     }
 
     //Returns name and ddo for a directive class
@@ -221,13 +224,16 @@ class Angular2Adapter {
         return retDirType;
     }
 
-    setupModelDi(aClass:Function) {
+    getInjectArray(aClass:Function) {
+        var $inject = [];
+
         if (aClass.parameters) {
-            aClass.$inject = [];
             aClass.parameters.forEach((paramAnnotations) => {
-                aClass.$inject.push(this.getInjectStrFromParamAnnotations(paramAnnotations));
+                $inject.push(this.getInjectStrFromParamAnnotations(paramAnnotations));
             });
         }
+
+        return $inject;
     }
 
     getInjectStrFromParamAnnotations(paramAnnotations) {
