@@ -6454,8 +6454,8 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
             } else {
               this.registeredDirectives.add(dir);
             }
-            var dirAnno = this.getDirAnno(dir);
             this.registerDirective(dir);
+            var dirAnno = this.getDirAnno(dir);
             if (dirAnno.template && dirAnno.template.directives) {
               dirAnno.template.directives.forEach((function(childDir) {
                 $__0.registerDirectiveTree(childDir);
@@ -6463,16 +6463,28 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
             }
           },
           registerDirective: function(dir) {
-            var $__0 = this;
+            assert.argumentTypes(dir, DirectiveClass);
             dir = this.wrapDir(dir);
-            this.setupModelDi(dir);
+            dir.$inject = this.getInjectArray(dir);
+            this.registerComponentServices(dir);
+            var dirInfo = this.getNg1DirectiveInfo(dir);
+            this.app.directive(dirInfo.name, function() {
+              return dirInfo.ddo;
+            });
+          },
+          registerComponentServices: function(dir) {
+            var $__0 = this;
+            assert.argumentTypes(dir, DirectiveClass);
             var dirAnno = this.getDirAnno(dir);
             if (dirAnno.componentServices) {
               dirAnno.componentServices.forEach((function(serviceType) {
-                $__0.setupModelDi(serviceType);
+                serviceType.$inject = $__0.getInjectArray(serviceType);
                 $__0.app.service($__0.lowerCaseFirstLetter($__0.getFunctionName(serviceType)), serviceType);
               }));
             }
+          },
+          getNg1DirectiveInfo: function(dir) {
+            var dirAnno = this.getDirAnno(dir);
             var restrict;
             var dashesDirectiveName;
             var match;
@@ -6486,9 +6498,6 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
               restrict = 'E';
               dashesDirectiveName = dirAnno.selector;
             }
-            var camelDirectiveName = dashesDirectiveName.replace(/-([a-z])/g, (function(char) {
-              return char[1].toUpperCase();
-            }));
             var scope = {};
             for (var key in dirAnno.bind) {
               if (dirAnno.bind.hasOwnProperty(key)) {
@@ -6509,9 +6518,13 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
                 ddo.templateUrl = dirAnno.template.url;
               }
             }
-            this.app.directive(camelDirectiveName, function() {
-              return ddo;
-            });
+            var name = dashesDirectiveName.replace(/-([a-z])/g, (function(char) {
+              return char[1].toUpperCase();
+            }));
+            return {
+              name: name,
+              ddo: ddo
+            };
           },
           wrapDir: function(dirType) {
             var adapter = this;
@@ -6596,15 +6609,16 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
             }
             return retDirType;
           },
-          setupModelDi: function(aClass) {
+          getInjectArray: function(aClass) {
             var $__0 = this;
-            assert.argumentTypes(aClass, Object);
+            assert.argumentTypes(aClass, Function);
+            var $inject = [];
             if (aClass.parameters) {
-              aClass.$inject = [];
               aClass.parameters.forEach((function(paramAnnotations) {
-                aClass.$inject.push($__0.getInjectStrFromParamAnnotations(paramAnnotations));
+                $inject.push($__0.getInjectStrFromParamAnnotations(paramAnnotations));
               }));
             }
+            return $inject;
           },
           getInjectStrFromParamAnnotations: function(paramAnnotations) {
             for (var i = 0; i < paramAnnotations.length; i++) {
@@ -6642,9 +6656,9 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
             }
           },
           isDirClass: function(obj) {
-            return obj.annotations && obj.annotations.filter((function(anno) {
+            return !!(obj.annotations && obj.annotations.filter((function(anno) {
               return anno instanceof Directive;
-            })).length;
+            })).length);
           }
         }, {});
       }());
@@ -6657,11 +6671,17 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
       Object.defineProperty(Angular2Adapter.prototype.registerDirective, "parameters", {get: function() {
           return [[DirectiveClass]];
         }});
+      Object.defineProperty(Angular2Adapter.prototype.registerComponentServices, "parameters", {get: function() {
+          return [[DirectiveClass]];
+        }});
+      Object.defineProperty(Angular2Adapter.prototype.getNg1DirectiveInfo, "parameters", {get: function() {
+          return [[DirectiveClass]];
+        }});
       Object.defineProperty(Angular2Adapter.prototype.wrapDir, "parameters", {get: function() {
           return [[DirectiveClass]];
         }});
-      Object.defineProperty(Angular2Adapter.prototype.setupModelDi, "parameters", {get: function() {
-          return [[Object]];
+      Object.defineProperty(Angular2Adapter.prototype.getInjectArray, "parameters", {get: function() {
+          return [[Function]];
         }});
       Object.defineProperty(Angular2Adapter.prototype.getDirAnno, "parameters", {get: function() {
           return [[DirectiveClass]];

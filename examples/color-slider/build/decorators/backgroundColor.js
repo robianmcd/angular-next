@@ -26,8 +26,8 @@ System.register("decorators/backgroundColor.js", ["assert.js", "core/core.js"], 
       Object.defineProperty(BackgroundColor, "annotations", {get: function() {
           return [new Decorator({
             selector: '[background-color]',
-            bind: {'backgroundColor': 'backgroundColor'},
-            observe: {'backgroundColor': 'onColorChange'}
+            bind: {backgroundColor: 'backgroundColor'},
+            observe: {backgroundColor: 'onColorChange'}
           })];
         }});
       Object.defineProperty(BackgroundColor, "parameters", {get: function() {
