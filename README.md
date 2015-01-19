@@ -70,4 +70,5 @@ or from the CDN
 <script src="//robianmcd.github.io/angular-next/dist/angularNext-standalone.js"></script>
 ```
 
-More docs coming soon...
+## Documentation
+For documentation on the supported features checkout the [Wiki](https://github.com/robianmcd/angular-next/wiki).
