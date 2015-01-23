@@ -17,7 +17,8 @@ class Component extends Directive {
 var ComponentOptions = assert.define('ComponentOptions', function(options) {
     //Required fields
     assert(options).is(assert.structure({
-        selector: assert.string
+        selector: assert.string,
+        template: TemplateConfig
     }));
 
     //Optional fields
