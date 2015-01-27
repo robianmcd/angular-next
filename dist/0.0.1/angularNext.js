@@ -1,6 +1,6 @@
-System.register("angular/angular.js", ["ng2/bootstrap.js", "ng2/templateConfig.js", "ng2/directive.js", "ng2/component.js", "ng2/decorator.js", "ng2/template.js", "ng2/ngElement.js", "ngNext/injectNgOne.js", "ngNext/angular2Adapter.js"], function($__export) {
+System.register("core/core.js", ["ng2/bootstrap.js", "ng2/templateConfig.js", "ng2/directive.js", "ng2/component.js", "ng2/decorator.js", "ng2/template.js", "ng2/ngElement.js", "ngNext/injectNgOne.js", "ngNext/angular2Adapter.js"], function($__export) {
   "use strict";
-  var __moduleName = "angular/angular.js";
+  var __moduleName = "core/core.js";
   var $__exportNames = {};
   var $__exportNames = {};
   var $__exportNames = {};
@@ -60,7 +60,7 @@ System.register("angular/angular.js", ["ng2/bootstrap.js", "ng2/templateConfig.j
     execute: function() {}
   };
 });
-//# sourceURL=angular/angular.js
+//# sourceURL=core/core.js
 System.register("ng2/bootstrap.js", ["ngNext/angular2Adapter.js"], function($__export) {
   "use strict";
   var __moduleName = "ng2/bootstrap.js";
@@ -114,10 +114,7 @@ System.register("ng2/component.js", ["assert.js", "ng2/directive.js", "ng2/templ
           return [[ComponentOptions]];
         }});
       ComponentOptions = assert.define('ComponentOptions', function(options) {
-        assert(options).is(assert.structure({
-          selector: assert.string,
-          template: TemplateConfig
-        }));
+        assert(options).is(assert.structure({selector: assert.string}));
         if (options.componentServices) {
           assert(options.componentServices).is(assert.arrayOf(Object));
         }

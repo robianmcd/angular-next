@@ -1,4 +1,4 @@
-import {Component, TemplateConfig, NgElement} from 'core/core.js';
+import {Component, TemplateConfig, NgElement} from 'angular/angular.js';
 import ChildComponent from 'childComponent.js';
 import MyService from 'myService.js';
 import MyChildService from 'myChildService.js';

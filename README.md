@@ -73,9 +73,11 @@ or from the CDN
 ## Documentation
 For documentation on the supported features checkout the [Wiki](https://github.com/robianmcd/angular-next/wiki).
 
-## Roadmap
+## Changelog
 
-1. Add a [changelog](http://keepachangelog.com/)
+
+
+## Roadmap
 1. Improve unit tests and add e2e tests
 1. Look into integrating with the new [router](https://github.com/angular/router)
 1. Add better logging for common errors

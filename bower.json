@@ -1,7 +1,7 @@
 {
   "name": "angular-next",
   "description": "Angular Next brings the power of Angular 2 to Angular 1 and gives you an incremental migration path.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/robianmcd/angular-next",
   "authors": [
     "Rob <robianmcd@gmail.com>"

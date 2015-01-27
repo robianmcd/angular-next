@@ -1,4 +1,4 @@
-import {Angular2Adapter, Decorator, Component, TemplateConfig, InjectNgOne} from 'core/core.js';
+import {Angular2Adapter, Decorator, Component, TemplateConfig, InjectNgOne} from 'angular/angular.js';
 
 describe('Angular2Adapter', function () {
 

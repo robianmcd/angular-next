@@ -1,4 +1,4 @@
-import {Component, TemplateConfig, NgElement} from 'core/core.js';
+import {Component, TemplateConfig, NgElement} from 'angular/angular.js';
 import ColorDec from 'colorDec.js';
 import HelloComponent from 'helloComponent.js';
 
