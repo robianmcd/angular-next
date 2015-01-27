@@ -73,9 +73,9 @@ or from the CDN
 ## Documentation
 For documentation on the supported features checkout the [Wiki](https://github.com/robianmcd/angular-next/wiki).
 
-### Changelog
+## Changelog
 
-### [0.0.2] - 2015-01-26
+### 0.0.2 - 2015-01-26
 
 #### Changed
 - replace core/core.js module with angular/angular.js to reflect [this change in angular 2.0](https://github.com/angular/angular/commit/ec5cb3eb66aa343bbc7f67c182c1cc021ce04096)
