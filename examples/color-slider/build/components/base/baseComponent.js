@@ -1,4 +1,4 @@
-System.register("components/base/baseComponent.js", ["core/core.js", "decorators/backgroundColor.js", "services/colorUtil.js", "components/colorSettings/ng2ColorSettings.js"], function($__export) {
+System.register("components/base/baseComponent.js", ["angular/angular.js", "decorators/backgroundColor.js", "services/colorUtil.js", "components/colorSettings/ng2ColorSettings.js"], function($__export) {
   "use strict";
   var __moduleName = "components/base/baseComponent.js";
   var Component,

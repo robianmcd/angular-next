@@ -1,4 +1,4 @@
-System.register("components/colorSettings/ng2ColorSettings.js", ["assert.js", "core/core.js", "decorators/backgroundColor.js", "services/colorUtil.js", "components/base/baseComponent.js"], function($__export) {
+System.register("components/colorSettings/ng2ColorSettings.js", ["assert.js", "angular/angular.js", "decorators/backgroundColor.js", "services/colorUtil.js", "components/base/baseComponent.js"], function($__export) {
   "use strict";
   var __moduleName = "components/colorSettings/ng2ColorSettings.js";
   var assert,

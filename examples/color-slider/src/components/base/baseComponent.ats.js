@@ -1,4 +1,4 @@
-import {Component, TemplateConfig} from 'core/core.js';
+import {Component, TemplateConfig} from 'angular/angular.js';
 import BackgroundColor from 'decorators/backgroundColor.js';
 import ColorUtil from 'services/colorUtil.js';
 import Ng2ColorSettings from 'components/colorSettings/ng2ColorSettings.js';

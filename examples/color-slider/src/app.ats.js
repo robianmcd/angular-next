@@ -1,4 +1,4 @@
-import {bootstrap} from 'core/core.js';
+import {bootstrap} from 'angular/angular.js';
 import BaseComponent from 'components/base/baseComponent.js';
 
 export function main() {

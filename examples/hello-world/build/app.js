@@ -1,4 +1,4 @@
-System.register(["core/core.js"], function($__export) {
+System.register(["angular/angular.js"], function($__export) {
   "use strict";
   var bootstrap,
       Component,

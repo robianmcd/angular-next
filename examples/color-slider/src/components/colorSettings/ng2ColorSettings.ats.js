@@ -1,4 +1,4 @@
-import {Component, TemplateConfig, InjectNgOne} from 'core/core.js';
+import {Component, TemplateConfig, InjectNgOne} from 'angular/angular.js';
 import BackgroundColor from 'decorators/backgroundColor.js';
 import ColorUtil from 'services/colorUtil.js';
 import BaseComponent from 'components/base/baseComponent.js';

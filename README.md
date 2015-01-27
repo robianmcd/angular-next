@@ -25,7 +25,7 @@ index.html
 
 app.js
 ```javascript
-import {bootstrap, Component, TemplateConfig} from 'core/core.js';
+import {bootstrap, Component, TemplateConfig} from 'angular/angular.js';
 
 @Component({
     selector: 'hello-component',
@@ -73,9 +73,18 @@ or from the CDN
 ## Documentation
 For documentation on the supported features checkout the [Wiki](https://github.com/robianmcd/angular-next/wiki).
 
-## Changelog
+### Changelog
 
+### [0.0.2] - 2015-01-26
 
+#### Changed
+- replace core/core.js module with angular/angular.js to reflect [this change in angular 2.0](https://github.com/angular/angular/commit/ec5cb3eb66aa343bbc7f67c182c1cc021ce04096)
+
+#### Added
+- Started versioning releases in the dist folder
+- Created a changelog based on [keepachangelog.com](http://keepachangelog.com/)
+
+[Click here for the full changelog](https://github.com/robianmcd/angular-next/blob/gh-pages/CHANGELOG.md)
 
 ## Roadmap
 1. Improve unit tests and add e2e tests

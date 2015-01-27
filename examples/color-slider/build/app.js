@@ -1,4 +1,4 @@
-System.register("app.js", ["core/core.js", "components/base/baseComponent.js"], function($__export) {
+System.register("app.js", ["angular/angular.js", "components/base/baseComponent.js"], function($__export) {
   "use strict";
   var __moduleName = "app.js";
   var bootstrap,

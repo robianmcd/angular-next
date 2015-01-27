@@ -1,4 +1,4 @@
-import {bootstrap, Component, TemplateConfig} from 'core/core.js';
+import {bootstrap, Component, TemplateConfig} from 'angular/angular.js';
 
 @Component({
     selector: 'hello-component',
