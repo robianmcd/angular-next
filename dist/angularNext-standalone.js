@@ -6400,7 +6400,7 @@ System.register("ng2/templateConfig.js", [], function($__export) {
   };
 });
 //# sourceURL=ng2/templateConfig.js
-System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "ng2/component.js", "ng2/ngElement.js", "ngNext/injectNgOne.js"], function($__export) {
+System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "ng2/component.js", "ng2/ngElement.js", "ngNext/injectNgOne.js", "ngNext/polyfillPromise.js"], function($__export) {
   "use strict";
   var __moduleName = "ngNext/angular2Adapter.js";
   var assert,
@@ -6410,6 +6410,7 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
       ComponentClass,
       NgElement,
       InjectNgOne,
+      polyfillPromise,
       Angular2Adapter;
   return {
     setters: [function(m) {
@@ -6424,6 +6425,8 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
       NgElement = m.NgElement;
     }, function(m) {
       InjectNgOne = m.InjectNgOne;
+    }, function(m) {
+      polyfillPromise = m.default;
     }],
     execute: function() {
       Angular2Adapter = (function() {
@@ -6436,6 +6439,7 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
           this.app = angular.module(moduleName);
           this.logLevel = logLevel;
           this.registeredDirectives = new Set();
+          polyfillPromise(this.app);
         };
         return ($traceurRuntime.createClass)(Angular2Adapter, {
           bootstrapComponent: function(rootComponent) {
@@ -6722,3 +6726,45 @@ System.register("ngNext/injectNgOne.js", ["assert.js"], function($__export) {
   };
 });
 //# sourceURL=ngNext/injectNgOne.js
+System.register("ngNext/polyfillPromise.js", [], function($__export) {
+  "use strict";
+  var __moduleName = "ngNext/polyfillPromise.js";
+  function polyfillPromise(ngModule) {
+    ngModule.run(['$q', '$window', function($q, $window) {
+      $window.Promise = function(executor) {
+        return $q(executor);
+      };
+      $window.Promise.all = $q.all.bind($q);
+      $window.Promise.reject = $q.reject.bind($q);
+      $window.Promise.resolve = $q.when.bind($q);
+      $window.Promise.race = function(promises) {
+        var promiseMgr = $q.defer();
+        for (var i = 0; i < promises.length; i++) {
+          promises[i].then(function(result) {
+            if (promiseMgr) {
+              promiseMgr.resolve(result);
+              promiseMgr = null;
+            }
+          });
+          promises[i].catch(function(result) {
+            if (promiseMgr) {
+              promiseMgr.reject(result);
+              promiseMgr = null;
+            }
+          });
+        }
+        return promiseMgr.promise;
+      };
+    }]);
+    if (angular.isArray(ngModule._runBlocks)) {
+      ngModule._runBlocks.unshift(ngModule._runBlocks.pop());
+    }
+  }
+  $__export("default", polyfillPromise);
+  return {
+    setters: [],
+    execute: function() {
+    }
+  };
+});
+//# sourceURL=ngNext/polyfillPromise.js

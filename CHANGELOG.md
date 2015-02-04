@@ -2,7 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased][unreleased]
-nothing yet
+
+### Added
+- Replaced ES6 Promise implementation with one based on $q so they are integrated with Angular's digest cycle.
 
 ## [0.0.2] - 2015-01-26
 
