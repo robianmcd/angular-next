@@ -21,7 +21,7 @@ var traceurOptions = {
     annotations: true,
     types: true,
     typeAssertions: true,
-    typeAssertionModule: "assert.js"
+    typeAssertionModule: "angular2/rtts-assert.js"
 };
 
 gulp.task('build-angular-next', function () {
@@ -43,11 +43,7 @@ gulp.task('build', ['build-angular-next', 'build-test-files'], function () {
         'bower_components/es6-module-loader/dist/es6-module-loader.src.js',
         'lib/systemjs-register/extension-register.js',
         'lib/systemjs-register/initialize-register.js',
-        'lib/assert/assert.js',
         'dist/angularNext.js'])
-        .pipe(gulpIf(/assert.js/,
-            traceur({modules: 'instantiate', moduleName: true})
-        ))
         .pipe(concat('angularNext-standalone.js'))
         .pipe(gulp.dest('dist'));
 });

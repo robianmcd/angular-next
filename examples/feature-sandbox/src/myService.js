@@ -1,5 +1,5 @@
 import MyChildService from 'myChildService.js';
-import {InjectNgOne} from 'angular/angular.js';
+import {InjectNgOne} from 'angular2/angular2.js';
 
 class MyService {
     constructor(childService: MyChildService, @InjectNgOne('$log') $log) {

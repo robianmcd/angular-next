@@ -1,3 +1,5 @@
+var _global = typeof window === 'object' ? window : global;
+
 // TODO(vojta):
 // - extract into multiple files
 // - different error types
@@ -11,7 +13,35 @@ function argPositionName(i) {
     return POSITION_NAME[position] || (position + 'th');
 }
 
-var primitives = $traceurRuntime.type;
+var primitives;
+var genericType;
+
+if (typeof $traceurRuntime === 'object') {
+    primitives = $traceurRuntime.type;
+    genericType = $traceurRuntime.genericType;
+} else {
+    // Allow to work without traceur runtime as well!
+    primitives = {
+        any: {name: 'any'},
+        boolean: {name: 'boolean'},
+        number: {name: 'number'},
+        string: {name: 'string'},
+        symbol: {name: 'symbol'},
+        void: {name: 'void'}
+    };
+    genericType = function(type, args) {
+        return {
+            type: type,
+            args: args
+        }
+    }
+}
+Object.keys(primitives).forEach(function(name) {
+    primitives[name].__assertName = name;
+});
+
+export function proxy(){
+}
 
 function assertArgumentTypes(...params) {
     var actual, type;
@@ -62,6 +92,10 @@ function prettyPrint(value) {
     }
 
     if (typeof value === 'object') {
+        if (value.__assertName) {
+            return value.__assertName;
+        }
+
         if (value.map) {
             return '[' + value.map(prettyPrint).join(', ') + ']';
         }
@@ -70,15 +104,21 @@ function prettyPrint(value) {
         return '{' + properties.map((p) => p + ': ' + prettyPrint(value[p])).join(', ') + '}';
     }
 
-    return value.__
-
-    Name || value.name || value.toString();
+    return value.__assertName || value.name || value.toString();
 }
 
 function isType(value, T, errors) {
-
+    if (T && T.type) {
+        // needed for generics.
+        // TODO(tbosch): read out T.args and do assertions based on them as well!
+        T = T.type;
+    }
     if (T === primitives.void) {
         return typeof value === 'undefined';
+    }
+
+    if (_isProxy(value)) {
+        return true;
     }
 
     if (T === primitives.any || value === null) {
@@ -141,6 +181,11 @@ function isType(value, T, errors) {
     // return res;
 }
 
+function _isProxy(obj) {
+    if (!obj || !obj.constructor || !obj.constructor.annotations) return false;
+    return obj.constructor.annotations.filter((a) => a instanceof proxy).length > 0;
+}
+
 function formatErrors(errors, indent = '  ') {
     return errors.map((e) => {
         if (typeof e === 'string') return indent + '- ' + e;
@@ -164,6 +209,7 @@ function type(actual, T) {
 
         throw new Error(msg);
     }
+    return actual;
 }
 
 function returnType(actual, T) {
@@ -184,33 +230,18 @@ function returnType(actual, T) {
     return actual;
 }
 
-
 // TODO(vojta): define these with DSL?
-var string = define('string', function(value) {
+var string = type.string = define('string', function(value) {
     return typeof value === 'string';
 });
 
-// function string() {}
-// string.assert = function(value) {
-//   return typeof value === 'string';
-// };
-
-var boolean = define('boolean', function(value) {
+var boolean = type.boolean = define('boolean', function(value) {
     return typeof value === 'boolean';
 });
-// function boolean() {}
-// boolean.assert = function(value) {
-//   return typeof value === 'boolean';
-// };
 
-var number = define('number', function(value) {
+var number = type.number = define('number', function(value) {
     return typeof value === 'number';
 });
-// function number() {}
-// number.assert = function(value) {
-//   return typeof value === 'number';
-// };
-
 
 function arrayOf(...types) {
     return assert.define('array of ' + types.map(prettyPrint).join('/'), function(value) {
@@ -306,6 +337,10 @@ function assert(value) {
 
 // throw if no type provided
 assert.type = type;
+for (var prop in primitives) {
+    assert.type[prop] = primitives[prop];
+}
+assert.genericType = genericType;
 
 // throw if odd number of args
 assert.argumentTypes = assertArgumentTypes;

@@ -1,4 +1,4 @@
-import {Decorator, NgElement} from 'angular/angular.js';
+import {Decorator, NgElement} from 'angular2/angular2.js';
 
 @Decorator({
     selector: '[color]',

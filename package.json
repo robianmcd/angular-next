@@ -19,8 +19,12 @@
     "karma-jasmine": "~0.3.3",
     "karma-firefox-launcher": "~0.1.4"
   },
-  "main": "src/angular/angular.js",
-  "dependencies": {
-    "rtts-assert": "~2.0.0-alpha.6"
+  "main": false,
+  "directories": {
+    "lib": "src/angular2"
+  },
+  "format": "es6",
+  "map": {
+    "angular2": "."
   }
 }

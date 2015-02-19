@@ -1,4 +1,4 @@
-import {bootstrap} from 'angular/angular.js';
+import {bootstrap} from 'angular2/angular2.js';
 import HelloComponent from 'helloComponent.js';
 
 export function main() {

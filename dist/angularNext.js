@@ -1,6 +1,6 @@
-System.register("angular/angular.js", ["ng2/bootstrap.js", "ng2/templateConfig.js", "ng2/directive.js", "ng2/component.js", "ng2/decorator.js", "ng2/template.js", "ng2/ngElement.js", "ngNext/injectNgOne.js", "ngNext/angular2Adapter.js"], function($__export) {
+System.register("angular2/angular2.js", ["angular2/ng2/bootstrap.js", "angular2/ng2/templateConfig.js", "angular2/ng2/directive.js", "angular2/ng2/component.js", "angular2/ng2/decorator.js", "angular2/ng2/template.js", "angular2/ng2/ngElement.js", "angular2/ngNext/injectNgOne.js", "angular2/ngNext/angular2Adapter.js"], function($__export) {
   "use strict";
-  var __moduleName = "angular/angular.js";
+  var __moduleName = "angular2/angular2.js";
   var $__exportNames = {};
   var $__exportNames = {};
   var $__exportNames = {};
@@ -60,273 +60,284 @@ System.register("angular/angular.js", ["ng2/bootstrap.js", "ng2/templateConfig.j
     execute: function() {}
   };
 });
-//# sourceURL=angular/angular.js
-System.register("ng2/bootstrap.js", ["ngNext/angular2Adapter.js"], function($__export) {
+//# sourceURL=angular2/angular2.js
+System.register("angular2/rtts-assert.js", [], function($__export) {
   "use strict";
-  var __moduleName = "ng2/bootstrap.js";
-  var Angular2Adapter;
-  function bootstrap(component) {
-    var config = arguments[1] !== (void 0) ? arguments[1] : {};
-    var adapter = new Angular2Adapter(config);
-    adapter.bootstrapComponent(component);
+  var __moduleName = "angular2/rtts-assert.js";
+  var _global,
+      POSITION_NAME,
+      primitives,
+      genericType,
+      string,
+      boolean,
+      number,
+      currentStack,
+      prop;
+  function argPositionName(i) {
+    var position = (i / 2) + 1;
+    return POSITION_NAME[position] || (position + 'th');
   }
-  $__export("bootstrap", bootstrap);
-  return {
-    setters: [function(m) {
-      Angular2Adapter = m.Angular2Adapter;
-    }],
-    execute: function() {
-      ;
+  function proxy() {}
+  function assertArgumentTypes() {
+    for (var params = [],
+        $__2 = 0; $__2 < arguments.length; $__2++)
+      params[$__2] = arguments[$__2];
+    var actual,
+        type;
+    var currentArgErrors;
+    var errors = [];
+    var msg;
+    for (var i = 0,
+        l = params.length; i < l; i = i + 2) {
+      actual = params[i];
+      type = params[i + 1];
+      currentArgErrors = [];
+      if (!isType(actual, type, currentArgErrors)) {
+        errors.push(argPositionName(i) + ' argument has to be an instance of ' + prettyPrint(type) + ', got ' + prettyPrint(actual));
+        if (currentArgErrors.length) {
+          errors.push(currentArgErrors);
+        }
+      }
     }
-  };
-});
-//# sourceURL=ng2/bootstrap.js
-System.register("ng2/component.js", ["assert.js", "ng2/directive.js", "ng2/templateConfig.js"], function($__export) {
-  "use strict";
-  var __moduleName = "ng2/component.js";
-  var assert,
-      Directive,
-      TemplateConfig,
-      Component,
-      ComponentOptions,
-      ComponentClass;
-  return {
-    setters: [function(m) {
-      assert = m.assert;
-    }, function(m) {
-      Directive = m.Directive;
-    }, function(m) {
-      TemplateConfig = m.TemplateConfig;
-    }],
-    execute: function() {
-      Component = (function($__super) {
-        var Component = function Component(options) {
-          assert.argumentTypes(options, ComponentOptions);
-          this.componentServices = options.componentServices;
-          this.template = options.template;
-          delete options.componentServices;
-          delete options.template;
-          $traceurRuntime.superConstructor(Component).call(this, options);
-        };
-        return ($traceurRuntime.createClass)(Component, {}, {}, $__super);
-      }(Directive));
-      Object.defineProperty(Component, "parameters", {get: function() {
-          return [[ComponentOptions]];
-        }});
-      ComponentOptions = assert.define('ComponentOptions', function(options) {
-        assert(options).is(assert.structure({
-          selector: assert.string,
-          template: TemplateConfig
-        }));
-        if (options.componentServices) {
-          assert(options.componentServices).is(assert.arrayOf(Object));
-        }
-      });
-      ComponentClass = assert.define('ComponentClass', function(componentClass) {
-        assert.type(componentClass, Object);
-        var numDirAnnos;
-        var numComponentAnnos;
-        if (componentClass.annotations) {
-          numDirAnnos = componentClass.annotations.filter((function(anno) {
-            return anno instanceof Directive;
-          })).length;
-          numComponentAnnos = componentClass.annotations.filter((function(anno) {
-            return anno instanceof Component;
-          })).length;
-        } else {
-          numDirAnnos = 0;
-          numComponentAnnos = 0;
-        }
-        if (numComponentAnnos === 0) {
-          assert.fail('A ComponentClass must have a Component annotation');
-        }
-        if (numDirAnnos > 1) {
-          asssert.fail('You cannot have more than one Directive annotations on a class.');
-        }
-      });
-      $__export("Component", Component), $__export("ComponentOptions", ComponentOptions), $__export("ComponentClass", ComponentClass);
+    if (errors.length) {
+      throw new Error('Invalid arguments given!\n' + formatErrors(errors));
     }
-  };
-});
-//# sourceURL=ng2/component.js
-System.register("ng2/decorator.js", ["assert.js", "ng2/directive.js"], function($__export) {
-  "use strict";
-  var __moduleName = "ng2/decorator.js";
-  var assert,
-      Directive,
-      Decorator,
-      DecoratorClass;
-  return {
-    setters: [function(m) {
-      assert = m.assert;
-    }, function(m) {
-      Directive = m.Directive;
-    }],
-    execute: function() {
-      Decorator = (function($__super) {
-        var Decorator = function Decorator(options) {
-          assert.argumentTypes(options, Object);
-          $traceurRuntime.superConstructor(Decorator).call(this, options);
-        };
-        return ($traceurRuntime.createClass)(Decorator, {}, {}, $__super);
-      }(Directive));
-      Object.defineProperty(Decorator, "parameters", {get: function() {
-          return [[Object]];
-        }});
-      DecoratorClass = assert.define('DecoratorClass', function(decoratorClass) {
-        assert.type(decoratorClass, Object);
-        var numDirAnnos;
-        var numComponentAnnos;
-        if (decoratorClass.annotations) {
-          numDirAnnos = decoratorClass.annotations.filter((function(anno) {
-            return anno instanceof Directive;
-          })).length;
-          numComponentAnnos = decoratorClass.annotations.filter((function(anno) {
-            return anno instanceof Decorator;
-          })).length;
-        } else {
-          numDirAnnos = 0;
-          numComponentAnnos = 0;
-        }
-        if (numComponentAnnos === 0) {
-          assert.fail('A DecoratorClass must have a Decorator annotation');
-        }
-        if (numDirAnnos > 1) {
-          asssert.fail('You cannot have more than one Directive annotations on a class.');
-        }
-      });
-      $__export("Decorator", Decorator), $__export("DecoratorClass", DecoratorClass);
+  }
+  function prettyPrint(value) {
+    if (typeof value === 'undefined') {
+      return 'undefined';
     }
-  };
-});
-//# sourceURL=ng2/decorator.js
-System.register("ng2/directive.js", ["assert.js"], function($__export) {
-  "use strict";
-  var __moduleName = "ng2/directive.js";
-  var assert,
-      Directive,
-      DirectiveOptions,
-      DirectiveClass;
-  return {
-    setters: [function(m) {
-      assert = m.assert;
-    }],
-    execute: function() {
-      Directive = (function() {
-        var Directive = function Directive(options) {
-          assert.argumentTypes(options, DirectiveOptions);
-          this.selector = options.selector;
-          this.bind = options.bind;
-          this.controllerAs = options.controllerAs || 'ctrl';
-          this.observe = options.observe;
-        };
-        return ($traceurRuntime.createClass)(Directive, {}, {});
-      }());
-      Object.defineProperty(Directive, "parameters", {get: function() {
-          return [[DirectiveOptions]];
-        }});
-      DirectiveOptions = assert.define('DirectiveOptions', function(options) {
-        assert(options).is(assert.structure({selector: assert.string}));
-        if (options.bind) {
-          assert.type(options.bind, Object);
+    if (typeof value === 'string') {
+      return '"' + value + '"';
+    }
+    if (typeof value === 'boolean') {
+      return value.toString();
+    }
+    if (value === null) {
+      return 'null';
+    }
+    if (typeof value === 'object') {
+      if (value.__assertName) {
+        return value.__assertName;
+      }
+      if (value.map) {
+        return '[' + value.map(prettyPrint).join(', ') + ']';
+      }
+      var properties = Object.keys(value);
+      return '{' + properties.map((function(p) {
+        return p + ': ' + prettyPrint(value[p]);
+      })).join(', ') + '}';
+    }
+    return value.__assertName || value.name || value.toString();
+  }
+  function isType(value, T, errors) {
+    if (T && T.type) {
+      T = T.type;
+    }
+    if (T === primitives.void) {
+      return typeof value === 'undefined';
+    }
+    if (_isProxy(value)) {
+      return true;
+    }
+    if (T === primitives.any || value === null) {
+      return true;
+    }
+    if (T === primitives.string) {
+      return typeof value === 'string';
+    }
+    if (T === primitives.number) {
+      return typeof value === 'number';
+    }
+    if (T === primitives.boolean) {
+      return typeof value === 'boolean';
+    }
+    if (typeof T.assert === 'function') {
+      var parentStack = currentStack;
+      var isValid;
+      currentStack = errors;
+      try {
+        isValid = T.assert(value);
+      } catch (e) {
+        fail(e.message);
+        isValid = false;
+      }
+      currentStack = parentStack;
+      if (typeof isValid === 'undefined') {
+        isValid = errors.length === 0;
+      }
+      return isValid;
+    }
+    return value instanceof T;
+  }
+  function _isProxy(obj) {
+    if (!obj || !obj.constructor || !obj.constructor.annotations)
+      return false;
+    return obj.constructor.annotations.filter((function(a) {
+      return a instanceof proxy;
+    })).length > 0;
+  }
+  function formatErrors(errors) {
+    var indent = arguments[1] !== (void 0) ? arguments[1] : '  ';
+    return errors.map((function(e) {
+      if (typeof e === 'string')
+        return indent + '- ' + e;
+      return formatErrors(e, indent + '  ');
+    })).join('\n');
+  }
+  function type(actual, T) {
+    var errors = [];
+    if (!isType(actual, T, errors)) {
+      var msg = 'Expected an instance of ' + prettyPrint(T) + ', got ' + prettyPrint(actual) + '!';
+      if (errors.length) {
+        msg += '\n' + formatErrors(errors);
+      }
+      throw new Error(msg);
+    }
+    return actual;
+  }
+  function returnType(actual, T) {
+    var errors = [];
+    if (!isType(actual, T, errors)) {
+      var msg = 'Expected to return an instance of ' + prettyPrint(T) + ', got ' + prettyPrint(actual) + '!';
+      if (errors.length) {
+        msg += '\n' + formatErrors(errors);
+      }
+      throw new Error(msg);
+    }
+    return actual;
+  }
+  function arrayOf() {
+    for (var types = [],
+        $__3 = 0; $__3 < arguments.length; $__3++)
+      types[$__3] = arguments[$__3];
+    return assert.define('array of ' + types.map(prettyPrint).join('/'), function(value) {
+      var $__5;
+      if (assert(value).is(Array)) {
+        for (var $__0 = value[$traceurRuntime.toProperty(Symbol.iterator)](),
+            $__1; !($__1 = $__0.next()).done; ) {
+          var item = $__1.value;
+          {
+            ($__5 = assert(item)).is.apply($__5, $traceurRuntime.spread(types));
+          }
         }
-        if (options.controllerAs) {
-          assert.type(options.controllerAs, assert.string);
+      }
+    });
+  }
+  function structure(definition) {
+    var properties = Object.keys(definition);
+    return assert.define('object with properties ' + properties.join(', '), function(value) {
+      if (assert(value).is(Object)) {
+        for (var $__0 = properties[$traceurRuntime.toProperty(Symbol.iterator)](),
+            $__1; !($__1 = $__0.next()).done; ) {
+          var property = $__1.value;
+          {
+            assert(value[property]).is(definition[property]);
+          }
         }
-        if (options.observe) {
-          assert.type(options.observe, Object);
-        }
-        for (var key in options) {
-          if (options.hasOwnProperty(key)) {
-            if (key !== 'selector' && key !== 'bind' && key !== 'controllerAs' && key !== 'observe') {
-              assert.fail((key + " is not a valid directive field"));
+      }
+    });
+  }
+  function fail(message) {
+    currentStack.push(message);
+  }
+  function define(classOrName, check) {
+    var cls = classOrName;
+    if (typeof classOrName === 'string') {
+      cls = function() {};
+      cls.__assertName = classOrName;
+    }
+    cls.assert = function(value) {
+      return check(value);
+    };
+    return cls;
+  }
+  function assert(value) {
+    return {is: function is() {
+        var $__5;
+        for (var types = [],
+            $__4 = 0; $__4 < arguments.length; $__4++)
+          types[$__4] = arguments[$__4];
+        var allErrors = [];
+        var errors;
+        for (var $__0 = types[$traceurRuntime.toProperty(Symbol.iterator)](),
+            $__1; !($__1 = $__0.next()).done; ) {
+          var type = $__1.value;
+          {
+            errors = [];
+            if (isType(value, type, errors)) {
+              return true;
+            }
+            allErrors.push(prettyPrint(value) + ' is not instance of ' + prettyPrint(type));
+            if (errors.length) {
+              allErrors.push(errors);
             }
           }
         }
-      });
-      DirectiveClass = assert.define('DirectiveClass', function(dirClass) {
-        assert.type(dirClass, Object);
-        var numDirAnnos;
-        if (dirClass.annotations) {
-          numDirAnnos = dirClass.annotations.filter((function(anno) {
-            return anno instanceof Directive;
-          })).length;
-        } else {
-          numDirAnnos = 0;
-        }
-        if (numDirAnnos === 0) {
-          assert.fail('A DirectiveClass must have a Directive annotation');
-        } else if (numDirAnnos > 1) {
-          asssert.fail('You cannot have more than one Directive annotations on a class.');
-        }
-      });
-      $__export("Directive", Directive), $__export("DirectiveOptions", DirectiveOptions), $__export("DirectiveClass", DirectiveClass);
-    }
-  };
-});
-//# sourceURL=ng2/directive.js
-System.register("ng2/ngElement.js", [], function($__export) {
-  "use strict";
-  var __moduleName = "ng2/ngElement.js";
-  var NgElement;
+        ($__5 = currentStack).push.apply($__5, $traceurRuntime.spread(allErrors));
+        return false;
+      }};
+  }
+  $__export("proxy", proxy);
   return {
     setters: [],
     execute: function() {
-      NgElement = (function() {
-        var NgElement = function NgElement($element) {
-          this.domElement = $element[0];
+      _global = typeof window === 'object' ? window : global;
+      POSITION_NAME = ['', '1st', '2nd', '3rd'];
+      if (typeof $traceurRuntime === 'object') {
+        primitives = $traceurRuntime.type;
+        genericType = $traceurRuntime.genericType;
+      } else {
+        primitives = {
+          any: {name: 'any'},
+          boolean: {name: 'boolean'},
+          number: {name: 'number'},
+          string: {name: 'string'},
+          symbol: {name: 'symbol'},
+          void: {name: 'void'}
         };
-        return ($traceurRuntime.createClass)(NgElement, {}, {});
-      }());
-      $__export("NgElement", NgElement);
+        genericType = function(type, args) {
+          return {
+            type: type,
+            args: args
+          };
+        };
+      }
+      Object.keys(primitives).forEach(function(name) {
+        primitives[name].__assertName = name;
+      });
+      string = type.string = define('string', function(value) {
+        return typeof value === 'string';
+      });
+      boolean = type.boolean = define('boolean', function(value) {
+        return typeof value === 'boolean';
+      });
+      number = type.number = define('number', function(value) {
+        return typeof value === 'number';
+      });
+      currentStack = [];
+      assert.type = type;
+      for (prop in primitives) {
+        assert.type[prop] = primitives[prop];
+      }
+      assert.genericType = genericType;
+      assert.argumentTypes = assertArgumentTypes;
+      assert.returnType = returnType;
+      assert.define = define;
+      assert.fail = fail;
+      assert.string = string;
+      assert.number = number;
+      assert.boolean = boolean;
+      assert.arrayOf = arrayOf;
+      assert.structure = structure;
+      $__export("assert", assert);
     }
   };
 });
-//# sourceURL=ng2/ngElement.js
-System.register("ng2/template.js", ["ng2/directive.js"], function($__export) {
+//# sourceURL=angular2/rtts-assert.js
+System.register("angular2/ngNext/angular2Adapter.js", ["angular2/rtts-assert.js", "angular2/ng2/directive.js", "angular2/ng2/component.js", "angular2/ng2/ngElement.js", "angular2/ngNext/injectNgOne.js", "angular2/ngNext/polyfillPromise.js"], function($__export) {
   "use strict";
-  var __moduleName = "ng2/template.js";
-  var Directive,
-      Template;
-  return {
-    setters: [function(m) {
-      Directive = m.Directive;
-    }],
-    execute: function() {
-      Template = (function($__super) {
-        var Template = function Template(options) {
-          $traceurRuntime.superConstructor(Template).call(this, options);
-        };
-        return ($traceurRuntime.createClass)(Template, {}, {}, $__super);
-      }(Directive));
-      $__export("Template", Template);
-    }
-  };
-});
-//# sourceURL=ng2/template.js
-System.register("ng2/templateConfig.js", [], function($__export) {
-  "use strict";
-  var __moduleName = "ng2/templateConfig.js";
-  var TemplateConfig;
-  return {
-    setters: [],
-    execute: function() {
-      TemplateConfig = (function() {
-        var TemplateConfig = function TemplateConfig(options) {
-          this.inline = options.inline;
-          this.url = options.url;
-          this.directives = options.directives;
-        };
-        return ($traceurRuntime.createClass)(TemplateConfig, {}, {});
-      }());
-      $__export("TemplateConfig", TemplateConfig);
-    }
-  };
-});
-//# sourceURL=ng2/templateConfig.js
-System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "ng2/component.js", "ng2/ngElement.js", "ngNext/injectNgOne.js", "ngNext/polyfillPromise.js"], function($__export) {
-  "use strict";
-  var __moduleName = "ngNext/angular2Adapter.js";
+  var __moduleName = "angular2/ngNext/angular2Adapter.js";
   var assert,
       Directive,
       DirectiveClass,
@@ -624,10 +635,10 @@ System.register("ngNext/angular2Adapter.js", ["assert.js", "ng2/directive.js", "
     }
   };
 });
-//# sourceURL=ngNext/angular2Adapter.js
-System.register("ngNext/injectNgOne.js", ["assert.js"], function($__export) {
+//# sourceURL=angular2/ngNext/angular2Adapter.js
+System.register("angular2/ngNext/injectNgOne.js", ["angular2/rtts-assert.js"], function($__export) {
   "use strict";
-  var __moduleName = "ngNext/injectNgOne.js";
+  var __moduleName = "angular2/ngNext/injectNgOne.js";
   var assert,
       InjectNgOne;
   return {
@@ -649,10 +660,10 @@ System.register("ngNext/injectNgOne.js", ["assert.js"], function($__export) {
     }
   };
 });
-//# sourceURL=ngNext/injectNgOne.js
-System.register("ngNext/polyfillPromise.js", [], function($__export) {
+//# sourceURL=angular2/ngNext/injectNgOne.js
+System.register("angular2/ngNext/polyfillPromise.js", [], function($__export) {
   "use strict";
-  var __moduleName = "ngNext/polyfillPromise.js";
+  var __moduleName = "angular2/ngNext/polyfillPromise.js";
   function polyfillPromise(ngModule) {
     ngModule.run(['$q', '$window', function($q, $window) {
       $window.Promise = function(executor) {
@@ -691,4 +702,267 @@ System.register("ngNext/polyfillPromise.js", [], function($__export) {
     }
   };
 });
-//# sourceURL=ngNext/polyfillPromise.js
+//# sourceURL=angular2/ngNext/polyfillPromise.js
+System.register("angular2/ng2/bootstrap.js", ["angular2/ngNext/angular2Adapter.js"], function($__export) {
+  "use strict";
+  var __moduleName = "angular2/ng2/bootstrap.js";
+  var Angular2Adapter;
+  function bootstrap(component) {
+    var config = arguments[1] !== (void 0) ? arguments[1] : {};
+    var adapter = new Angular2Adapter(config);
+    adapter.bootstrapComponent(component);
+  }
+  $__export("bootstrap", bootstrap);
+  return {
+    setters: [function(m) {
+      Angular2Adapter = m.Angular2Adapter;
+    }],
+    execute: function() {
+      ;
+    }
+  };
+});
+//# sourceURL=angular2/ng2/bootstrap.js
+System.register("angular2/ng2/component.js", ["angular2/rtts-assert.js", "angular2/ng2/directive.js", "angular2/ng2/templateConfig.js"], function($__export) {
+  "use strict";
+  var __moduleName = "angular2/ng2/component.js";
+  var assert,
+      Directive,
+      TemplateConfig,
+      Component,
+      ComponentOptions,
+      ComponentClass;
+  return {
+    setters: [function(m) {
+      assert = m.assert;
+    }, function(m) {
+      Directive = m.Directive;
+    }, function(m) {
+      TemplateConfig = m.TemplateConfig;
+    }],
+    execute: function() {
+      Component = (function($__super) {
+        var Component = function Component(options) {
+          assert.argumentTypes(options, ComponentOptions);
+          this.componentServices = options.componentServices;
+          this.template = options.template;
+          delete options.componentServices;
+          delete options.template;
+          $traceurRuntime.superConstructor(Component).call(this, options);
+        };
+        return ($traceurRuntime.createClass)(Component, {}, {}, $__super);
+      }(Directive));
+      Object.defineProperty(Component, "parameters", {get: function() {
+          return [[ComponentOptions]];
+        }});
+      ComponentOptions = assert.define('ComponentOptions', function(options) {
+        assert(options).is(assert.structure({
+          selector: assert.string,
+          template: TemplateConfig
+        }));
+        if (options.componentServices) {
+          assert(options.componentServices).is(assert.arrayOf(Object));
+        }
+      });
+      ComponentClass = assert.define('ComponentClass', function(componentClass) {
+        assert.type(componentClass, Object);
+        var numDirAnnos;
+        var numComponentAnnos;
+        if (componentClass.annotations) {
+          numDirAnnos = componentClass.annotations.filter((function(anno) {
+            return anno instanceof Directive;
+          })).length;
+          numComponentAnnos = componentClass.annotations.filter((function(anno) {
+            return anno instanceof Component;
+          })).length;
+        } else {
+          numDirAnnos = 0;
+          numComponentAnnos = 0;
+        }
+        if (numComponentAnnos === 0) {
+          assert.fail('A ComponentClass must have a Component annotation');
+        }
+        if (numDirAnnos > 1) {
+          asssert.fail('You cannot have more than one Directive annotations on a class.');
+        }
+      });
+      $__export("Component", Component), $__export("ComponentOptions", ComponentOptions), $__export("ComponentClass", ComponentClass);
+    }
+  };
+});
+//# sourceURL=angular2/ng2/component.js
+System.register("angular2/ng2/decorator.js", ["angular2/rtts-assert.js", "angular2/ng2/directive.js"], function($__export) {
+  "use strict";
+  var __moduleName = "angular2/ng2/decorator.js";
+  var assert,
+      Directive,
+      Decorator,
+      DecoratorClass;
+  return {
+    setters: [function(m) {
+      assert = m.assert;
+    }, function(m) {
+      Directive = m.Directive;
+    }],
+    execute: function() {
+      Decorator = (function($__super) {
+        var Decorator = function Decorator(options) {
+          assert.argumentTypes(options, Object);
+          $traceurRuntime.superConstructor(Decorator).call(this, options);
+        };
+        return ($traceurRuntime.createClass)(Decorator, {}, {}, $__super);
+      }(Directive));
+      Object.defineProperty(Decorator, "parameters", {get: function() {
+          return [[Object]];
+        }});
+      DecoratorClass = assert.define('DecoratorClass', function(decoratorClass) {
+        assert.type(decoratorClass, Object);
+        var numDirAnnos;
+        var numComponentAnnos;
+        if (decoratorClass.annotations) {
+          numDirAnnos = decoratorClass.annotations.filter((function(anno) {
+            return anno instanceof Directive;
+          })).length;
+          numComponentAnnos = decoratorClass.annotations.filter((function(anno) {
+            return anno instanceof Decorator;
+          })).length;
+        } else {
+          numDirAnnos = 0;
+          numComponentAnnos = 0;
+        }
+        if (numComponentAnnos === 0) {
+          assert.fail('A DecoratorClass must have a Decorator annotation');
+        }
+        if (numDirAnnos > 1) {
+          asssert.fail('You cannot have more than one Directive annotations on a class.');
+        }
+      });
+      $__export("Decorator", Decorator), $__export("DecoratorClass", DecoratorClass);
+    }
+  };
+});
+//# sourceURL=angular2/ng2/decorator.js
+System.register("angular2/ng2/directive.js", ["angular2/rtts-assert.js"], function($__export) {
+  "use strict";
+  var __moduleName = "angular2/ng2/directive.js";
+  var assert,
+      Directive,
+      DirectiveOptions,
+      DirectiveClass;
+  return {
+    setters: [function(m) {
+      assert = m.assert;
+    }],
+    execute: function() {
+      Directive = (function() {
+        var Directive = function Directive(options) {
+          assert.argumentTypes(options, DirectiveOptions);
+          this.selector = options.selector;
+          this.bind = options.bind;
+          this.controllerAs = options.controllerAs || 'ctrl';
+          this.observe = options.observe;
+        };
+        return ($traceurRuntime.createClass)(Directive, {}, {});
+      }());
+      Object.defineProperty(Directive, "parameters", {get: function() {
+          return [[DirectiveOptions]];
+        }});
+      DirectiveOptions = assert.define('DirectiveOptions', function(options) {
+        assert(options).is(assert.structure({selector: assert.string}));
+        if (options.bind) {
+          assert.type(options.bind, Object);
+        }
+        if (options.controllerAs) {
+          assert.type(options.controllerAs, assert.string);
+        }
+        if (options.observe) {
+          assert.type(options.observe, Object);
+        }
+        for (var key in options) {
+          if (options.hasOwnProperty(key)) {
+            if (key !== 'selector' && key !== 'bind' && key !== 'controllerAs' && key !== 'observe') {
+              assert.fail((key + " is not a valid directive field"));
+            }
+          }
+        }
+      });
+      DirectiveClass = assert.define('DirectiveClass', function(dirClass) {
+        assert.type(dirClass, Object);
+        var numDirAnnos;
+        if (dirClass.annotations) {
+          numDirAnnos = dirClass.annotations.filter((function(anno) {
+            return anno instanceof Directive;
+          })).length;
+        } else {
+          numDirAnnos = 0;
+        }
+        if (numDirAnnos === 0) {
+          assert.fail('A DirectiveClass must have a Directive annotation');
+        } else if (numDirAnnos > 1) {
+          asssert.fail('You cannot have more than one Directive annotations on a class.');
+        }
+      });
+      $__export("Directive", Directive), $__export("DirectiveOptions", DirectiveOptions), $__export("DirectiveClass", DirectiveClass);
+    }
+  };
+});
+//# sourceURL=angular2/ng2/directive.js
+System.register("angular2/ng2/ngElement.js", [], function($__export) {
+  "use strict";
+  var __moduleName = "angular2/ng2/ngElement.js";
+  var NgElement;
+  return {
+    setters: [],
+    execute: function() {
+      NgElement = (function() {
+        var NgElement = function NgElement($element) {
+          this.domElement = $element[0];
+        };
+        return ($traceurRuntime.createClass)(NgElement, {}, {});
+      }());
+      $__export("NgElement", NgElement);
+    }
+  };
+});
+//# sourceURL=angular2/ng2/ngElement.js
+System.register("angular2/ng2/template.js", ["angular2/ng2/directive.js"], function($__export) {
+  "use strict";
+  var __moduleName = "angular2/ng2/template.js";
+  var Directive,
+      Template;
+  return {
+    setters: [function(m) {
+      Directive = m.Directive;
+    }],
+    execute: function() {
+      Template = (function($__super) {
+        var Template = function Template(options) {
+          $traceurRuntime.superConstructor(Template).call(this, options);
+        };
+        return ($traceurRuntime.createClass)(Template, {}, {}, $__super);
+      }(Directive));
+      $__export("Template", Template);
+    }
+  };
+});
+//# sourceURL=angular2/ng2/template.js
+System.register("angular2/ng2/templateConfig.js", [], function($__export) {
+  "use strict";
+  var __moduleName = "angular2/ng2/templateConfig.js";
+  var TemplateConfig;
+  return {
+    setters: [],
+    execute: function() {
+      TemplateConfig = (function() {
+        var TemplateConfig = function TemplateConfig(options) {
+          this.inline = options.inline;
+          this.url = options.url;
+          this.directives = options.directives;
+        };
+        return ($traceurRuntime.createClass)(TemplateConfig, {}, {});
+      }());
+      $__export("TemplateConfig", TemplateConfig);
+    }
+  };
+});
+//# sourceURL=angular2/ng2/templateConfig.js

@@ -1,8 +1,8 @@
-import {Directive, DirectiveClass} from 'ng2/directive.js';
-import {Component, ComponentClass} from 'ng2/component.js';
-import {NgElement} from 'ng2/ngElement.js';
-import {InjectNgOne} from 'ngNext/injectNgOne.js';
-import polyfillPromise from 'ngNext/polyfillPromise.js';
+import {Directive, DirectiveClass} from 'angular2/ng2/directive.js';
+import {Component, ComponentClass} from 'angular2/ng2/component.js';
+import {NgElement} from 'angular2/ng2/ngElement.js';
+import {InjectNgOne} from 'angular2/ngNext/injectNgOne.js';
+import polyfillPromise from 'angular2/ngNext/polyfillPromise.js';
 
 class Angular2Adapter {
     constructor({moduleName, logLevel = 0}) {
