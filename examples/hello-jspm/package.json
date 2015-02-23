@@ -1,0 +1,11 @@
+{
+  "jspm": {
+    "directories": {
+      "lib": ".",
+      "packages": "jspm_packages"
+    },
+    "dependencies": {
+      "angular-next": "github:robianmcd/angular-next@cea62e2f55b1ae826c357244c82c61b2c3e6df64"
+    }
+  }
+}

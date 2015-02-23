@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - Replaced ES6 Promise implementation with one based on $q so they are integrated with Angular's digest cycle.
+- Created an example using jspm
 
 ## [0.0.2] - 2015-01-26
 

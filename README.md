@@ -50,6 +50,9 @@ export function main() {
 **[Hello World](https://github.com/robianmcd/angular-next/tree/gh-pages/examples/hello-world)**
 * A working demo of the hello world example shown above.
 
+**[Hello jspm](https://github.com/robianmcd/angular-next/tree/gh-pages/examples/hello-jspm)**
+* Uses [jspm](http://jspm.io/) to load the Angular Next modules into the browser.
+
 **[Color Slider](https://github.com/robianmcd/angular-next/tree/gh-pages/examples/color-slider)**
 * Demonstrates usage of: components, decorators, services, bootstrapping, selector, bind, observe, NgElement, injecting parent directives, injecting Angular 1 services, gulp, Traceur, etc.
 
@@ -68,6 +71,11 @@ or from the CDN
 
 ```html
 <script src="//robianmcd.github.io/angular-next/dist/angularNext-standalone.js"></script>
+```
+
+or from jspm. See the [jspm example](https://github.com/robianmcd/angular-next/tree/gh-pages/examples/hello-jspm) for details.
+```sh
+jspm install angular2=angular-next
 ```
 
 ## Documentation
