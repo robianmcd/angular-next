@@ -10,9 +10,9 @@
     "gulp": "~3.8.10",
     "gulp-concat": "~2.4.1",
     "gulp-insert": "~0.4.0",
-    "gulp-traceur": "~0.15.0",
-    "gulp-if": "~1.2.5",
+    "gulp-traceur": "0.17.0",
     "gulp-rename": "~1.2.0",
+    "gulp-replace": "~0.5.3",
     "karma": "~0.12.30",
     "gulp-karma": "0.0.4",
     "jasmine-core": "~2.1.3",
@@ -21,10 +21,7 @@
   },
   "main": false,
   "directories": {
-    "lib": "src/angular2"
+    "lib": "dist/es6/angular2"
   },
-  "format": "es6",
-  "map": {
-    "angular2": "."
-  }
+  "format": "es6"
 }

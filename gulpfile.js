@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     traceur = require('gulp-traceur'),
     concat = require('gulp-concat'),
     karma = require('gulp-karma'),
-    gulpIf = require('gulp-if');
+    replace = require('gulp-replace');
 
 var appFiles = 'src/**/*.js';
 var testFiles = 'test/**/*.js';
@@ -25,10 +25,14 @@ var traceurOptions = {
 };
 
 gulp.task('build-angular-next', function () {
+    gulp.src(appFiles)
+        .pipe(replace(/(import|export)( .*? from '.*?)\.js(';)/g, '$1$2$3'))
+        .pipe(gulp.dest('dist/es6'));
+
     return gulp.src(appFiles)
         .pipe(traceur(traceurOptions))
         .pipe(concat('angularNext.js'))
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build-test-files', function () {

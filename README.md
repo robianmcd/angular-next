@@ -25,7 +25,7 @@ index.html
 
 app.js
 ```javascript
-import {bootstrap, Component, TemplateConfig} from 'angular/angular.js';
+import {bootstrap, Component, TemplateConfig} from 'angular2/angular2.js';
 
 @Component({
     selector: 'hello-component',
