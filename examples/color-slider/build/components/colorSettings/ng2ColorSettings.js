@@ -1,9 +1,9 @@
-System.register("components/colorSettings/ng2ColorSettings.js", ["assert.js", "angular/angular.js", "decorators/backgroundColor.js", "services/colorUtil.js", "components/base/baseComponent.js"], function($__export) {
+System.register("components/colorSettings/ng2ColorSettings.js", ["angular2/rtts-assert.js", "angular2/angular2.js", "decorators/backgroundColor.js", "services/colorUtil.js", "components/base/baseComponent.js"], function($__export) {
   "use strict";
   var __moduleName = "components/colorSettings/ng2ColorSettings.js";
   var assert,
       Component,
-      TemplateConfig,
+      Template,
       InjectNgOne,
       BackgroundColor,
       ColorUtil,
@@ -14,7 +14,7 @@ System.register("components/colorSettings/ng2ColorSettings.js", ["assert.js", "a
       assert = m.assert;
     }, function(m) {
       Component = m.Component;
-      TemplateConfig = m.TemplateConfig;
+      Template = m.Template;
       InjectNgOne = m.InjectNgOne;
     }, function(m) {
       BackgroundColor = m.default;
@@ -44,12 +44,9 @@ System.register("components/colorSettings/ng2ColorSettings.js", ["assert.js", "a
         }, {});
       }());
       Object.defineProperty(Ng2ColorSettings, "annotations", {get: function() {
-          return [new Component({
-            selector: 'ng2-color-settings',
-            template: new TemplateConfig({
-              url: 'components/colorSettings/colorSettings.html',
-              directives: [BackgroundColor]
-            })
+          return [new Component({selector: 'ng2-color-settings'}), new Template({
+            url: 'components/colorSettings/colorSettings.html',
+            directives: [BackgroundColor]
           })];
         }});
       Object.defineProperty(Ng2ColorSettings, "parameters", {get: function() {

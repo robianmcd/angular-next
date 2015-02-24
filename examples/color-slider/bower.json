@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "angular": "1.3.8",
-    "angular-next": "0.0.2",
+    "angular-next": "0.0.3",
     "angular-material": "~0.6.1"
   }
 }

@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Replaced template option in Component directives with a new `@Template` annotation
+- Renamed assert.js module to angular2/rtts-assert.js
 
 ## [0.0.2] - 2015-01-26
 

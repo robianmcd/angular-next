@@ -15,7 +15,7 @@ index.html
 <hello-component></hello-component>
 
 <script src="//robianmcd.github.io/angular-next/dist/angularNext-standalone.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.js"></script>
 <script>
     System.import('app').then(function (module) {
         module.main();
@@ -83,14 +83,15 @@ For documentation on the supported features checkout the [Wiki](https://github.c
 
 ## Changelog
 
-### 0.0.2 - 2015-01-26
+## 0.0.3 - 2015-02-23
 
-#### Changed
-- replace core/core.js module with angular/angular.js to reflect [this change in angular 2.0](https://github.com/angular/angular/commit/ec5cb3eb66aa343bbc7f67c182c1cc021ce04096)
+### Added
+- Replaced ES6 Promise implementation with one based on $q so they are integrated with Angular's digest cycle.
+- Created an example using jspm
 
-#### Added
-- Started versioning releases in the dist folder
-- Created a changelog based on [keepachangelog.com](http://keepachangelog.com/)
+### Changed
+- Replaced template option in Component directives with a new `@Template` annotation
+- Renamed assert.js module to angular2/rtts-assert.js
 
 [Click here for the full changelog](https://github.com/robianmcd/angular-next/blob/gh-pages/CHANGELOG.md)
 

@@ -1,8 +1,8 @@
-System.register(["angular/angular.js"], function($__export) {
+System.register(["angular2/angular2.js"], function($__export) {
   "use strict";
   var bootstrap,
       Component,
-      TemplateConfig,
+      Template,
       HelloComponent;
   function main() {
     angular.module('myApp', []);
@@ -13,7 +13,7 @@ System.register(["angular/angular.js"], function($__export) {
     setters: [function(m) {
       bootstrap = m.bootstrap;
       Component = m.Component;
-      TemplateConfig = m.TemplateConfig;
+      Template = m.Template;
     }],
     execute: function() {
       HelloComponent = (function() {
@@ -23,10 +23,7 @@ System.register(["angular/angular.js"], function($__export) {
         return ($traceurRuntime.createClass)(HelloComponent, {}, {});
       }());
       Object.defineProperty(HelloComponent, "annotations", {get: function() {
-          return [new Component({
-            selector: 'hello-component',
-            template: new TemplateConfig({inline: '<h1>{{ctrl.message}}</h1>'})
-          })];
+          return [new Component({selector: 'hello-component'}), new Template({inline: '<h1>{{ctrl.message}}</h1>'})];
         }});
     }
   };

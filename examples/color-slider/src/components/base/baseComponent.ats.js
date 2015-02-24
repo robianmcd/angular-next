@@ -1,15 +1,15 @@
-import {Component, TemplateConfig} from 'angular/angular.js';
+import {Component, Template} from 'angular2/angular2.js';
 import BackgroundColor from 'decorators/backgroundColor.js';
 import ColorUtil from 'services/colorUtil.js';
 import Ng2ColorSettings from 'components/colorSettings/ng2ColorSettings.js';
 
 @Component({
     selector: 'base-component',
-    componentServices: [ColorUtil],
-    template: new TemplateConfig({
-        url: 'components/base/baseComponent.html',
-        directives: [BackgroundColor, Ng2ColorSettings]
-    })
+    componentServices: [ColorUtil]
+})
+@Template({
+    url: 'components/base/baseComponent.html',
+    directives: [BackgroundColor, Ng2ColorSettings]
 })
 class BaseComponent {
     constructor() {

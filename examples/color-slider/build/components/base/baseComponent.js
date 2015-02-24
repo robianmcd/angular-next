@@ -1,8 +1,8 @@
-System.register("components/base/baseComponent.js", ["angular/angular.js", "decorators/backgroundColor.js", "services/colorUtil.js", "components/colorSettings/ng2ColorSettings.js"], function($__export) {
+System.register("components/base/baseComponent.js", ["angular2/angular2.js", "decorators/backgroundColor.js", "services/colorUtil.js", "components/colorSettings/ng2ColorSettings.js"], function($__export) {
   "use strict";
   var __moduleName = "components/base/baseComponent.js";
   var Component,
-      TemplateConfig,
+      Template,
       BackgroundColor,
       ColorUtil,
       Ng2ColorSettings,
@@ -10,7 +10,7 @@ System.register("components/base/baseComponent.js", ["angular/angular.js", "deco
   return {
     setters: [function(m) {
       Component = m.Component;
-      TemplateConfig = m.TemplateConfig;
+      Template = m.Template;
     }, function(m) {
       BackgroundColor = m.default;
     }, function(m) {
@@ -30,11 +30,10 @@ System.register("components/base/baseComponent.js", ["angular/angular.js", "deco
       Object.defineProperty(BaseComponent, "annotations", {get: function() {
           return [new Component({
             selector: 'base-component',
-            componentServices: [ColorUtil],
-            template: new TemplateConfig({
-              url: 'components/base/baseComponent.html',
-              directives: [BackgroundColor, Ng2ColorSettings]
-            })
+            componentServices: [ColorUtil]
+          }), new Template({
+            url: 'components/base/baseComponent.html',
+            directives: [BackgroundColor, Ng2ColorSettings]
           })];
         }});
       $__export('default', BaseComponent);

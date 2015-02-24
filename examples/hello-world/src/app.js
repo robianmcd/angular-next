@@ -1,10 +1,10 @@
-import {bootstrap, Component, TemplateConfig} from 'angular/angular.js';
+import {bootstrap, Component, Template} from 'angular2/angular2.js';
 
 @Component({
-    selector: 'hello-component',
-    template: new TemplateConfig({
-        inline: '<h1>{{ctrl.message}}</h1>'
-    })
+    selector: 'hello-component'
+})
+@Template({
+    inline: '<h1>{{ctrl.message}}</h1>'
 })
 class HelloComponent {
     constructor() {

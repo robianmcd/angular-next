@@ -38,7 +38,7 @@ gulp.task('js', function () {
             annotations: true,
             types: true,
             typeAssertions: true,
-            typeAssertionModule: 'assert.js'
+            typeAssertionModule: 'angular2/rtts-assert.js'
         });
 
     gulp.src('src/**/*.js')

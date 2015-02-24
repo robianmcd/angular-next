@@ -1,4 +1,4 @@
-System.register("decorators/backgroundColor.js", ["assert.js", "angular/angular.js"], function($__export) {
+System.register("decorators/backgroundColor.js", ["angular2/rtts-assert.js", "angular2/angular2.js"], function($__export) {
   "use strict";
   var __moduleName = "decorators/backgroundColor.js";
   var assert,

@@ -1,14 +1,14 @@
-import {Component, TemplateConfig, InjectNgOne} from 'angular/angular.js';
+import {Component, Template, InjectNgOne} from 'angular2/angular2.js';
 import BackgroundColor from 'decorators/backgroundColor.js';
 import ColorUtil from 'services/colorUtil.js';
 import BaseComponent from 'components/base/baseComponent.js';
 
 @Component({
-    selector: 'ng2-color-settings',
-    template: new TemplateConfig({
-        url: 'components/colorSettings/colorSettings.html',
-        directives: [BackgroundColor]
-    })
+    selector: 'ng2-color-settings'
+})
+@Template({
+    url: 'components/colorSettings/colorSettings.html',
+    directives: [BackgroundColor]
 })
 class Ng2ColorSettings {
     //Notice how this constructor injects a service, a parent component, and an Angular 1 service.
