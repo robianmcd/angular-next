@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased][unreleased]
 
+## [0.0.3] - 2015-02-23
+
 ### Added
 - Replaced ES6 Promise implementation with one based on $q so they are integrated with Angular's digest cycle.
 - Created an example using jspm
@@ -24,5 +26,6 @@ All notable changes to this project will be documented in this file.
 - Setup foundation for Angular Next
 
 [unreleased]: https://github.com/robianmcd/angular-next/compare/...HEAD
+[0.0.3]: https://github.com/robianmcd/angular-next/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/robianmcd/angular-next/compare/0.0.1...0.0.2
 [0.0.1]: https://github.com/robianmcd/angular-next/compare/0.0.0...0.0.1
