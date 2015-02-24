@@ -1,9 +1,8 @@
-import {Directive} from './directive';
-
-//A transclude directive like ng-if or ng-repeat
-class Template extends Directive {
+class Template {
     constructor(options) {
-        super(options);
+        this.inline = options.inline;
+        this.url = options.url;
+        this.directives = options.directives;
     }
 }
 

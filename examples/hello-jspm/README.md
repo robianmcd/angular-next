@@ -1,4 +1,4 @@
-# Angular Next - Hello World
+# Angular Next - Hello jspm
 
 This is a hello world app that uses Angular Next and [jspm](http://jspm.io/).
 
@@ -10,7 +10,7 @@ This is a hello world app that uses Angular Next and [jspm](http://jspm.io/).
 
 ```sh
 git clone https://github.com/robianmcd/angular-next.git
-cd angular-next/examples/hello-world
+cd angular-next/examples/hello-jspm
 npm insatll -g jspm
 jspm install
 python -m SimpleHTTPServer

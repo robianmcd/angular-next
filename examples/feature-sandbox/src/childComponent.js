@@ -1,17 +1,17 @@
-import {Component, TemplateConfig, NgElement} from 'angular2/angular2.js';
+import {Component, Template, NgElement} from 'angular2/angular2.js';
 import ColorDec from 'colorDec.js';
 import HelloComponent from 'helloComponent.js';
 
 @Component({
     selector: 'child-component',
-    template: new TemplateConfig({
-        inline: '' +
-            '<div>child: {{ctrl.test}}</div>' +
-            '<div><input type="text" ng-model="ctrl.color"/></div>' +
-            '<div color="ctrl.color">decorated red text</div>',
-        directives: [ColorDec]
-    }),
     controllerAs: 'ctrl'
+})
+@Template({
+    inline: '' +
+    '<div>child: {{ctrl.test}}</div>' +
+    '<div><input type="text" ng-model="ctrl.color"/></div>' +
+    '<div color="ctrl.color">decorated red text</div>',
+    directives: [ColorDec]
 })
 class ChildComponent {
     constructor(element: NgElement, hello: HelloComponent) {

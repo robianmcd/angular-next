@@ -1,5 +1,6 @@
 import {Directive, DirectiveClass} from '../ng2/directive.js';
 import {Component, ComponentClass} from '../ng2/component.js';
+import {Template} from '../ng2/template.js';
 import {NgElement} from '../ng2/ngElement.js';
 import {InjectNgOne} from './injectNgOne.js';
 import polyfillPromise from './polyfillPromise.js';
@@ -37,9 +38,9 @@ class Angular2Adapter {
 
         this.registerDirective(dir);
 
-        var dirAnno = this.getDirAnno(dir);
-        if (dirAnno.template && dirAnno.template.directives) {
-            dirAnno.template.directives.forEach((childDir) => {
+        var templateAnno = this.getTemplateAnno(dir);
+        if (templateAnno && templateAnno.directives) {
+            templateAnno.directives.forEach((childDir) => {
                 this.registerDirectiveTree(childDir);
             });
         }
@@ -110,11 +111,12 @@ class Angular2Adapter {
             bindToController: true
         };
 
-        if(dirAnno.template) {
-            if(dirAnno.template.inline) {
-                ddo.template = dirAnno.template.inline;
-            } else if (dirAnno.template.url) {
-                ddo.templateUrl = dirAnno.template.url;
+        var templateAnno = this.getTemplateAnno(dir);
+        if(templateAnno) {
+            if(templateAnno.inline) {
+                ddo.template = templateAnno.inline;
+            } else if (templateAnno.url) {
+                ddo.templateUrl = templateAnno.url;
             }
         }
 
@@ -260,6 +262,12 @@ class Angular2Adapter {
 
     getDirAnno(directive:DirectiveClass) {
         var dirAnnos = directive.annotations.filter((annotation) => annotation instanceof Directive);
+
+        return dirAnnos.length ? dirAnnos[0] : undefined;
+    }
+
+    getTemplateAnno(directive:DirectiveClass) {
+        var dirAnnos = directive.annotations.filter((annotation) => annotation instanceof Template);
 
         return dirAnnos.length ? dirAnnos[0] : undefined;
     }

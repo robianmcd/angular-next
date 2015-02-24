@@ -1,4 +1,4 @@
-import {Angular2Adapter, Decorator, Component, TemplateConfig, InjectNgOne} from 'angular2/angular2.js';
+import {Angular2Adapter, Decorator, Component, Template, InjectNgOne} from 'angular2/angular2.js';
 
 describe('Angular2Adapter', function () {
 
@@ -17,12 +17,10 @@ describe('Angular2Adapter', function () {
 
     @Component({
         selector: 'my-component',
-        template: new TemplateConfig({
-            inline: 'hello world'
-        }),
         controllerAs: 'myCtrl',
         bind: {param1: 'param1'}
     })
+    @Template({inline: 'hello world'})
     class MyComp {
         constructor(param1:Object) {
 

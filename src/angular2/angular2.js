@@ -1,5 +1,4 @@
 export * from './ng2/bootstrap.js';
-export * from './ng2/templateConfig.js';
 export * from './ng2/directive.js';
 export * from './ng2/component.js';
 export * from './ng2/decorator.js';

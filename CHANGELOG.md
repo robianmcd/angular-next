@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 - Replaced ES6 Promise implementation with one based on $q so they are integrated with Angular's digest cycle.
 - Created an example using jspm
 
+### Changed
+- Replaced template option in Component directives with a new `@Template` annotation
+
 ## [0.0.2] - 2015-01-26
 
 ### Changed

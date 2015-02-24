@@ -1,4 +1,4 @@
-System.register("angular2/angular2.js", ["./ng2/bootstrap.js", "./ng2/templateConfig.js", "./ng2/directive.js", "./ng2/component.js", "./ng2/decorator.js", "./ng2/template.js", "./ng2/ngElement.js", "./ngNext/injectNgOne.js", "./ngNext/angular2Adapter.js"], function($__export) {
+System.register("angular2/angular2.js", ["./ng2/bootstrap.js", "./ng2/directive.js", "./ng2/component.js", "./ng2/decorator.js", "./ng2/template.js", "./ng2/ngElement.js", "./ngNext/injectNgOne.js", "./ngNext/angular2Adapter.js"], function($__export) {
   "use strict";
   var __moduleName = "angular2/angular2.js";
   var $__exportNames = {};
@@ -9,14 +9,8 @@ System.register("angular2/angular2.js", ["./ng2/bootstrap.js", "./ng2/templateCo
   var $__exportNames = {};
   var $__exportNames = {};
   var $__exportNames = {};
-  var $__exportNames = {};
   return {
     setters: [function($__m) {
-      Object.keys($__m).forEach(function(p) {
-        if (!$__exportNames[p])
-          $__export(p, $__m[p]);
-      });
-    }, function($__m) {
       Object.keys($__m).forEach(function(p) {
         if (!$__exportNames[p])
           $__export(p, $__m[p]);
@@ -355,12 +349,11 @@ System.register("angular2/ng2/bootstrap.js", ["../ngNext/angular2Adapter.js"], f
   };
 });
 
-System.register("angular2/ng2/component.js", ["angular2/rtts-assert.js", "./directive.js", "./templateConfig.js"], function($__export) {
+System.register("angular2/ng2/component.js", ["angular2/rtts-assert.js", "./directive.js"], function($__export) {
   "use strict";
   var __moduleName = "angular2/ng2/component.js";
   var assert,
       Directive,
-      TemplateConfig,
       Component,
       ComponentOptions,
       ComponentClass;
@@ -369,17 +362,13 @@ System.register("angular2/ng2/component.js", ["angular2/rtts-assert.js", "./dire
       assert = $__m.assert;
     }, function($__m) {
       Directive = $__m.Directive;
-    }, function($__m) {
-      TemplateConfig = $__m.TemplateConfig;
     }],
     execute: function() {
       Component = (function($__super) {
         var Component = function Component(options) {
           assert.argumentTypes(options, ComponentOptions);
           this.componentServices = options.componentServices;
-          this.template = options.template;
           delete options.componentServices;
-          delete options.template;
           $traceurRuntime.superConstructor(Component).call(this, options);
         };
         return ($traceurRuntime.createClass)(Component, {}, {}, $__super);
@@ -388,10 +377,7 @@ System.register("angular2/ng2/component.js", ["angular2/rtts-assert.js", "./dire
           return [[ComponentOptions]];
         }});
       ComponentOptions = assert.define('ComponentOptions', function(options) {
-        assert(options).is(assert.structure({
-          selector: assert.string,
-          template: TemplateConfig
-        }));
+        assert(options).is(assert.structure({selector: assert.string}));
         if (options.componentServices) {
           assert(options.componentServices).is(assert.arrayOf(Object));
         }
@@ -557,48 +543,27 @@ System.register("angular2/ng2/ngElement.js", [], function($__export) {
   };
 });
 
-System.register("angular2/ng2/template.js", ["./directive.js"], function($__export) {
+System.register("angular2/ng2/template.js", [], function($__export) {
   "use strict";
   var __moduleName = "angular2/ng2/template.js";
-  var Directive,
-      Template;
+  var Template;
   return {
-    setters: [function($__m) {
-      Directive = $__m.Directive;
-    }],
+    setters: [],
     execute: function() {
-      Template = (function($__super) {
+      Template = (function() {
         var Template = function Template(options) {
-          $traceurRuntime.superConstructor(Template).call(this, options);
+          this.inline = options.inline;
+          this.url = options.url;
+          this.directives = options.directives;
         };
-        return ($traceurRuntime.createClass)(Template, {}, {}, $__super);
-      }(Directive));
+        return ($traceurRuntime.createClass)(Template, {}, {});
+      }());
       $__export("Template", Template);
     }
   };
 });
 
-System.register("angular2/ng2/templateConfig.js", [], function($__export) {
-  "use strict";
-  var __moduleName = "angular2/ng2/templateConfig.js";
-  var TemplateConfig;
-  return {
-    setters: [],
-    execute: function() {
-      TemplateConfig = (function() {
-        var TemplateConfig = function TemplateConfig(options) {
-          this.inline = options.inline;
-          this.url = options.url;
-          this.directives = options.directives;
-        };
-        return ($traceurRuntime.createClass)(TemplateConfig, {}, {});
-      }());
-      $__export("TemplateConfig", TemplateConfig);
-    }
-  };
-});
-
-System.register("angular2/ngNext/angular2Adapter.js", ["angular2/rtts-assert.js", "../ng2/directive.js", "../ng2/component.js", "../ng2/ngElement.js", "./injectNgOne.js", "./polyfillPromise.js"], function($__export) {
+System.register("angular2/ngNext/angular2Adapter.js", ["angular2/rtts-assert.js", "../ng2/directive.js", "../ng2/component.js", "../ng2/template.js", "../ng2/ngElement.js", "./injectNgOne.js", "./polyfillPromise.js"], function($__export) {
   "use strict";
   var __moduleName = "angular2/ngNext/angular2Adapter.js";
   var assert,
@@ -606,6 +571,7 @@ System.register("angular2/ngNext/angular2Adapter.js", ["angular2/rtts-assert.js"
       DirectiveClass,
       Component,
       ComponentClass,
+      Template,
       NgElement,
       InjectNgOne,
       polyfillPromise,
@@ -619,6 +585,8 @@ System.register("angular2/ngNext/angular2Adapter.js", ["angular2/rtts-assert.js"
     }, function($__m) {
       Component = $__m.Component;
       ComponentClass = $__m.ComponentClass;
+    }, function($__m) {
+      Template = $__m.Template;
     }, function($__m) {
       NgElement = $__m.NgElement;
     }, function($__m) {
@@ -660,9 +628,9 @@ System.register("angular2/ngNext/angular2Adapter.js", ["angular2/rtts-assert.js"
               this.registeredDirectives.add(dir);
             }
             this.registerDirective(dir);
-            var dirAnno = this.getDirAnno(dir);
-            if (dirAnno.template && dirAnno.template.directives) {
-              dirAnno.template.directives.forEach((function(childDir) {
+            var templateAnno = this.getTemplateAnno(dir);
+            if (templateAnno && templateAnno.directives) {
+              templateAnno.directives.forEach((function(childDir) {
                 $__0.registerDirectiveTree(childDir);
               }));
             }
@@ -716,11 +684,12 @@ System.register("angular2/ngNext/angular2Adapter.js", ["angular2/rtts-assert.js"
               scope: scope,
               bindToController: true
             };
-            if (dirAnno.template) {
-              if (dirAnno.template.inline) {
-                ddo.template = dirAnno.template.inline;
-              } else if (dirAnno.template.url) {
-                ddo.templateUrl = dirAnno.template.url;
+            var templateAnno = this.getTemplateAnno(dir);
+            if (templateAnno) {
+              if (templateAnno.inline) {
+                ddo.template = templateAnno.inline;
+              } else if (templateAnno.url) {
+                ddo.templateUrl = templateAnno.url;
               }
             }
             var name = dashesDirectiveName.replace(/-([a-z])/g, (function(char) {
@@ -846,6 +815,12 @@ System.register("angular2/ngNext/angular2Adapter.js", ["angular2/rtts-assert.js"
             }));
             return dirAnnos.length ? dirAnnos[0] : undefined;
           },
+          getTemplateAnno: function(directive) {
+            var dirAnnos = directive.annotations.filter((function(annotation) {
+              return annotation instanceof Template;
+            }));
+            return dirAnnos.length ? dirAnnos[0] : undefined;
+          },
           lowerCaseFirstLetter: function(str) {
             return str.charAt(0).toLowerCase() + str.slice(1);
           },
@@ -889,6 +864,9 @@ System.register("angular2/ngNext/angular2Adapter.js", ["angular2/rtts-assert.js"
           return [[Function]];
         }});
       Object.defineProperty(Angular2Adapter.prototype.getDirAnno, "parameters", {get: function() {
+          return [[DirectiveClass]];
+        }});
+      Object.defineProperty(Angular2Adapter.prototype.getTemplateAnno, "parameters", {get: function() {
           return [[DirectiveClass]];
         }});
       Object.defineProperty(Angular2Adapter.prototype.getFunctionName, "parameters", {get: function() {
