@@ -14,7 +14,7 @@ System.config({
 
 System.config({
   "map": {
-    "angular2": "github:robianmcd/angular-next@cea62e2f55b1ae826c357244c82c61b2c3e6df64"
+    "angular2": "github:robianmcd/angular-next@6fd681c33c4d6cd98837f893e2ead642611e9982"
   }
 });
 

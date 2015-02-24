@@ -1,16 +1,11 @@
 /* */ 
 import {Directive} from './directive';
-import {TemplateConfig} from './templateConfig';
 
 //Like a panel
 class Component extends Directive {
     constructor(options: ComponentOptions) {
         this.componentServices = options.componentServices;
-        this.template = options.template;
-
         delete options.componentServices;
-        delete options.template;
-
         super(options);
     }
 }
@@ -18,8 +13,7 @@ class Component extends Directive {
 var ComponentOptions = assert.define('ComponentOptions', function(options) {
     //Required fields
     assert(options).is(assert.structure({
-        selector: assert.string,
-        template: TemplateConfig
+        selector: assert.string
     }));
 
     //Optional fields

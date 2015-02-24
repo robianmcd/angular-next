@@ -75,7 +75,7 @@ or from the CDN
 
 or from jspm. See the [jspm example](https://github.com/robianmcd/angular-next/tree/gh-pages/examples/hello-jspm) for details.
 ```sh
-jspm install angular2=angular-next
+jspm install angular2=github:robianmcd/angular-next
 ```
 
 ## Documentation

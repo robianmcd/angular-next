@@ -1,6 +1,5 @@
 /* */ 
 export * from './ng2/bootstrap';
-export * from './ng2/templateConfig';
 export * from './ng2/directive';
 export * from './ng2/component';
 export * from './ng2/decorator';

@@ -1,5 +1,5 @@
 /* */ 
-class TemplateConfig {
+class Template {
     constructor(options) {
         this.inline = options.inline;
         this.url = options.url;
@@ -7,4 +7,4 @@ class TemplateConfig {
     }
 }
 
-export {TemplateConfig};
+export {Template};
