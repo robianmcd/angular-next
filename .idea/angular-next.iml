@@ -10,6 +10,7 @@
       <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/bower_components" />
       <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/build" />
       <excludeFolder url="file://$MODULE_DIR$/examples/feature-sandbox/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/examples/hello-jspm/jspm_packages" />
       <excludeFolder url="file://$MODULE_DIR$/examples/hello-world/build" />
       <excludeFolder url="file://$MODULE_DIR$/examples/hello-world/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/node_modules" />

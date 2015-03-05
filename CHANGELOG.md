@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased][unreleased]
 
+### Added
+- Added support for Angular 2 style events and property bindings in templates
+
 ## [0.0.3] - 2015-02-23
 
 ### Added

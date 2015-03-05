@@ -8,9 +8,9 @@ import HelloComponent from 'helloComponent.js';
 })
 @Template({
     inline: '' +
-    '<div>child: {{ctrl.test}}</div>' +
-    '<div><input type="text" ng-model="ctrl.color"/></div>' +
-    '<div color="ctrl.color">decorated red text</div>',
+    '<div (click)="ctrl.clicked()">child: {{ctrl.test}}</div>' +
+    '<div><input type="text" [value]="ctrl.color"/></div>' +
+    '<div color="ctrl.color">decorated {{ctrl.color}} text</div>',
     directives: [ColorDec]
 })
 class ChildComponent {
@@ -23,6 +23,10 @@ class ChildComponent {
 
     getTestStr() {
         return 'blue text';
+    }
+
+    clicked() {
+        console.log('clicked');
     }
 }
 

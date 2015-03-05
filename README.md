@@ -96,6 +96,8 @@ For documentation on the supported features checkout the [Wiki](https://github.c
 [Click here for the full changelog](https://github.com/robianmcd/angular-next/blob/gh-pages/CHANGELOG.md)
 
 ## Roadmap
+1. support as much of the new template syntax as possible
+1. improve jspm example to include bundeling
 1. Improve unit tests and add e2e tests
 1. Look into integrating with the new [router](https://github.com/angular/router)
 1. Add better logging for common errors

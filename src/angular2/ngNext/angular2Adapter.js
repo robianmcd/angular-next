@@ -4,6 +4,7 @@ import {Template} from '../ng2/template.js';
 import {NgElement} from '../ng2/ngElement.js';
 import {InjectNgOne} from './injectNgOne.js';
 import polyfillPromise from './polyfillPromise.js';
+import registerNg2Directives from './registerNg2Directives.js';
 
 class Angular2Adapter {
     constructor({moduleName, logLevel = 0}) {
@@ -15,6 +16,8 @@ class Angular2Adapter {
         this.registeredDirectives = new Set();
 
         polyfillPromise(this.app);
+        registerNg2Directives(this.app);
+
     }
 
     bootstrapComponent(rootComponent:ComponentClass) {
