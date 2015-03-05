@@ -3,9 +3,12 @@ import {Directive} from './directive';
 //Like a panel
 class Component extends Directive {
     constructor(options: ComponentOptions) {
-        this.componentServices = options.componentServices;
+        //We can't assign this to `this` before calling super
+        var componentServices = options.componentServices;
         delete options.componentServices;
         super(options);
+
+        this.componentServices = componentServices;
     }
 }
 
